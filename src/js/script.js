@@ -13,13 +13,30 @@ function addList(input) {
     const temp = document.createElement('li');
     temp.innerHTML = `
         <div class="view">
-            <input class="toggle" type="checkbox"/>
+            <input class="toggle" type="checkbox" onclick="clickCheckBox(event)"/>
             <label class="label">${input}</label>
             <button class="destroy" onclick="destroy(event)"></button>
         </div>
         <input class="edit" value="${input}" />
     `
     todoList.appendChild(temp);
+}
+
+function clickCheckBox(event) {
+    const classList = event.target.parentNode.parentElement.classList;
+    if(!classList.contains("false") && !classList.contains("completed")){
+        classList.add("false");
+    }
+    if (classList.contains("false")) {
+        event.target.setAttribute("checked", "");
+        classList.replace("false", "completed");
+        return;
+    }
+    if (classList.contains("completed")) {
+        event.target.removeAttribute("checked");
+        classList.replace("completed", "false");
+        return;
+    }
 }
 
 function destroy(event) {
