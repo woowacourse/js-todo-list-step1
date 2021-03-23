@@ -5,9 +5,9 @@ addEventListenerShowAll();
 
 function addEventListenerAddingTodos() {
     document.addEventListener('keypress', function (e) {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             let todoItem = document.getElementById("new-todo-title").value;
-            if (todoItem != '') {
+            if (todoItem !== '') {
                 addTodo(todoItem);
             }
             document.getElementById("new-todo-title").value = '';
@@ -59,7 +59,7 @@ function addEventListenerShowCompleted() {
 
 function addTodo(input) {
     let todoTag = document.createElement('li');
-    todoTag.classList.add(false);
+    todoTag.classList.add('false');
     todoTag.innerHTML =
         ` <div class="view">
                 <input class="toggle" type="checkbox" onclick="check(this);"/>
@@ -81,11 +81,11 @@ function edit(self) {
     classList.add("editing");
 
     self.parentNode.parentElement.addEventListener('keydown', function (event) {
-        if (event.key == 'Escape') {
+        if (event.key === 'Escape') {
             classList.remove("editing");
             return;
         }
-        if (event.key == 'Enter') {
+        if (event.key === 'Enter') {
             self.innerHTML = self.parentNode.parentElement.querySelector(".edit").value;
             classList.remove("editing");
             return;
@@ -103,7 +103,6 @@ function check(self) {
     if (classList.contains("completed")) {
         self.removeAttribute("checked")
         classList.replace("completed", "false");
-        return;
     }
 }
 
