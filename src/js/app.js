@@ -1,197 +1,100 @@
-import {ElementRepository} from './ElementRepository.js'
-import {Element} from './Element.js'
+import {CancelModifyElementCommand} from "./Command/CancelModifyElementCommand.js";
+import {CreateNewElementCommand} from "./Command/CreateNewElementCommand.js";
+import {ModifyElementCommand} from "./Command/ModifyElementCommand.js";
+import {OutputView} from "./view/OutputView.js";
 
 class App {
 
     #editingElement
+    #commands
+
+    constructor() {
+        this.#commands = [
+            new CancelModifyElementCommand(this),
+            new CreateNewElementCommand(this),
+            new ModifyElementCommand(this)
+        ]
+    }
 
     run() {
-        console.log("hello")
-        this.#addEnterListenerWithElementHandler()
+        this.#addCommandListener()
         this.#addCheckBoxListener()
         this.#addFilterListener()
     }
 
     #addFilterListener() {
         let filters = document.querySelector("ul[class=filters]").querySelectorAll("a")
-        console.log()
+
         filters.forEach(filter =>
-            filter.addEventListener('click',
-                () => {
-                    filters.forEach(f => f.classList.remove("selected"))
-                    filter.classList.add("selected")
-                    this.#drawElementByHash(filter.getAttribute("href"))
-                }
-            )
+            this.#setFilterListener(filter, filters)
         )
+    }
+
+    #setFilterListener(filter, filters) {
+        filter.addEventListener('click',
+            () => {
+                this.#setFiltersToUnSelected(filters);
+                this.#setSelectedFilterToSelected(filter);
+                OutputView.drawElementByHash(filter.getAttribute("href"))
+            }
+        );
+    }
+
+    #setSelectedFilterToSelected(filter) {
+        filter.classList.add("selected")
+    }
+
+    #setFiltersToUnSelected(filters) {
+        filters.forEach(f => f.classList.remove("selected"))
     }
 
     #addCheckBoxListener() {
-        let checkboxs = document.querySelectorAll("input[type=checkbox]")
-        checkboxs.forEach(checkbox =>
-            checkbox.addEventListener('change',
-                () => {
-                    checkbox.classList.toggle('#complete')
-                }
-            )
+        let checkboxes = document.querySelectorAll("input[type=checkbox]")
+
+        checkboxes.forEach(checkbox =>
+            this.#setCheckboxListener(checkbox)
         )
     }
 
-    #addEnterListenerWithElementHandler() {
+    #setCheckboxListener(checkbox) {
+        checkbox.addEventListener('change',
+            () => {
+                checkbox.classList.toggle('#complete')
+            }
+        );
+    }
+
+    #addCommandListener() {
         window.addEventListener("keydown", e => {
-            if (e.code === "Escape" && this.#editingElement !== undefined) {
-                this.#editingElement.classList.remove('editing')
-                this.#editingElement.classList.add('view')
-                this.#editingElement = undefined
-            } else if (e.code === "Enter" && this.#editingElement !== undefined) {
-                let id = this.#editingElement.getAttribute("id")
-                let text = this.#editingElement.querySelector("input[class=edit]").value
-                ElementRepository.changeText(id, text)
-                this.#editingElement.classList.remove('editing')
-                this.#editingElement.classList.add('view')
-                this.#drawElementByHash()
-                this.#printCount()
-                this.#editingElement = undefined
-            } else if (e.code === "Enter") {
-                this.#addElement()
-                // this.#addCheckboxListener()
-                this.#clearInput()
-                this.#drawElementByHash()
-                this.#printCount()
+            let command = this.#commands.find(
+                command => command.isUsable(e.code)
+            );
+
+            if(command === undefined) {
+                return
+            }
+
+            command.execute()
+
+            if(e.code === "Enter") {
+                OutputView.printTodoList()
             }
 
         })
     }
 
-    #printCount() {
-        document.querySelector("span[class=todo-count]").innerHTML =
-            `총 <string>${ElementRepository.getCount()}</string> 개`
+    getEditingElement() {
+        return this.#editingElement
     }
 
-    #addElement() {
-        let userInput = this.#getTextFromUserInput();
-        if (!this.#isBlank(userInput)) {
-            return;
-        }
-
-        let newElement = new Element(userInput)
-        ElementRepository.addElement(newElement)
+    setEditingElementToUndefined() {
+        this.#editingElement = undefined
     }
 
-    #getTextFromUserInput() {
-        return document.getElementsByClassName("new-todo")[0].value
+    setEditingElement(dom) {
+        this.#editingElement = dom
     }
 
-    #isBlank(input) {
-        if (input === "" || input === undefined) return false
-        return true
-    }
-
-    #drawElementByHash(hash) {
-        if(hash == undefined) {
-            hash = window.location.hash
-        }
-
-        if (hash === "#active") {
-            this.#draw(this.#getViewElementsByDom())
-            return
-        }
-
-        if (hash === "#completed") {
-            this.#draw(this.#getCompleteElementsByDom())
-            return
-        }
-        console.log("tetsd")
-        this.#draw(this.#getAllElementsByDom())
-    }
-
-    #draw(doms) {
-        document.getElementById("todo-list").innerHTML = ""
-        doms.forEach(dom => document.getElementById("todo-list").appendChild(dom))
-
-    }
-
-    #getCompleteElementsByDom() {
-        return this.#toDomAndAddEvent(ElementRepository.getAllElements()
-            .filter(element => element.value.isDone()))
-    }
-
-    #getViewElementsByDom() {
-        return this.#toDomAndAddEvent(ElementRepository.getAllElements()
-            .filter(element => !element.value.isDone()))
-    }
-
-    #getAllElementsByDom() {
-        return this.#toDomAndAddEvent(ElementRepository.getAllElements())
-
-    }
-
-    #toDomAndAddEvent(elements) {
-        let doms = elements.map(element => this.#toDom(element.id, element.value))
-        doms.forEach(
-            dom => {
-                this.#addCheckboxEvent(dom)
-                this.#addRemoveEvent(dom)
-                this.#addModifyEvent(dom)
-            }
-        )
-
-        return doms
-    }
-
-    #addModifyEvent(dom) {
-        let checkbox = dom.querySelector("label")
-
-        checkbox.addEventListener('dblclick', () => {
-            this.#editingElement = dom
-            dom.classList.remove('view')
-            dom.classList.add('editing')
-        })
-    }
-
-    #addRemoveEvent(dom) {
-        let id = dom.getAttribute("id")
-        let remove = dom.querySelector("button[class=destroy]")
-        console.log(id)
-        remove.addEventListener('click', () => {
-            ElementRepository.removeElementById(id)
-            document.getElementById(id).remove()
-            this.#printCount()
-        })
-    }
-
-    #addCheckboxEvent(dom) {
-        let checkbox = dom.querySelector("input[type=checkbox]")
-        let id = dom.getAttribute("id")
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                ElementRepository.setDone(id)
-                dom.classList.add('completed')
-            } else {
-                ElementRepository.setUnDone(id)
-                dom.classList.remove('completed')
-            }
-        })
-    }
-
-    #toDom(id, element) {
-        let html = `
-        <li id="${id}" class="${element.getState()}">
-            <div class="view">
-                <input class="toggle" type="checkbox"/>
-                <label class="label">${element.getText()}</label>
-                <button class="destroy"></button>
-            </div>
-            <input class="edit"/ value="${element.getText()}">
-        </li>`
-
-        let dom = new DOMParser().parseFromString(html, "text/html")
-        return dom.getRootNode().body.querySelector("li")
-    }
-
-    #clearInput() {
-        document.getElementById("new-todo-title").value = ""
-    }
 }
 
 let app = new App()
