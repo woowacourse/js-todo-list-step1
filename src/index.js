@@ -27,6 +27,11 @@ function createHtml(itemText) {
             toggleElem.removeAttribute('checked');
         }
     });
+
+    let destroyElem = kanban.querySelector('.destroy');
+    destroyElem.addEventListener('click', event => {
+        todoList.removeChild(kanban);
+    })
     return kanban
 }
 
