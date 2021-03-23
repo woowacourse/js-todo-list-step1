@@ -20,6 +20,7 @@ function addList(input) {
         <input class="edit" value="${input}" />
     `
     todoList.appendChild(temp);
+    updateCount();
 }
 
 function clickCheckBox(event) {
@@ -41,6 +42,7 @@ function clickCheckBox(event) {
 
 function destroy(event) {
     event.target.parentNode.parentElement.remove();
+    updateCount();
 }
 
 function edit(event) {
@@ -55,3 +57,7 @@ function edit(event) {
 })
 }
 
+function updateCount() {
+    const count = document.querySelectorAll('.todoapp .todo-list li').length;
+    const countString = document.getElementById('todo-count-text').innerHTML = count;
+}
