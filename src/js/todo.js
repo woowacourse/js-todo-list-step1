@@ -1,13 +1,19 @@
-document.addEventListener('keypress', function (e) {
-    if (e.key == 'Enter') {
-        const todoItem = document.getElementById("new-todo-title").value;
-        addTodo(todoItem);
-    }
-})
-
+addEventListenerAddingTodos();
 addEventListenerShowCompleted();
 addEventListenerShowActive();
 addEventListenerShowAll();
+
+function addEventListenerAddingTodos() {
+    document.addEventListener('keypress', function (e) {
+        if (e.key == 'Enter') {
+            let todoItem = document.getElementById("new-todo-title").value;
+            if (todoItem != '') {
+                addTodo(todoItem);
+            }
+            document.getElementById("new-todo-title").value = '';
+        }
+    })
+}
 
 function addEventListenerShowAll() {
     document.querySelector("a[href='#']").addEventListener('click', function () {
@@ -52,51 +58,58 @@ function addEventListenerShowCompleted() {
 }
 
 function addTodo(input) {
-    const todoTag = document.createElement('li');
+    let todoTag = document.createElement('li');
     todoTag.classList.add(false);
     todoTag.innerHTML =
         ` <div class="view">
-                <input class="toggle" type="checkbox" onclick="clicked(this);"/>
-                <label class="label" ondblclick="doubleClick(this)">${input}</label>
+                <input class="toggle" type="checkbox" onclick="check(this);"/>
+                <label class="label" ondblclick="edit(this)">${input}</label>
                 <button class="destroy" onclick="remove(this)"></button>
-               </div>
-               <input class="edit" value="${input}"/>`;
+          </div>
+          <input class="edit" value="${input}"/>`;
     document.getElementById("todo-list").appendChild(todoTag);
     updateCount();
 }
 
-function updateCount(){
-    sample = document.querySelector(".todo-list").querySelectorAll("li");
-    console.log(sample.length);
-    document.querySelector(".todo-count").innerHTML = "총 "+ `<strong>${sample.length}</strong>`+ " 개";
+function updateCount() {
+    let sample = document.querySelector(".todo-list").querySelectorAll("li");
+    document.querySelector(".todo-count").innerHTML = "총 " + `<strong>${sample.length}</strong>` + " 개";
 }
 
-function doubleClick(self) {
-    classList = self.parentNode.parentElement.classList;
+function edit(self) {
+    let classList = self.parentNode.parentElement.classList;
     classList.add("editing");
-    document.addEventListener('keydown', function (e) {
-        if(e.key == 'Escape'){
-            classList.remove("editing")
+
+    self.parentNode.parentElement.addEventListener('keydown', function (event) {
+        if (event.key == 'Escape') {
+            classList.remove("editing");
+            return;
+        }
+        if (event.key == 'Enter') {
+            self.innerHTML = self.parentNode.parentElement.querySelector(".edit").value;
+            classList.remove("editing");
+            return;
         }
     })
 }
 
-function clicked(self){
-    classList = self.parentNode.parentElement.classList;
-    if(classList.contains("false")){
+function check(self) {
+    let classList = self.parentNode.parentElement.classList;
+    if (classList.contains("false")) {
         self.setAttribute("checked", "");
         classList.replace("false", "completed");
         return;
     }
-    if(classList.contains("completed")){
+    if (classList.contains("completed")) {
         self.removeAttribute("checked")
         classList.replace("completed", "false");
         return;
     }
 }
 
-function remove(self){
+function remove(self) {
     self.parentNode.parentElement.remove();
+    updateCount();
 }
 
 
