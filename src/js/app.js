@@ -9,8 +9,22 @@ class App {
         console.log("hello")
         this.#addEnterListenerWithElementHandler()
         this.#addCheckBoxListener()
+        this.#addFilterListener()
     }
 
+    #addFilterListener() {
+        let filters = document.querySelector("ul[class=filters]").querySelectorAll("a")
+        console.log()
+        filters.forEach(filter =>
+            filter.addEventListener('click',
+                () => {
+                    filters.forEach(f => f.classList.remove("selected"))
+                    filter.classList.add("selected")
+                    this.#drawElementByHash(filter.getAttribute("href"))
+                }
+            )
+        )
+    }
 
     #addCheckBoxListener() {
         let checkboxs = document.querySelectorAll("input[type=checkbox]")
@@ -73,8 +87,11 @@ class App {
         return true
     }
 
-    #drawElementByHash() {
-        let hash = window.location.hash
+    #drawElementByHash(hash) {
+        if(hash == undefined) {
+            hash = window.location.hash
+        }
+
         if (hash === "#active") {
             this.#draw(this.#getViewElementsByDom())
             return
