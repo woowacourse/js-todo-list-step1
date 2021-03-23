@@ -15,7 +15,7 @@ function createHtml(itemText) {
                 <label class="label">${itemText}</label>
             <button class="destroy"></button>
         </div>
-        <input class="edit" value="새로운 타이틀" />`;
+        <input class="edit" value="" />`;
     let toggleElem = kanban.querySelector('.toggle');
     toggleElem.addEventListener('change', event => {
         if (event.target.checked) {
@@ -29,8 +29,23 @@ function createHtml(itemText) {
     });
 
     let destroyElem = kanban.querySelector('.destroy');
-    destroyElem.addEventListener('click', event => {
+    destroyElem.addEventListener('click', () => {
         todoList.removeChild(kanban);
+    })
+
+    kanban.addEventListener("dblclick", () => {
+        kanban.classList.add('editing');
+    });
+    const editText = kanban.querySelector('.edit');
+    const labelText = kanban.querySelector('.label');
+    editText.addEventListener('keydown', event => {
+        if (event.key === "Enter") {
+            labelText.innerHTML = editText.value;
+            kanban.classList.remove('editing');
+        } else if (event.key === "Escape") {
+            editText.value = itemText;
+            kanban.classList.remove('editing');
+        }
     })
     return kanban
 }
