@@ -30,6 +30,19 @@ function enter(input_new_todo_list) {
     const input_edit = document.createElement('input');
     input_edit.setAttribute('class', 'edit');
     input_edit.setAttribute('value', input_new_todo_list.value);
+    input_edit.onkeyup = function editEnter(element) {
+      if (document.activeElement && event.keyCode === 13) {
+        li.classList.remove('editing');
+        if (input_edit.value === '') {
+          li.parentNode.removeChild(li);
+        }
+        label.innerText = input_edit.value;
+        return;
+      }
+      if (document.activeElement && event.keyCode === 27) {
+        li.classList.remove('editing');
+      }
+    }
 
 
     const div_view = document.createElement('div');
@@ -52,12 +65,3 @@ function enter(input_new_todo_list) {
   }
 }
 
-function editEnter(input_edited_todo_list, li) {
-  if (event.keyCode === 13) {
-    alert('수정 엔터 키 입력');
-    return;
-  }
-  if (event.keyCode === 27) {
-    alert('수정 esc 키 입력');
-  }
-}
