@@ -1,3 +1,5 @@
+
+// todoItem 추가
 const todoInput = document.getElementById('new-todo-title');
 todoInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -13,9 +15,14 @@ function addList(input) {
         <div class="view">
             <input class="toggle" type="checkbox"/>
             <label class="label">${input}</label>
-            <button class="destroy"></button>
+            <button class="destroy" onclick="destroy(event)"></button>
         </div>
         <input class="edit" value="${input}" />
     `
     todoList.appendChild(temp);
 }
+
+function destroy(event) {
+    event.target.parentNode.parentElement.remove();
+}
+
