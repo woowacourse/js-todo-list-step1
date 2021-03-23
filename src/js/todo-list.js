@@ -10,6 +10,7 @@ function enter(input_new_todo_list) {
     button_destroy.setAttribute('class', 'destroy');
     button_destroy.onclick = function remove() {
       li.parentNode.removeChild(li);
+      countTodoListsOfSelectedStatus();
     }
 
     const label = document.createElement('label');
@@ -44,7 +45,6 @@ function enter(input_new_todo_list) {
       }
     }
 
-
     const div_view = document.createElement('div');
     div_view.setAttribute('class', 'view');
 
@@ -62,6 +62,29 @@ function enter(input_new_todo_list) {
     document.getElementById('todo-list').appendChild(li);
 
     document.getElementById('new-todo-title').value = null;
+    countTodoListsOfSelectedStatus();
   }
 }
 
+function countTodoListsOfSelectedStatus() {
+  const countOfTodoListsOfSelectedStatus
+      = document.getElementById("todo-list").childElementCount;
+  const count_container = document.getElementsByClassName('count-container')[0];
+  count_container.innerHTML =
+      '<span class="todo-count">'
+      + '총 <strong>'
+      + countOfTodoListsOfSelectedStatus
+      + '</strong> 개'
+      + '</span>'
+      + '<ul class="filters">'
+      + '<li>'
+      + '<a class="all selected" href="/#">전체보기</a>'
+      + '</li>'
+      + '<li>'
+      + '<a class="active" href="#active">해야할 일</a>'
+      + '</li>'
+      + '<li>'
+      + '<a class="completed" href="#completed">완료한 일</a>'
+      + '</li>'
+      + '</ul>'
+}
