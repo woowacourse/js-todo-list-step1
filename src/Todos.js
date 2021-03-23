@@ -6,15 +6,6 @@ Todos.prototype.push = function(todo) {
     this.todos.push(todo);
 }
 
-Todos.prototype.html = function() {
-    var result = "";
-    
-    this.todos.forEach(todo =>
-        result += todo.html()
-    );
-    return result;
-}
-
 Todos.prototype.checkById = function(id) {
     this.todos.filter(todo => todo.id === id).forEach(todo => todo.check());
 }
@@ -37,4 +28,16 @@ Todos.prototype.undoToEditById = function(id) {
 
 Todos.prototype.count = function() {
     return this.todos.length;
+}
+
+Todos.prototype.allTodos = function() {
+    return this.todos;
+}
+
+Todos.prototype.activeTodos = function() {
+    return this.todos.filter(todo => !todo.isChecked);
+}
+
+Todos.prototype.completedTodos = function() {
+    return this.todos.filter(todo => todo.isChecked);
 }
