@@ -13,12 +13,13 @@ window.onload = function() {
             <div class="view">
                 <input class="toggle" type="checkbox" onclick="check(this)">
                 <label class="label">${inputText}</label>
-                <button class="destroy"></button>
+                <button class="destroy" onclick= "destroyTodo(this)"></button>
             </div>`;
             todoList.appendChild(newTodoLI);
         }
     }
 }
+
 function check(box) {
     if (box.checked == true) {
         box.parentNode.parentNode.className = "completed";
@@ -26,4 +27,9 @@ function check(box) {
     if (box.checked == false) {
         box.parentNode.parentNode.className = "todo";
     }
+}
+
+function destroyTodo(todo) {
+    const todoParent  = todo.parentNode.parentNode;
+    todoParent.parentNode.removeChild(todoParent);
 }
