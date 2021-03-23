@@ -13,7 +13,7 @@ function addTodo(input) {
         ` <div class="view">
                 <input class="toggle" type="checkbox" onclick="clicked(this);"/>
                 <label class="label">${input}</label>
-                <button class="destroy"></button>
+                <button class="destroy" onclick="remove(this)"></button>
                </div>
                <input class="edit" value="${input}"/>`;
     document.getElementById("todo-list").appendChild(todoTag);
@@ -31,6 +31,10 @@ function clicked(self){
         classList.replace("completed", "false");
         return;
     }
+}
+
+function remove(self){
+    self.parentNode.parentElement.remove();
 }
 
 
