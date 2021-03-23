@@ -14,7 +14,7 @@ function addList(input) {
     temp.innerHTML = `
         <div class="view">
             <input class="toggle" type="checkbox" onclick="clickCheckBox(event)"/>
-            <label class="label">${input}</label>
+            <label class="label" ondblclick="edit(event)">${input}</label>
             <button class="destroy" onclick="destroy(event)"></button>
         </div>
         <input class="edit" value="${input}" />
@@ -24,7 +24,7 @@ function addList(input) {
 
 function clickCheckBox(event) {
     const classList = event.target.parentNode.parentElement.classList;
-    if(!classList.contains("false") && !classList.contains("completed")){
+    if (!classList.contains("false") && !classList.contains("completed")){
         classList.add("false");
     }
     if (classList.contains("false")) {
@@ -41,5 +41,17 @@ function clickCheckBox(event) {
 
 function destroy(event) {
     event.target.parentNode.parentElement.remove();
+}
+
+function edit(event) {
+    const classList = event.target.parentNode.parentElement.classList;
+    classList.add("editing")
+
+    const input = event.target.parentNode.parentElement;
+    input.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+        classList.remove("editing")
+    }
+})
 }
 
