@@ -7,8 +7,11 @@ function enter(element) {
     const li = document.createElement('li');
 
     const button_destroy = document.createElement('button');
-
     button_destroy.setAttribute('class', 'destroy');
+    button_destroy.onclick = function remove() {
+      li.parentNode.removeChild(li);
+    }
+
     const label = document.createElement('label');
     label.setAttribute('class', 'label');
 
@@ -16,7 +19,7 @@ function enter(element) {
     const input_toggle = document.createElement('input');
     input_toggle.setAttribute('class', 'toggle');
     input_toggle.setAttribute('type', 'checkbox');
-    input_toggle.onclick = function checked(event) {
+    input_toggle.onclick = function checked() {
       input_toggle.checked = true;
       li.setAttribute('class', 'toggle completed');
     }
