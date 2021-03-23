@@ -19,6 +19,13 @@ function addTodo(input) {
                <input class="edit" value="${input}"/>`;
     document.getElementById("todo-list").appendChild(todoTag);
 
+    updateCount();
+}
+
+function updateCount(){
+    sample = document.querySelector(".todo-list").querySelectorAll("li");
+    console.log(sample.length);
+    document.querySelector(".todo-count").innerHTML = "총 "+ `<strong>${sample.length}</strong>`+ " 개";
 }
 
 function doubleClick(self) {
