@@ -3,11 +3,14 @@ import {Element} from './Element.js'
 
 class App {
 
+    #editingElement
+
     run() {
         console.log("hello")
         this.#addEnterListenerWithElementHandler()
         this.#addCheckBoxListener()
     }
+
 
     #addCheckBoxListener() {
         let checkboxs = document.querySelectorAll("input[type=checkbox]")
@@ -22,12 +25,24 @@ class App {
 
     #addEnterListenerWithElementHandler() {
         window.addEventListener("keydown", e => {
-            if (e.code === "Enter") {
-                this.#addElement()
+            if (e.code === "Escape" && this.#editingElement !== undefined) {
+                this.#editingElement.classList.remove('editing')
+                this.#editingElement.classList.add('view')
+                this.#editingElement = undefined
+            } else if (e.code === "Enter" && this.#editingElement !== undefined) {
+                let id = this.#editingElement.getAttribute("id")
+                let text = this.#editingElement.querySelector("input[class=edit]").value
+                ElementRepository.changeText(id, text)
+                this.#editingElement.classList.remove('editing')
+                this.#editingElement.classList.add('view')
                 this.#drawElementByHash()
-               // this.#addCheckboxListener()
+            } else if (e.code === "Enter") {
+                this.#addElement()
+                // this.#addCheckboxListener()
                 this.#clearInput()
+                this.#drawElementByHash()
             }
+
         })
     }
 
@@ -66,7 +81,7 @@ class App {
     }
 
     #draw(doms) {
-        document.getElementById("todo-list").innerHTML=""
+        document.getElementById("todo-list").innerHTML = ""
         doms.forEach(dom => document.getElementById("todo-list").appendChild(dom))
 
     }
@@ -87,15 +102,26 @@ class App {
     }
 
     #toDomAndAddEvent(elements) {
-        let doms = elements.map(element => this.#toDom(element.index, element.value))
+        let doms = elements.map(element => this.#toDom(element.id, element.value))
         doms.forEach(
             dom => {
                 this.#addCheckboxEvent(dom)
                 this.#addRemoveEvent(dom)
+                this.#addModifyEvent(dom)
             }
         )
 
         return doms
+    }
+
+    #addModifyEvent(dom) {
+        let checkbox = dom.querySelector("label")
+
+        checkbox.addEventListener('dblclick', () => {
+            this.#editingElement = dom
+            dom.classList.remove('view')
+            dom.classList.add('editing')
+        })
     }
 
     #addRemoveEvent(dom) {
@@ -103,7 +129,7 @@ class App {
         let remove = dom.querySelector("button[class=destroy]")
         console.log(id)
         remove.addEventListener('click', () => {
-            ElementRepository.removeElementByIndex(id)
+            ElementRepository.removeElementById(id)
             document.getElementById(id).remove()
         })
     }
@@ -122,15 +148,15 @@ class App {
         })
     }
 
-    #toDom(index, element) {
+    #toDom(id, element) {
         let html = `
-        <li id="${index}" class="${element.getState()}">
+        <li id="${id}" class="${element.getState()}">
             <div class="view">
                 <input class="toggle" type="checkbox"/>
                 <label class="label">${element.getText()}</label>
                 <button class="destroy"></button>
             </div>
-            <input class="edit" value="${element.getText()}" />
+            <input class="edit"/ value="${element.getText()}">
         </li>`
 
         let dom = new DOMParser().parseFromString(html, "text/html")

@@ -1,24 +1,30 @@
 export class ElementRepository {
 
     static #elements = []
-    static #index = 0
+    static #id = 0
 
     static addElement(element) {
         ElementRepository.#elements.push({
-            index : ElementRepository.#index,
+            id : ElementRepository.#id,
             value : element
         })
 
-        ElementRepository.#index++;
+        ElementRepository.#id++;
     }
 
-    static removeElementByIndex(index) {
+    static removeElementById(id) {
         ElementRepository.#elements = ElementRepository.#elements
-            .filter(element => element.index !== Number(index))
+            .filter(element => element.id !== Number(id))
     }
 
     static getAllElements() {
         return ElementRepository.#elements
+    }
+
+    static changeText(id, text) {
+        let element = ElementRepository.#elements.filter(element => element.id === Number(id))
+        console.log(element[0])
+        element[0].value.changeText(text)
     }
 
 }

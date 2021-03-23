@@ -30,4 +30,9 @@ export class Element {
 
         return "view"
     }
+
+    changeText(text) {
+        this.#text = text
+    }
+
 }
