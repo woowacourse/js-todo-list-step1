@@ -65,7 +65,7 @@ class App {
     }
 
     #addCommandListener() {
-        window.addEventListener("keydown", e => {
+        window.addEventListener("keyup", e => {
             let command = this.#commands.find(
                 command => command.isUsable(e.code)
             );
@@ -73,6 +73,8 @@ class App {
             if(command === undefined) {
                 return
             }
+
+            console.log(command)
 
             command.execute()
 

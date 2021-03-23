@@ -42,5 +42,4 @@ export class OutputView {
         doms.forEach(dom => document.getElementById("todo-list").appendChild(dom))
     }
 
-
 }
