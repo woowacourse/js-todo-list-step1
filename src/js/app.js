@@ -5,14 +5,27 @@ class App {
 
     run() {
         console.log("hello")
-        this.#addListenerWithElementHandler()
+        this.#addEnterListenerWithElementHandler()
+        this.#addCheckBoxListener()
     }
 
-    #addListenerWithElementHandler() {
+    #addCheckBoxListener() {
+        let checkboxs = document.querySelectorAll("input[type=checkbox]")
+        checkboxs.forEach(checkbox =>
+            checkbox.addEventListener('change',
+                () => {
+                    checkbox.classList.toggle('#complete')
+                }
+            )
+        )
+    }
+
+    #addEnterListenerWithElementHandler() {
         window.addEventListener("keydown", e => {
             if (e.code === "Enter") {
                 this.#addElement()
                 this.#drawElementByHash()
+               // this.#addCheckboxListener()
                 this.#clearInput()
             }
         })
@@ -40,58 +53,77 @@ class App {
     #drawElementByHash() {
         let hash = window.location.hash
         if (hash === "#active") {
-            console.log("tets")
-            this.#draw(this.#getViewElementsByHtml())
+            this.#draw(this.#getViewElementsByDom())
             return
         }
 
         if (hash === "#completed") {
-            console.log("tets2")
-            this.#draw(this.#getCompleteElementsByHtml())
+            this.#draw(this.#getCompleteElementsByDom())
             return
         }
         console.log("tetsd")
-        this.#draw(this.#getAllElementsByHtml())
+        this.#draw(this.#getAllElementsByDom())
     }
 
-    #draw(html) {
-        document.getElementById("todo-list").innerHTML = html
+    #draw(doms) {
+        document.getElementById("todo-list").innerHTML=""
+        doms.forEach(dom => document.getElementById("todo-list").appendChild(dom))
+
     }
 
-    #getCompleteElementsByHtml() {
-        return ElementRepository.getAllElements()
-            .filter(element => element.value.isDone())
-            .map(element => this.#toHtml(element.index, element.value))
-            .join("")
+    #getCompleteElementsByDom() {
+        return this.#toDomAndAddEvent(ElementRepository.getAllElements()
+            .filter(element => element.value.isDone()))
     }
 
-    #getViewElementsByHtml() {
-        return ElementRepository.getAllElements()
-            .filter(element => !element.value.isDone())
-            .map(element => this.#toHtml(element.index, element.value))
-            .join("")
+    #getViewElementsByDom() {
+        return this.#toDomAndAddEvent(ElementRepository.getAllElements()
+            .filter(element => !element.value.isDone()))
     }
 
-    #getAllElementsByHtml() {
-        return ElementRepository.getAllElements()
-            .map(element => this.#toHtml(element.index, element.value))
-            .join("")
+    #getAllElementsByDom() {
+        return this.#toDomAndAddEvent(ElementRepository.getAllElements())
+
     }
 
-    #toHtml(index, element) {
-        return `
-        <li id="${index}">
-            <div class="${element.getState()}">
+    #toDomAndAddEvent(elements) {
+        let doms = elements.map(element => this.#toDom(element.index, element.value))
+        doms.forEach(
+            dom => {
+                let checkbox = dom.querySelector("input[type=checkbox]")
+
+                checkbox.addEventListener('change', () => {
+                    if(checkbox.checked) {
+                        console.log('tets')
+                        dom.classList.add('completed')
+                    } else {
+                        console.log("wesdf")
+                        dom.classList.remove('completed')
+                    }
+                })
+            }
+        )
+
+        return doms
+    }
+
+    #toDom(index, element) {
+        let html = `
+        <li id="${index}" class="${element.getState()}">
+            <div class="view">
                 <input class="toggle" type="checkbox"/>
                 <label class="label">${element.getText()}</label>
                 <button class="destroy"></button>
             </div>
             <input class="edit" value="${element.getText()}" />
         </li>`
+
+        let dom = new DOMParser().parseFromString(html, "text/html")
+        return dom.getRootNode().body.querySelector("li")
     }
 
     #clearInput() {
-        document.getElementById("new-todo-title").value=""
+        document.getElementById("new-todo-title").value = ""
     }
 }
 

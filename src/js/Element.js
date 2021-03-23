@@ -24,11 +24,10 @@ export class Element {
     }
 
     getState() {
-        if(this.isDone()) {
-            return "#complete"
+        if (this.isDone()) {
+            return "completed"
         }
 
-        return "#active"
+        return "view"
     }
-
 }
