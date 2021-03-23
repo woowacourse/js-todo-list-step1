@@ -9,6 +9,9 @@ document.addEventListener('keypress', function (e) {
 function addTodo(input) {
     const todoTag = document.createElement('li');
     todoTag.classList.add(false);
+    todoTag.ondblclick = function () {
+        todoTag.classList.add("editing");
+    };
     todoTag.innerHTML =
         ` <div class="view">
                 <input class="toggle" type="checkbox" onclick="clicked(this);"/>
@@ -17,6 +20,7 @@ function addTodo(input) {
                </div>
                <input class="edit" value="${input}"/>`;
     document.getElementById("todo-list").appendChild(todoTag);
+
 }
 
 function clicked(self){
