@@ -34,3 +34,7 @@ Todos.prototype.changeTodoItemById = function(id, newTodoItem) {
 Todos.prototype.undoToEditById = function(id) {
     this.todos.filter(todo => todo.id === id).forEach(todo => todo.undoToEdit());
 }
+
+Todos.prototype.count = function() {
+    return this.todos.length;
+}

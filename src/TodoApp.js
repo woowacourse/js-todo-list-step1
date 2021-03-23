@@ -4,12 +4,14 @@ import Todo from './Todo.js';
 const app = function Contoller() {
     const newTodoTitle = document.querySelector('#new-todo-title');
     const todoList = document.querySelector('#todo-list');
+    const todoCount = document.querySelector('.todo-count');
 
     const todos = new Todos();
 
     const updateTodoList = () => {
         console.log(3);
         todoList.innerHTML = todos.html();
+        todoCount.innerHTML = "총 <strong>" + todos.count() + "</strong> 개";
     }
 
     const addTodoItem = ({target, key}) => {
