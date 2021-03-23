@@ -27,4 +27,7 @@ export class ElementRepository {
         element[0].value.changeText(text)
     }
 
+    static getCount() {
+        return ElementRepository.#elements.length
+    }
 }

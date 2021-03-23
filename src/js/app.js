@@ -36,14 +36,22 @@ class App {
                 this.#editingElement.classList.remove('editing')
                 this.#editingElement.classList.add('view')
                 this.#drawElementByHash()
+                this.#printCount()
+                this.#editingElement = undefined
             } else if (e.code === "Enter") {
                 this.#addElement()
                 // this.#addCheckboxListener()
                 this.#clearInput()
                 this.#drawElementByHash()
+                this.#printCount()
             }
 
         })
+    }
+
+    #printCount() {
+        document.querySelector("span[class=todo-count]").innerHTML =
+            `총 <string>${ElementRepository.getCount()}</string> 개`
     }
 
     #addElement() {
