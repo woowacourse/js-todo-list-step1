@@ -23,11 +23,20 @@ export class ElementRepository {
 
     static changeText(id, text) {
         let element = ElementRepository.#elements.filter(element => element.id === Number(id))
-        console.log(element[0])
         element[0].value.changeText(text)
     }
 
     static getCount() {
         return ElementRepository.#elements.length
+    }
+
+    static setDone(id) {
+        let element = ElementRepository.#elements.filter(element => element.id === Number(id))
+        element[0].value.setDone()
+    }
+
+    static setUnDone(id) {
+        let element = ElementRepository.#elements.filter(element => element.id === Number(id))
+        element[0].value.setUnDone()
     }
 }

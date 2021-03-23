@@ -156,18 +156,19 @@ class App {
         remove.addEventListener('click', () => {
             ElementRepository.removeElementById(id)
             document.getElementById(id).remove()
+            this.#printCount()
         })
     }
 
     #addCheckboxEvent(dom) {
         let checkbox = dom.querySelector("input[type=checkbox]")
-
+        let id = dom.getAttribute("id")
         checkbox.addEventListener('change', () => {
             if (checkbox.checked) {
-                console.log('tets')
+                ElementRepository.setDone(id)
                 dom.classList.add('completed')
             } else {
-                console.log("wesdf")
+                ElementRepository.setUnDone(id)
                 dom.classList.remove('completed')
             }
         })
