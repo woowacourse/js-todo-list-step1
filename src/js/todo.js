@@ -5,7 +5,51 @@ document.addEventListener('keypress', function (e) {
     }
 })
 
+addEventListenerShowCompleted();
+addEventListenerShowActive();
+addEventListenerShowAll();
 
+function addEventListenerShowAll() {
+    document.querySelector("a[href='#']").addEventListener('click', function () {
+        let todos = document.querySelector(".todo-list").querySelectorAll("li");
+        for (let i = 0; i < todos.length; i++) {
+            if (todos[i].classList.contains("completed")) {
+                todos[i].style.display = null;
+            }
+            if (todos[i].classList.contains("false")) {
+                todos[i].style.display = null;
+            }
+        }
+    })
+}
+
+function addEventListenerShowActive() {
+    document.querySelector("a[href='#active']").addEventListener('click', function () {
+        let todos = document.querySelector(".todo-list").querySelectorAll("li");
+        for (let i = 0; i < todos.length; i++) {
+            if (todos[i].classList.contains("completed")) {
+                todos[i].style.display = "none";
+            }
+            if (todos[i].classList.contains("false")) {
+                todos[i].style.display = null;
+            }
+        }
+    })
+}
+
+function addEventListenerShowCompleted() {
+    document.querySelector("a[href='#completed']").addEventListener('click', function () {
+        let todos = document.querySelector(".todo-list").querySelectorAll("li");
+        for (let i = 0; i < todos.length; i++) {
+            if (todos[i].classList.contains("false")) {
+                todos[i].style.display = "none";
+            }
+            if (todos[i].classList.contains("completed")) {
+                todos[i].style.display = null;
+            }
+        }
+    })
+}
 
 function addTodo(input) {
     const todoTag = document.createElement('li');
@@ -18,7 +62,6 @@ function addTodo(input) {
                </div>
                <input class="edit" value="${input}"/>`;
     document.getElementById("todo-list").appendChild(todoTag);
-
     updateCount();
 }
 
