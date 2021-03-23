@@ -18,3 +18,7 @@ Todos.prototype.html = function() {
 Todos.prototype.checkById = function(id) {
     this.todos.filter(todo => todo.id === id).forEach(todo => todo.check())
 }
+
+Todos.prototype.removeById = function(id) {
+    this.todos = this.todos.filter(todo => todo.id !== id)
+}

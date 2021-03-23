@@ -5,9 +5,9 @@ export default function Todo(title) {
 }
 
 const todoTemplate = (todo) => {
-    return `<li ${todo.isChecked ? `class = "completed"` : ``}>
+    return `<li id=${todo.id} ${todo.isChecked ? `class = "completed"` : ``}>
         <div class="view">
-            <input id=${todo.id} class="toggle" type="checkbox" ${todo.isChecked ? `checked` : ``}/>
+            <input class="toggle" type="checkbox" ${todo.isChecked ? `checked` : ``}/>
             <label class="label">${todo.title}</label>
             <button class="destroy"></button>
         </div>

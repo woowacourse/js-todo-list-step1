@@ -22,14 +22,21 @@ const app = function Contoller() {
 
     const checkTodoItem = (event) => {
         if (event.target && event.target.nodeName == "INPUT") {
-            todos.checkById(event.target.getAttribute("id"));
+            todos.checkById(event.target.closest("li").getAttribute("id"));
+            updateTodoList();
+        }
+    };
+
+    const removeTodoItem = (event) => {
+        if (event.target && event.target.nodeName == "BUTTON") {
+            todos.removeById(event.target.closest("li").getAttribute("id"));
             updateTodoList();
         }
     };
 
     newTodoTitle.addEventListener('keyup', addTodoItem);
-
-    todoList.addEventListener('mouseup', checkTodoItem)
+    todoList.addEventListener('mouseup', checkTodoItem);
+    todoList.addEventListener('mouseup', removeTodoItem);
 }
 
 window.onload = () => {
