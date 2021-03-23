@@ -14,7 +14,7 @@ export class ElementRepository {
 
     static removeElementByIndex(index) {
         ElementRepository.#elements = ElementRepository.#elements
-            .filter(element => element.getIndex() !== index)
+            .filter(element => element.index !== Number(index))
     }
 
     static getAllElements() {

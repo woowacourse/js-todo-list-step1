@@ -90,21 +90,36 @@ class App {
         let doms = elements.map(element => this.#toDom(element.index, element.value))
         doms.forEach(
             dom => {
-                let checkbox = dom.querySelector("input[type=checkbox]")
-
-                checkbox.addEventListener('change', () => {
-                    if(checkbox.checked) {
-                        console.log('tets')
-                        dom.classList.add('completed')
-                    } else {
-                        console.log("wesdf")
-                        dom.classList.remove('completed')
-                    }
-                })
+                this.#addCheckboxEvent(dom)
+                this.#addRemoveEvent(dom)
             }
         )
 
         return doms
+    }
+
+    #addRemoveEvent(dom) {
+        let id = dom.getAttribute("id")
+        let remove = dom.querySelector("button[class=destroy]")
+        console.log(id)
+        remove.addEventListener('click', () => {
+            ElementRepository.removeElementByIndex(id)
+            document.getElementById(id).remove()
+        })
+    }
+
+    #addCheckboxEvent(dom) {
+        let checkbox = dom.querySelector("input[type=checkbox]")
+
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                console.log('tets')
+                dom.classList.add('completed')
+            } else {
+                console.log("wesdf")
+                dom.classList.remove('completed')
+            }
+        })
     }
 
     #toDom(index, element) {
