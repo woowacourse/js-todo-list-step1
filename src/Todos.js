@@ -14,3 +14,7 @@ Todos.prototype.html = function() {
     );
     return result;
 }
+
+Todos.prototype.checkById = function(id) {
+    this.todos.filter(todo => todo.id === id).forEach(todo => todo.check())
+}

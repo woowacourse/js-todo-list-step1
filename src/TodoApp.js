@@ -7,6 +7,10 @@ const app = function Contoller() {
 
     const todos = new Todos();
 
+    const updateTodoList = () => {
+        todoList.innerHTML = todos.html();
+    }
+
     const addTodoItem = ({target, key}) => {
         if (key === "Enter" && target.value) {
             const todo = new Todo(target.value);
@@ -16,11 +20,16 @@ const app = function Contoller() {
         }
     }
 
-    const updateTodoList = () => {
-        todoList.innerHTML = todos.html();
+    const checkTodoItem = (event) => {
+        if (event.target && event.target.nodeName == "INPUT") {
+            todos.checkById(event.target.getAttribute("id"));
+            updateTodoList();
+        }
     };
 
     newTodoTitle.addEventListener('keyup', addTodoItem);
+
+    todoList.addEventListener('mouseup', checkTodoItem)
 }
 
 window.onload = () => {
