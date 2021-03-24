@@ -1,9 +1,12 @@
 let inputText = document.getElementById('new-todo-title');
 const todoList = document.getElementById('todo-list');
+let counterDisplayElem = document.querySelector('.todo-count');
+let count = 0;
+
 
 inputText.addEventListener("keydown", addTodo);
 
-function addNewItem(list, itemText){
+function addNewItem(list, itemText) {
     list.appendChild(createHtml(itemText));
 }
 
@@ -31,6 +34,10 @@ function createHtml(itemText) {
     let destroyElem = kanban.querySelector('.destroy');
     destroyElem.addEventListener('click', () => {
         todoList.removeChild(kanban);
+        count--;
+
+
+        updateCountDisplay();
     })
 
     kanban.addEventListener("dblclick", () => {
@@ -55,5 +62,11 @@ function addTodo(e) {
         let itemText = inputText.value;
         addNewItem(todoList, itemText);
         inputText.value = '';
+        count++;
+        updateCountDisplay();
     }
+}
+
+function updateCountDisplay() {
+    counterDisplayElem.innerHTML = `총 <strong>${count}</strong> 개`;
 }
