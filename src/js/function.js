@@ -51,11 +51,11 @@ function createTempliate(dataObject) {
 function createList(listClassName) {
     const newList = document.createElement("li");
     newList.className = listClassName;
-    newList.ondblclick = (event) => {
+    newList.addEventListener("dblclick", (event) => {
         const parentList = event.target.parentNode.parentNode
         parentList.className += " editing";
         parentList.children[1].display = "block";
-    }
+    });
     return newList;
 }
 
@@ -70,7 +70,7 @@ function createCheckbox(isChecked) {
     newCheckbox.type = "checkbox";
     newCheckbox.className = "toggle";
     newCheckbox.checked = isChecked;
-    newCheckbox.onclick = (event) => {
+    newCheckbox.addEventListener("click", (event) => {
         const parentList = event.target.parentNode.parentNode;
         if (parentList.className === "false") {
             parentList.className = "completed";
@@ -78,7 +78,7 @@ function createCheckbox(isChecked) {
             parentList.className = "false";
         }
         countChange(getUrlType());
-    }
+    });
     return newCheckbox;
 }
 
@@ -109,19 +109,15 @@ function createHideInput(inputData) {
     hideInput.className = "edit";
     hideInput.value = inputData;
     hideInput.display = "none";
-    hideInput.onkeydown = (event) => {
-        console.log(event.key);
-        if (event.key === ESC) {
+    hideInput.addEventListener("keydown", (event) => {
+        if (event.key === ESC || event.key === ENTER) {
+            if (event.key === ENTER) {
+                event.target.previousSibling.children[1].textContent = event.target.value;
+            }
             event.target.display = "none";
             event.target.parentNode.className = event.target.parentNode.className.split(" ")[0];
-            return;
         } 
-        if (event.key === ENTER) {
-            event.target.previousSibling.children[1].textContent = event.target.value;
-            event.target.display = "none";
-            event.target.parentNode.className = event.target.parentNode.className.split(" ")[0];
-        }
-    }
+    });
     return hideInput;
 }
 
@@ -133,8 +129,9 @@ function countChange(urlType) {
         countClass("false");
     }
     else if (urlType === "#completed") {
-        countClass("completed")
+        countClass("completed");
     }
+    chagneDisplay(urlType);
 }
 
 function countAll() {
@@ -158,12 +155,25 @@ function changeSelect(event) {
 
     event.target.className = "selected";
     if (event.target === ALL_VIEW) {
-        countAll();
+        countChange("#");
     } else if (event.target === ACTIVE_VIEW) {
-        countClass("false");
+        countChange("#active");
     } else if (event.target === COMPLETED_VIEW) {
-        countClass("completed");
+        countChange("#completed");
     }
+}
+
+function chagneDisplay(urlType) {
+    for (const item of TODO.children) {
+        if (urlType === "#"
+        || (urlType === "#active" && item.className === "false")
+        || (urlType === "#completed" && item.className === "completed")) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+    }
+    
 }
 
 function getUrlType() {
