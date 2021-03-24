@@ -83,7 +83,10 @@ function showAllList() {
     filters[0].addEventListener('click', function() {
         let todoList = document.getElementById('todo-list').querySelectorAll('li');
         let todos = document.querySelector('.todo-count');
-        let count = 0;
+
+        filters[0].querySelector('.all').classList.add('selected');
+        filters[1].querySelector('.active').classList.remove('selected');
+        filters[2].querySelector('.completed').classList.remove('selected');
 
         for (let i = 0; i < todoList.length; i++) {
             if (todoList[i].classList.contains('false')) {
@@ -104,6 +107,10 @@ function showTodoList() {
         let todos = document.querySelector('.todo-count');
         let count = 0;
 
+        filters[0].querySelector('.all').classList.remove('selected');
+        filters[1].querySelector('.active').classList.add('selected');
+        filters[2].querySelector('.completed').classList.remove('selected');
+
         for (let i = 0; i < todoList.length; i++) {
             if (todoList[i].classList.contains('false')) {
                 todoList[i].style.display = 'block';
@@ -123,6 +130,10 @@ function showDoneList() {
         let todoList = document.getElementById('todo-list').querySelectorAll('li');
         let todos = document.querySelector('.todo-count');
         let count = 0;
+
+        filters[0].querySelector('.all').classList.remove('selected');
+        filters[1].querySelector('.active').classList.remove('selected');
+        filters[2].querySelector('.completed').classList.add('selected');
 
         for (let i = 0; i < todoList.length; i++) {
             if (todoList[i].classList.contains('false')) {
