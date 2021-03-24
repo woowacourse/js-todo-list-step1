@@ -8,9 +8,12 @@ const ENTER = "Enter";
 const ESC = "Escape";
 
 
-// window.onload = () => {
-
-// }
+window.onload = () => {
+    TODO_INPUT.addEventListener("keydown", addItem);
+    ALL_VIEW.addEventListener("click", changeSelect);
+    ACTIVE_VIEW.addEventListener("click", changeSelect);
+    COMPLETED_VIEW.addEventListener("click", changeSelect);
+}
 
 
 function addItem(event) {
