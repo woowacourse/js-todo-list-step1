@@ -39,9 +39,11 @@ function enter(input_new_todo_list) {
     input_toggle.onclick = function checked() {
       if (input_toggle.checked) {
         li.setAttribute('class', 'completed');
+        input_toggle.setAttribute('checked', '');
         showTodoListsOfSelectedStatus(currentSelectedATagToShowStrategy);
         return;
       }
+      input_toggle.removeAttribute('checked');
       li.classList.remove('completed');
       showTodoListsOfSelectedStatus(currentSelectedATagToShowStrategy);
     }
