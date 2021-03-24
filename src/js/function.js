@@ -8,25 +8,34 @@ const ENTER = "Enter";
 const ESC = "Escape";
 
 
+// window.onload = () => {
+
+// }
+
+
 function addItem(event) {
     if (event.key === ENTER && TODO_INPUT.value.trim() !== "") {
-        const inputData = TODO_INPUT.value.trim();
-        TODO_INPUT.value = "";
 
-        createTempliate(inputData)
+        const dataObject = {
+            value: TODO_INPUT.value.trim(), 
+            listClassName: "false",
+            isChecked: false,
+        }
+
+        createTempliate(dataObject)
 
         TODO_INPUT.value = "";
         countChange(getUrlType());
     }
 }
 
-function createTempliate(inputData) {
-    const newList = createList();
+function createTempliate(dataObject) {
+    const newList = createList(dataObject.listClassName);
     const newDiv = createDiv();
-    const newCheckbox = createCheckbox();
-    const newLabel = createLabel(inputData);
+    const newCheckbox = createCheckbox(dataObject.isChecked);
+    const newLabel = createLabel(dataObject.value);
     const newButton = createButton();
-    const hideInput = createHideInput(inputData);
+    const hideInput = createHideInput(dataObject.value);
     
     newDiv.appendChild(newCheckbox);
     newDiv.appendChild(newLabel);
@@ -36,9 +45,9 @@ function createTempliate(inputData) {
     TODO.appendChild(newList);
 }
 
-function createList() {
+function createList(listClassName) {
     const newList = document.createElement("li");
-    newList.className = "false";
+    newList.className = listClassName;
     newList.ondblclick = (event) => {
         const parentList = event.target.parentNode.parentNode
         parentList.className += " editing";
@@ -53,10 +62,11 @@ function createDiv() {
     return newDiv;
 }
 
-function createCheckbox() {
+function createCheckbox(isChecked) {
     const newCheckbox = document.createElement("input");
     newCheckbox.type = "checkbox";
     newCheckbox.className = "toggle";
+    newCheckbox.checked = isChecked;
     newCheckbox.onclick = (event) => {
         const parentList = event.target.parentNode.parentNode;
         if (parentList.className === "false") {
