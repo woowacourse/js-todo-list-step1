@@ -1,6 +1,4 @@
-document.getElementById('new-todo-title').addEventListener('keydown', e=> {
-    addTodoItem(e)
-});
+document.getElementById('new-todo-title').addEventListener('keydown', addTodoItem);
 
 function addTodoItem(e) {
     console.log(e.keyCode);
@@ -12,11 +10,12 @@ function addTodoItem(e) {
     console.log(todoTitle);
 
     const li = document.createElement('li');
-    li.setAttribute('class', 'todo-item')
+    li.setAttribute('class', 'editing')
 
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.setAttribute('class', 'toggle');
+    input.addEventListener('click', toggleTodoItem)
 
     const title = document.createElement('label');
     title.setAttribute('class', 'label');
@@ -31,4 +30,14 @@ function addTodoItem(e) {
 
     todoList.appendChild(li);
 
+}
+
+function toggleTodoItem(e) {
+    let todoItem = e.target.parentElement;
+    if (e.target.checked) {
+        todoItem.className = 'completed';
+        return
+    }
+
+    todoItem.className = 'editing';
 }
