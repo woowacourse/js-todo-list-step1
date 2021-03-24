@@ -40,7 +40,7 @@ function toggleTodoItem(e) {
         return
     }
 
-    todoItem.className = 'editing';
+    todoItem.removeAttribute('class');
 }
 
 function deleteTodoItem(e) {
