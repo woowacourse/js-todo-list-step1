@@ -1,7 +1,11 @@
 import Todos from './Todos.js';
 import Todo from './Todo.js';
+import {allFilters, Filter} from './Filter.js';
 
 const app = function Contoller() {
+
+    const todos = new Todos();
+    const currnetFilter = new Filter();
 
     const todoTemplate = (todo) => {
         return `<li id=${todo.id} class ="${todo.isChecked ? `completed` : ``} ${todo.isEditing ? `editing` : ``}">
@@ -14,14 +18,19 @@ const app = function Contoller() {
         </li>`;
     };
 
+    const filterTemplate = (filter) => {
+        console.log(currnetFilter);
+        return `<li>
+            <a id=${filter} href="#${filter}" ${currnetFilter.name === filter ? `class = selected` : ``}> ${allFilters[filter]} </a>
+        </li>`
+    }
+
     const newTodoTitle = document.querySelector('#new-todo-title');
     const todoList = document.querySelector('#todo-list');
     const todoCount = document.querySelector('.todo-count');
     const filters = document.querySelector('.filters');
 
     let filter = "all";
-
-    const todos = new Todos();
 
     const newTodoList = (todoItems) => {
         var result = "";
@@ -36,9 +45,9 @@ const app = function Contoller() {
     const updateTodoList = () => {
     
         let filteredTodoItems;
-        if (filter === "active") {
+        if (currnetFilter.name === "active") {
             filteredTodoItems = todos.activeTodos();
-        } else if (filter === "completed") {
+        } else if (currnetFilter.name === "completed") {
             filteredTodoItems = todos.completedTodos();
         } else {
             filteredTodoItems = todos.allTodos();
@@ -46,7 +55,21 @@ const app = function Contoller() {
 
         todoList.innerHTML = newTodoList(filteredTodoItems);
         todoCount.innerHTML = "총 <strong>" + filteredTodoItems.length + "</strong> 개";
-    }
+    };
+
+    const newFilters = () => {
+        var result = "";
+
+        console.log(allFilters)
+        Object.keys(allFilters).forEach(filter =>
+            result += filterTemplate(filter)
+        );
+        return result;
+    };
+
+    const updateFilters = () => {
+        filters.innerHTML = newFilters();
+    };
 
     const addTodoItem = ({target, key}) => {
         if (key === "Enter" && target.value) {
@@ -79,23 +102,20 @@ const app = function Contoller() {
     }
 
     const editTodoItem = ({target, key}) => {
-        if (target.value) {
-            if (key === "Enter") {
-                todos.changeTodoItemById(target.closest("li").getAttribute("id"), target.value);
-                updateTodoList();
-            }
-            if (key === "Escape") {
-                todos.undoToEditById(target.closest("li").getAttribute("id"));
-                updateTodoList();
-            }
+        if (target.value && key === "Enter") {
+            todos.changeTodoItemById(target.closest("li").getAttribute("id"), target.value);
+            updateTodoList();
+        }
+        if (key === "Escape") {
+            todos.undoToEditById(target.closest("li").getAttribute("id"));
+            updateTodoList();
         }
     }
 
     const filterTodoItems = (event) => {
         if (event.target && event.target.tagName === "A") {
-            filter = event.target.getAttribute("class");
-            event.target.closest('ul').querySelectorAll('a').forEach(target => target.classList.remove('selected'));
-            event.target.classList.add('selected');
+            currnetFilter.chageFilter(event.target.getAttribute("id"));
+            updateFilters();
             updateTodoList();
         }
     }

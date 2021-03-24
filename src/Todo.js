@@ -15,7 +15,7 @@ Todo.prototype.edit = function() {
 
 Todo.prototype.changeTodoItem = function(title) {
     this.title = title;
-    this.isEditing = false;
+    this.undoToEdit();
 }
 
 Todo.prototype.undoToEdit = function() {

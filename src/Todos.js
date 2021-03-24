@@ -2,32 +2,32 @@ export default function Todos() {
     this.todos = [];
 }
 
+Todos.prototype.filterById = function(id) {
+    return this.todos.filter(todo => todo.id === id);
+}
+
 Todos.prototype.push = function(todo) {
     this.todos.push(todo);
 }
 
 Todos.prototype.checkById = function(id) {
-    this.todos.filter(todo => todo.id === id).forEach(todo => todo.check());
+    this.filterById(id).forEach(todo => todo.check());
+}
+
+Todos.prototype.editById = function(id) {
+    this.filterById(id).forEach(todo => todo.edit());
+}
+
+Todos.prototype.changeTodoItemById = function(id, newTodoItem) {
+    this.filterById(id).forEach(todo => todo.changeTodoItem(newTodoItem));
+}
+
+Todos.prototype.undoToEditById = function(id) {
+    this.filterById(id).forEach(todo => todo.undoToEdit());
 }
 
 Todos.prototype.removeById = function(id) {
     this.todos = this.todos.filter(todo => todo.id !== id);
-}
-
-Todos.prototype.editById = function(id) {
-    this.todos.filter(todo => todo.id === id).forEach(todo => todo.edit());
-}
-
-Todos.prototype.changeTodoItemById = function(id, newTodoItem) {
-    this.todos.filter(todo => todo.id === id).forEach(todo => todo.changeTodoItem(newTodoItem));
-}
-
-Todos.prototype.undoToEditById = function(id) {
-    this.todos.filter(todo => todo.id === id).forEach(todo => todo.undoToEdit());
-}
-
-Todos.prototype.count = function() {
-    return this.todos.length;
 }
 
 Todos.prototype.allTodos = function() {
