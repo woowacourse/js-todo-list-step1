@@ -2,6 +2,9 @@ window.onload = function() {
     const newTodo = document.getElementById("new-todo-title");
     const todoList = document.getElementById("todo-list");
     const listCount = document.getElementsByClassName("todo-count")[0].childNodes[1];
+    const all = document.getElementsByClassName("all")[0];
+    const active = document.getElementsByClassName("active")[0];
+    const completed = document.getElementsByClassName("completed")[0];
 
     newTodo.addEventListener("keydown",inputTodo);
     function inputTodo(e) {
@@ -21,7 +24,60 @@ window.onload = function() {
             listCount.innerHTML = parseInt(listCount.innerHTML) + 1;
         }
     }
+
+    all.addEventListener("click", filterAll);
+    function filterAll() {
+        active.classList.remove("selected");
+        completed.classList.remove("selected");
+        this.classList.add("selected");
+
+        let index = 0;
+        const todoListLI = todoList.getElementsByTagName("li");
+        for (index; index < todoListLI.length; index++) {
+            todoListLI[index].style.display = "block"
+        }
+        setCount(index);
+    }
+
+    active.addEventListener("click", filterActive);
+    function filterActive(){
+        all.classList.remove("selected");
+        completed.classList.remove("selected");
+        this.classList.add("selected");
+        const todoListLI = todoList.getElementsByTagName("li");
+        let index = 0;
+        for (let i = 0; i < todoListLI.length; i++) {
+            if(todoListLI[i].className == "todo") {
+                todoListLI[i].style.display = "block"
+                index++;
+            }
+            else {
+                todoListLI[i].style.display = "none"
+            }
+        }
+        setCount(index);
+    }
+
+    completed.addEventListener("click", filterCompleted);
+    function filterCompleted(){
+        all.classList.remove("selected");
+        active.classList.remove("selected");
+        const todoListLI = todoList.getElementsByTagName("li");
+
+        let index = 0;
+        for (let i = 0; i < todoListLI.length; i++) {
+            if(todoListLI[i].className == "completed") {
+                todoListLI[i].style.display = "block"
+                index++;
+            }
+            else {
+                todoListLI[i].style.display = "none"
+            }
+        }
+        setCount(index);
+    }
 }
+
 function changeMode(e){
     const originalValue = this.getElementsByTagName("label")[0].innerHTML;
     const editedValue = this.getElementsByTagName("input")[1].value;
@@ -54,3 +110,9 @@ function editTodo(editInput) {
     const editInputParent = editInput.parentNode;
     editInputParent.classList.add('editing');
 }
+
+function setCount(index) {
+    const listCount = document.getElementsByClassName("todo-count")[0].childNodes[1];
+    listCount.innerHTML = index;
+}
+
