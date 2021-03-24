@@ -30,12 +30,16 @@ function addTodoItem(e) {
     const editInput = document.createElement('input')
     editInput.setAttribute('class', 'edit');
     editInput.setAttribute('value', todoTitle);
+
     div.appendChild(input);
     div.appendChild(title);
     div.appendChild(button);
+
     li.appendChild(div);
     li.appendChild(editInput);
+
     todoList.appendChild(li);
+    countMoveItem();
 }
 
 function toggleTodoItem(e) {
@@ -53,6 +57,7 @@ function deleteTodoItem(e) {
     let todoList = document.getElementById('todo-list');
     let todoItem = e.target.parentElement.parentElement;
     todoList.removeChild(todoItem);
+    countMoveItem();
 }
 
 function changeInputMode(e) {
@@ -78,4 +83,13 @@ function finishEditMode(e) {
          todoItem.removeAttribute('class');
          todoItem.addEventListener('dblclick', changeInputMode);
      }
+}
+
+function countMoveItem() {
+    const countContainer = document.getElementsByClassName('count-container')[0];
+    const todoList = document.getElementById('todo-list');
+
+    const todoCount = countContainer.getElementsByClassName('todo-count')[0];
+    console.log(todoCount);
+    todoCount.innerHTML = '총 <strong>' + todoList.childElementCount + '</strong> 개';
 }
