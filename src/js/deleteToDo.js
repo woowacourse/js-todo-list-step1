@@ -9,4 +9,6 @@ const deleteToDos = () => {
 
 const clickXMark = (event) => {
     event.currentTarget.parentNode.parentNode.remove();
+
+    countDo();
 }

@@ -8,6 +8,7 @@ const enterToDoItem = () => {
         checkToDos();
         deleteToDos();
         editToDos();
+        countDo();
     }
 }
 
