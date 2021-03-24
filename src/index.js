@@ -102,14 +102,30 @@ function countMoveItem() {
 function changeFilter(filter) {
     let todoList = document.getElementById('todo-list');
     const liList = todoList.getElementsByTagName('li');
-    
+
+
     for (let i = 0; i < liList.length; i++) {
         let moveItem = liList[i];
         moveItem.style.display = 'block';
     }
 
     if (filter === '') {
+        document.getElementsByClassName('all')[0].classList.add('selected');
+        document.getElementsByClassName('completed')[0].classList.remove('selected');
+        document.getElementsByClassName('active')[0].classList.remove('selected');
         return;
+    }
+
+    if (filter === 'active') {
+        document.getElementsByClassName('all')[0].classList.remove('selected');
+        document.getElementsByClassName('completed')[0].classList.remove('selected');
+        document.getElementsByClassName('active')[0].classList.add('selected');
+    }
+
+    if (filter == 'completed') {
+        document.getElementsByClassName('all')[0].classList.remove('selected');
+        document.getElementsByClassName('active')[0].classList.remove('selected');
+        document.getElementsByClassName('completed')[0].classList.add('selected');
     }
 
     for (let i = 0; i < liList.length; i++) {
