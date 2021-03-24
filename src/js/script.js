@@ -25,17 +25,17 @@ function addList(input) {
 
 function clickCheckBox(event) {
     const classList = event.target.parentNode.parentElement.classList;
-    if (!classList.contains("false") && !classList.contains("completed")){
-        classList.add("false");
+    if (!classList.contains("active") && !classList.contains("completed")){
+        classList.add("active");
     }
-    if (classList.contains("false")) {
+    if (classList.contains("active")) {
         event.target.setAttribute("checked", "");
-        classList.replace("false", "completed");
+        classList.replace("active", "completed");
         return;
     }
     if (classList.contains("completed")) {
         event.target.removeAttribute("checked");
-        classList.replace("completed", "false");
+        classList.replace("completed", "active");
         return;
     }
 }
@@ -59,5 +59,35 @@ function edit(event) {
 
 function updateCount() {
     const count = document.querySelectorAll('.todoapp .todo-list li').length;
-    const countString = document.getElementById('todo-count-text').innerHTML = count;
+    document.getElementById('todo-count-text').innerHTML = count;
+}
+
+function allList() {
+    const todoItems = document.querySelectorAll('.todoapp .todo-list li');
+    todoItems.forEach(element => {
+        element.style.display = "block";
+    })
+}
+
+function onlyToDo() {
+    const todoItems = document.querySelectorAll('.todoapp .todo-list li');
+    todoItems.forEach(element => {
+        if (element.classList.contains("completed")) {
+            element.style.display = "none";
+        } else {
+            element.style.display = "block";
+        }
+    })
+}
+
+function completed() {
+    const todoItems = document.querySelectorAll('.todoapp .todo-list li');
+    todoItems.forEach(element => {
+        
+        if (element.classList.contains("active")) {
+            element.style.display = "none";
+        } else {
+            element.style.display = "block";
+        }
+    })
 }
