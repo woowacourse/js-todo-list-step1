@@ -11,7 +11,7 @@ function enterTodoItem() {
             `<div class="view">
                 <input class="toggle" type="checkbox" onclick="clickCheckbox(this)"/>
                 <label class="label">${inputTodoItem()}</label>
-                <button class="destroy"></button>
+                <button class="destroy" onclick="deleteTodoItem(this)"></button>
             </div>
             <input class="edit" value="${inputTodoItem()}" />`
 
@@ -37,4 +37,11 @@ function clickCheckbox(self) {
         self.removeAttribute('checked');
         li.classList.replace('completed', 'false');
     }
+}
+
+function deleteTodoItem(self) {
+    let li = self.parentNode.parentNode;
+    let ul = li.parentNode;
+
+    ul.removeChild(li);
 }
