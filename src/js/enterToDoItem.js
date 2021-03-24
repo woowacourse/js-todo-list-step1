@@ -5,6 +5,7 @@ function enterToDoItem() {
         const toDoContent = document.getElementById("new-todo-title").value;
         const singleToDo = foamToDoSingle(toDoContent);
         toDoParent.appendChild(singleToDo);
+        checkToDos();
     }
 }
 
@@ -20,12 +21,14 @@ function foamLabel(newTitle) {
     const elementLabel = document.createElement("label");
     elementLabel.setAttribute("class", "label");
     elementLabel.innerHTML = newTitle;
+
     return elementLabel;
 }
 
 function foamButton() {
     const elementButton = document.createElement("button");
     elementButton.setAttribute("class", "destroy");
+
     return elementButton;
 }
 
@@ -50,8 +53,8 @@ function foamInputEdit(newTitle) {
 
 function foamToDoSingle(newTitle) {
     const elementToDoSingle = document.createElement("li");
-    elementToDoSingle.appendChild(foamViewDiv(newTitle, content));
-    elementToDoSingle.appendChild(foamInputEdit(newTitle, content));
+    elementToDoSingle.appendChild(foamViewDiv(newTitle));
+    elementToDoSingle.appendChild(foamInputEdit(newTitle));
 
     return elementToDoSingle;
 }
