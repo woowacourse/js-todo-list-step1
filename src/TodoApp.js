@@ -14,12 +14,11 @@ const app = function Contoller() {
                 <label class="label">${todo.title}</label>
                 <button class="destroy"></button>
             </div>
-            <input class="edit" value="${todo.title}" />
+            <input class="edit" value="${todo.title}"}/>
         </li>`;
     };
 
     const filterTemplate = (filter) => {
-        console.log(currnetFilter);
         return `<li>
             <a id=${filter} href="#${filter}" ${currnetFilter.name === filter ? `class = selected` : ``}> ${allFilters[filter]} </a>
         </li>`
@@ -29,8 +28,6 @@ const app = function Contoller() {
     const todoList = document.querySelector('#todo-list');
     const todoCount = document.querySelector('.todo-count');
     const filters = document.querySelector('.filters');
-
-    let filter = "all";
 
     const newTodoList = (todoItems) => {
         var result = "";
@@ -43,8 +40,8 @@ const app = function Contoller() {
     };
 
     const updateTodoList = () => {
-    
         let filteredTodoItems;
+        
         if (currnetFilter.name === "active") {
             filteredTodoItems = todos.activeTodos();
         } else if (currnetFilter.name === "completed") {
@@ -60,7 +57,6 @@ const app = function Contoller() {
     const newFilters = () => {
         var result = "";
 
-        console.log(allFilters)
         Object.keys(allFilters).forEach(filter =>
             result += filterTemplate(filter)
         );
