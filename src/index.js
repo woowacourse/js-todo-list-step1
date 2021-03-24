@@ -1,3 +1,8 @@
+window.addEventListener('hashchange', function () {
+    const filter = location.href.split("#")[1]
+    changeFilter(filter);
+});
+
 document.getElementById('new-todo-title').addEventListener('keydown', addTodoItem);
 
 function addTodoItem(e) {
@@ -92,4 +97,33 @@ function countMoveItem() {
     const todoCount = countContainer.getElementsByClassName('todo-count')[0];
     console.log(todoCount);
     todoCount.innerHTML = '총 <strong>' + todoList.childElementCount + '</strong> 개';
+}
+
+function changeFilter(filter) {
+    let todoList = document.getElementById('todo-list');
+    const liList = todoList.getElementsByTagName('li');
+    
+    for (let i = 0; i < liList.length; i++) {
+        let moveItem = liList[i];
+        moveItem.style.display = 'block';
+    }
+
+    if (filter === '') {
+        return;
+    }
+
+    for (let i = 0; i < liList.length; i++) {
+        let moveItem = liList[i];
+        if (filter === 'active') {
+            if (moveItem.className === 'completed') {
+                moveItem.style.display = 'none';
+            }
+        }
+
+        if (filter === 'completed') {
+            if (moveItem.className !== 'completed') {
+                moveItem.style.display = 'none';
+            }
+        }
+    }
 }
