@@ -2,8 +2,8 @@ export default function Todos() {
     this.todos = [];
 }
 
-Todos.prototype.filterById = function(id) {
-    return this.todos.filter(todo => todo.id === id);
+Todos.prototype.findById = function(id) {
+    return this.todos.find(todo => todo.id === id);
 }
 
 Todos.prototype.push = function(todo) {
@@ -11,19 +11,19 @@ Todos.prototype.push = function(todo) {
 }
 
 Todos.prototype.checkById = function(id) {
-    this.filterById(id).forEach(todo => todo.check());
+    this.findById(id).check();
 }
 
 Todos.prototype.editById = function(id) {
-    this.filterById(id).forEach(todo => todo.edit());
+    this.findById(id).edit();
 }
 
 Todos.prototype.changeTodoItemById = function(id, newTodoItem) {
-    this.filterById(id).forEach(todo => todo.changeTodoItem(newTodoItem));
+    this.findById(id).changeTodoItem(newTodoItem);
 }
 
 Todos.prototype.undoToEditById = function(id) {
-    this.filterById(id).forEach(todo => todo.undoToEdit());
+    this.findById(id).undoToEdit();
 }
 
 Todos.prototype.removeById = function(id) {

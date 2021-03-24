@@ -5,7 +5,7 @@ export const allFilters = {
 };
 
 export function Filter() {
-    this.name = allFilters.all;
+    this.name = "all";
 }
 
 Filter.prototype.chageFilter = function(filter) {
