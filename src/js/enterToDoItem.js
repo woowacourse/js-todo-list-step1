@@ -7,6 +7,7 @@ const enterToDoItem = () => {
         toDoParent.appendChild(singleToDo);
         checkToDos();
         deleteToDos();
+        editToDos();
     }
 }
 
