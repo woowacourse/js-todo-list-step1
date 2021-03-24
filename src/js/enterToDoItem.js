@@ -1,5 +1,5 @@
 
-function enterToDoItem() {
+const enterToDoItem = () => {
     if (window.event.keyCode == 13) {
         const toDoParent = document.getElementById("todo-list");
         const toDoContent = document.getElementById("new-todo-title").value;
@@ -9,7 +9,7 @@ function enterToDoItem() {
     }
 }
 
-function foamToggleInput() {
+const foamToggleInput = () => {
     const elementCheckBox = document.createElement("input");
     elementCheckBox.setAttribute("class", "toggle");
     elementCheckBox.setAttribute("type", "checkbox");
@@ -17,7 +17,7 @@ function foamToggleInput() {
     return elementCheckBox;
 }
 
-function foamLabel(newTitle) {
+const foamLabel = (newTitle) => {
     const elementLabel = document.createElement("label");
     elementLabel.setAttribute("class", "label");
     elementLabel.innerHTML = newTitle;
@@ -25,14 +25,14 @@ function foamLabel(newTitle) {
     return elementLabel;
 }
 
-function foamButton() {
+const foamButton = () => {
     const elementButton = document.createElement("button");
     elementButton.setAttribute("class", "destroy");
 
     return elementButton;
 }
 
-function foamViewDiv(newTitle) {
+const foamViewDiv = (newTitle) => {
     const elementViewDiv = document.createElement("div");
     
     elementViewDiv.setAttribute("class", "view");
@@ -43,7 +43,7 @@ function foamViewDiv(newTitle) {
     return elementViewDiv;
 }
 
-function foamInputEdit(newTitle) {
+const foamInputEdit = (newTitle) => {
     const elementInputEdit = document.createElement("input");
     elementInputEdit.setAttribute("class", "edit");
     elementInputEdit.setAttribute("value", newTitle);
@@ -51,7 +51,7 @@ function foamInputEdit(newTitle) {
     return elementInputEdit;
 }
 
-function foamToDoSingle(newTitle) {
+const foamToDoSingle = (newTitle) => {
     const elementToDoSingle = document.createElement("li");
     elementToDoSingle.appendChild(foamViewDiv(newTitle));
     elementToDoSingle.appendChild(foamInputEdit(newTitle));
