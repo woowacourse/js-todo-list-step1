@@ -1,11 +1,17 @@
+const ENTER = "Enter";
+const ESC = "Escape";
+const CLASS_NAME_FALSE = "false";
+const CLASS_NAME_COMPLTED = "completed";
+const URL_NAME_COMPLTED = "#completed"
+const URL_NAME_ACTIVE = "#active"
+const URL_NAME_ALL = "#";
+
 const TODO = document.getElementById("todo-list");
 const TODO_INPUT = document.getElementById("new-todo-title");
 const CONTENT_COUNT = document.getElementById("content-count");
 const ALL_VIEW = document.getElementById("all");
 const ACTIVE_VIEW = document.getElementById("active");
-const COMPLETED_VIEW = document.getElementById("completed");
-const ENTER = "Enter";
-const ESC = "Escape";
+const COMPLETED_VIEW = document.getElementById(CLASS_NAME_COMPLTED);
 
 
 window.onload = () => {
@@ -22,7 +28,7 @@ function addItem(event) {
 
         const dataObject = {
             text: TODO_INPUT.value.trim(), 
-            className: "false",
+            className: CLASS_NAME_FALSE,
         }
 
         createTempliate(dataObject)
@@ -35,7 +41,7 @@ function addItem(event) {
 function createTempliate(dataObject) {
     const newList = createList(dataObject.className);
     const newDiv = createDiv();
-    const newCheckbox = createCheckbox(dataObject.className === "completed");
+    const newCheckbox = createCheckbox(dataObject.className === CLASS_NAME_COMPLTED);
     const newLabel = createLabel(dataObject.text);
     const newButton = createButton();
     const hideInput = createHideInput(dataObject.text);
@@ -72,10 +78,10 @@ function createCheckbox(isChecked) {
     newCheckbox.checked = isChecked;
     newCheckbox.addEventListener("click", (event) => {
         const parentList = event.target.parentNode.parentNode;
-        if (parentList.className === "false") {
-            parentList.className = "completed";
+        if (parentList.className === CLASS_NAME_FALSE) {
+            parentList.className = CLASS_NAME_COMPLTED;
         } else {
-            parentList.className = "false";
+            parentList.className = CLASS_NAME_FALSE;
         }
         countChange(getUrlType());
     });
@@ -122,14 +128,14 @@ function createHideInput(inputData) {
 }
 
 function countChange(urlType) {
-    if (urlType === "#") {
+    if (urlType === URL_NAME_ALL) {
         countAll();
     }
-    else if (urlType === "#active") {
-        countClass("false");
+    else if (urlType === URL_NAME_ACTIVE) {
+        countClass(CLASS_NAME_FALSE);
     }
-    else if (urlType === "#completed") {
-        countClass("completed");
+    else if (urlType === URL_NAME_COMPLTED) {
+        countClass(CLASS_NAME_COMPLTED);
     }
     chagneDisplay(urlType);
     saveLocalStorage();
@@ -156,19 +162,19 @@ function changeSelect(event) {
 
     event.target.className = "selected";
     if (event.target === ALL_VIEW) {
-        countChange("#");
+        countChange(URL_NAME_ALL);
     } else if (event.target === ACTIVE_VIEW) {
-        countChange("#active");
+        countChange(URL_NAME_ACTIVE);
     } else if (event.target === COMPLETED_VIEW) {
-        countChange("#completed");
+        countChange(URL_NAME_COMPLTED);
     }
 }
 
 function chagneDisplay(urlType) {
     for (const item of TODO.children) {
-        if (urlType === "#"
-        || (urlType === "#active" && item.className === "false")
-        || (urlType === "#completed" && item.className === "completed")) {
+        if (urlType === URL_NAME_ALL
+        || (urlType === URL_NAME_ACTIVE && item.className === CLASS_NAME_FALSE)
+        || (urlType === URL_NAME_COMPLTED && item.className === CLASS_NAME_COMPLTED)) {
             item.style.display = "block";
         } else {
             item.style.display = "none";
@@ -179,9 +185,8 @@ function chagneDisplay(urlType) {
 
 function getUrlType() {
     const urls = window.location.href.split("/");
-    console.log(urls);
     if (urls[3] === "") {
-        return "#";
+        return URL_NAME_ALL;
     }
     return window.location.href.split("/")[3];
 }
