@@ -17,6 +17,8 @@ function enterTodoItem() {
             <input class="edit" value="${input}" />`
 
         document.getElementById('todo-list').appendChild(li);
+        
+        countTodoItems();
     }
 }
 
@@ -45,6 +47,8 @@ function deleteTodoItem(self) {
     let ul = li.parentNode;
 
     ul.removeChild(li);
+
+    countTodoItems();
 }
 
 function editTodoItem(self) {
@@ -61,4 +65,11 @@ function editTodoItem(self) {
             self.innerHTML = li.querySelector('.edit').value;
         }
     })
+}
+
+function countTodoItems() {
+    let views = document.getElementsByClassName('view');
+    let todos = document.querySelector('.todo-count');
+
+    todos.innerHTML = `총 <strong>${views.length}</strong> 개`;
 }
