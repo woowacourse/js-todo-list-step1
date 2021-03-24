@@ -23,6 +23,7 @@ function addTodoItem(e) {
 
     const button = document.createElement('button');
     button.setAttribute('class', 'destroy');
+    button.addEventListener('click', deleteTodoItem)
 
     li.appendChild(input);
     li.appendChild(title);
@@ -40,4 +41,10 @@ function toggleTodoItem(e) {
     }
 
     todoItem.className = 'editing';
+}
+
+function deleteTodoItem(e) {
+    let todoList = document.getElementById('todo-list');
+    let todoItem = e.target.parentElement;
+    todoList.removeChild(todoItem);
 }
