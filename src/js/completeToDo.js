@@ -8,6 +8,7 @@ const checkToDos = () => {
     return;
 }
 
+
 const clickToDo = (event) => {
 
     event.currentTarget.checked = true;

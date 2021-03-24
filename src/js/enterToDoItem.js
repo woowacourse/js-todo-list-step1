@@ -6,6 +6,7 @@ const enterToDoItem = () => {
         const singleToDo = foamToDoSingle(toDoContent);
         toDoParent.appendChild(singleToDo);
         checkToDos();
+        deleteToDos();
     }
 }
 
