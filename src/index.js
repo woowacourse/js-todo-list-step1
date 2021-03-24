@@ -1,6 +1,7 @@
 let inputText = document.getElementById('new-todo-title');
 const todoList = document.getElementById('todo-list');
 let counterDisplayElem = document.querySelector('.todo-count');
+const filters = document.querySelector('.filters')
 let count = 0;
 
 
@@ -69,4 +70,46 @@ function addTodo(e) {
 
 function updateCountDisplay() {
     counterDisplayElem.innerHTML = `총 <strong>${count}</strong> 개`;
+}
+
+
+filters.addEventListener('click', event => {
+    const target = event.target;
+    if (!target.matches('a') || target.matches('.selected')) return;
+    changeBtn(target);
+    console.log(target);
+
+    let todoListElem = todoList.querySelectorAll("li");
+    if (target.matches('.all')) {
+        for (let i=0; i < todoListElem.length; i++) {
+            todoListElem[i].setAttribute("style", "null");
+        }
+    }
+    if (target.matches('.active')) {
+        for (let i=0; i < todoListElem.length; i++) {
+            console.log(todoListElem[i]);
+            if (todoListElem[i].matches(".completed")) {
+                todoListElem[i].setAttribute("style", "display:none");
+            } else {
+                todoListElem[i].setAttribute("style", "null");
+            }
+        }
+    }
+
+    if (target.matches('.completed')) {
+        for (let i=0; i < todoListElem.length; i++) {
+            console.log(todoListElem[i]);
+            if (todoListElem[i].matches(".completed")) {
+                todoListElem[i].setAttribute("style", "null");
+            } else {
+                todoListElem[i].setAttribute("style", "display:none");
+            }
+        }
+    }
+})
+
+function changeBtn(targetBtn) {
+    const $selectedBtn = filters.querySelector('.selected');
+    $selectedBtn.classList.remove('selected');
+    targetBtn.classList.add('selected');
 }
