@@ -1,6 +1,6 @@
 let toDoItemIndex = 0;
 
-function addToDoList() {
+function addTodoList() {
     const ul = document.getElementById("todo-list");
     const input = document.getElementById("new-todo-title");
     ul.innerHTML += `<li class="false" id="${toDoItemIndex}">
@@ -12,18 +12,28 @@ function addToDoList() {
         <input class="edit" value="${input.value}"/>
     </li>`;
     toDoItemIndex++;
-    input.value = null;
+    input.value = "";
 }
 
-document.getElementById("new-todo-title").addEventListener('change', addToDoList);
+function checkTodoItem(event) {
+    if (event.target.className === 'toggle' && event.target.checked) {
+        event.target.closest("li").className = 'completed';
+        event.target.toggleAttribute('checked');
+    }
+    if (event.target.className === 'toggle' && !event.target.checked) {
+        event.target.closest("li").className = 'false';
+        event.target.removeAttribute('checked');
+    }
+}
 
-document.addEventListener('click', function (e) {
-    if (e.target.className === 'toggle' && e.target.checked) {
-        e.target.parentNode.parentNode.className = 'completed';
-        e.target.toggleAttribute('checked');
+function removeTodoItem(event) {
+    if (event.target.className === 'destroy') {
+        event.target.closest("ul").removeChild(event.target.closest("li"));
     }
-    if (e.target.className === 'toggle' && !e.target.checked) {
-        e.target.parentNode.parentNode.className = 'false';
-        e.target.removeAttribute('checked');
-    }
-})
+}
+
+document.getElementById("new-todo-title").addEventListener('change', addTodoList);
+
+document.addEventListener('click', checkTodoItem);
+
+document.addEventListener('click', removeTodoItem);
