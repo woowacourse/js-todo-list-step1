@@ -1,6 +1,8 @@
 const $todoInput = document.querySelector("#new-todo-title");
+const $toggleInput = document.querySelector("#todo-list");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
+$toggleInput.addEventListener("click", onToggleTodoItem);
 
 function onAddTodoItem(event) {
   const todoTitle = event.target.value;
@@ -10,6 +12,10 @@ function onAddTodoItem(event) {
     event.target.value = "";
   }
 }
+
+function onToggleTodoItem(event) {
+    event.target.closest("li").classList.toggle("completed");
+  }  
 
 function renderTodoItemTemplate(title) {
   return ` <li>
