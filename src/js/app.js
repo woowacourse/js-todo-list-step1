@@ -1,4 +1,9 @@
 let newTodo = document.getElementById('new-todo-title');
+let filters = document.querySelector('.filters').querySelectorAll('li');
+
+showAllList();
+showTodoList();
+showDoneList();
 
 newTodo.addEventListener("keyup", enterTodoItem);
 
@@ -72,4 +77,63 @@ function countTodoItems() {
     let todos = document.querySelector('.todo-count');
 
     todos.innerHTML = `총 <strong>${views.length}</strong> 개`;
+}
+
+function showAllList() {
+    filters[0].addEventListener('click', function() {
+        let todoList = document.getElementById('todo-list').querySelectorAll('li');
+        let todos = document.querySelector('.todo-count');
+        let count = 0;
+
+        for (let i = 0; i < todoList.length; i++) {
+            if (todoList[i].classList.contains('false')) {
+                todoList[i].style.display = 'block';
+            }
+            if (todoList[i].classList.contains('completed')) {
+                todoList[i].style.display = 'block';
+            }
+        }
+        
+        todos.innerHTML = `총 <strong>${todoList.length}</strong> 개`;
+    })
+}
+
+function showTodoList() {
+    filters[1].addEventListener('click', function() {
+        let todoList = document.getElementById('todo-list').querySelectorAll('li');
+        let todos = document.querySelector('.todo-count');
+        let count = 0;
+
+        for (let i = 0; i < todoList.length; i++) {
+            if (todoList[i].classList.contains('false')) {
+                todoList[i].style.display = 'block';
+                count++;
+            }
+            if (todoList[i].classList.contains('completed')) {
+                todoList[i].style.display = 'none';
+            }
+        }
+        
+        todos.innerHTML = `총 <strong>${count}</strong> 개`;
+    })
+}
+
+function showDoneList() {
+    filters[2].addEventListener('click', function() {
+        let todoList = document.getElementById('todo-list').querySelectorAll('li');
+        let todos = document.querySelector('.todo-count');
+        let count = 0;
+
+        for (let i = 0; i < todoList.length; i++) {
+            if (todoList[i].classList.contains('false')) {
+                todoList[i].style.display = 'none';
+            }
+            if (todoList[i].classList.contains('completed')) {
+                todoList[i].style.display = 'block';
+                count++;
+            }
+        }
+
+        todos.innerHTML = `총 <strong>${count}</strong> 개`;
+    })
 }
