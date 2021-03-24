@@ -1,59 +1,23 @@
-let todo = document.querySelector('#new-todo-title');
+const todoInput = document.querySelector("#new-todo-title");
+
+todoInput.addEventListener("keyup", addTodoItem);
 
 function addTodoItem(event) {
-    if (event.keyCode === 13) {
-        addTodo();
+    const item = event.target.value;
+    const todoList = document.getElementById("todo-list");
+    if (event.key === "Enter" && item !== "") {
+        todoList.insertAdjacentHTML("beforeend", todoItemTemplate(item));
+        event.target.value = "";
     }
 }
 
-todo.addEventListener('keyup', addTodoItem);
-
-function addTodo()  {
-    const addValue = document.getElementById("new-todo-title").value;
-
-    const li = document.createElement("li");
-    li.appendChild(createDiv(addValue));
-    li.appendChild(createEditInput(addValue));
-
-    document
-        .getElementById('todo-list')
-        .appendChild(li);
-
-    document.getElementById("new-todo-title").value = "";
-}
-
-function createDiv(addValue) {
-    const div = document.createElement("div");
-    div.setAttribute("class", "view");
-    div.appendChild(createCheckboxInput());
-    div.appendChild(createLabel(addValue));
-    div.appendChild(createButton());
-    return div;
-}
-
-function createCheckboxInput() {
-    const input = document.createElement("input");
-    input.setAttribute("class", "toggle");
-    input.setAttribute("type", "checkbox");
-    return input;
-}
-
-function createLabel(addValue) {
-    const label = document.createElement("label");
-    label.setAttribute("class", "label");
-    label.innerText = addValue;
-    return label;
-}
-
-function createButton() {
-    const button = document.createElement("button");
-    button.setAttribute("class", "destroy");
-    return button;
-}
-
-function createEditInput(addValue) {
-    const editInput = document.createElement("input");
-    editInput.setAttribute("class", "edit");
-    editInput.setAttribute("value", addValue);
-    return editInput;
+function todoItemTemplate(item) {
+    return `<li>
+                <div class="view">
+                    <input class="toggle" type="checkbox">
+                    <label class="label">${item}</label>
+                    <button class="destroy"></button>
+                </div>
+                <input class="edit" value="새로운 타이틀">
+            </li>`;
 }
