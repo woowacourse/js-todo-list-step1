@@ -21,3 +21,16 @@ function renderTodoItemTemplate(title) {
                   <input class="edit" value="새로운 타이틀">
               </li>`;
 }
+
+const $toggleInput = document.querySelector("#todo-list");
+
+$toggleInput.addEventListener("click", function (e) {
+  if (e.target && e.target.nodeName == "INPUT") {
+     onToggleTodoItem(e);
+   }
+});
+
+function onToggleTodoItem(event) {
+  event.target.closest("li").classList.toggle("completed");
+  event.target.closest("input").toggleAttribute("checked");
+}
