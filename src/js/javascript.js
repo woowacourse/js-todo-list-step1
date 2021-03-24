@@ -22,15 +22,24 @@ function renderTodoItemTemplate(title) {
               </li>`;
 }
 
-const $toggleInput = document.querySelector("#todo-list");
+const $changeInput = document.querySelector("#todo-list");
 
-$toggleInput.addEventListener("click", function (e) {
+$changeInput.addEventListener("click", function (e) {
   if (e.target && e.target.nodeName == "INPUT") {
      onToggleTodoItem(e);
-   }
+     return;
+  }
+  if (e.target && e.target.nodeName == "BUTTON") {
+     onDestroyTodoItem(e);
+     return
+  }
 });
 
 function onToggleTodoItem(event) {
   event.target.closest("li").classList.toggle("completed");
   event.target.closest("input").toggleAttribute("checked");
+}
+
+function onDestroyTodoItem(event) {
+  event.target.closest("li").parentNode.removeChild(event.target.closest("li"));
 }
