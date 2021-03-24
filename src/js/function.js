@@ -13,6 +13,7 @@ window.onload = () => {
     ALL_VIEW.addEventListener("click", changeSelect);
     ACTIVE_VIEW.addEventListener("click", changeSelect);
     COMPLETED_VIEW.addEventListener("click", changeSelect);
+    loadLocalStorage();
 }
 
 
@@ -20,9 +21,8 @@ function addItem(event) {
     if (event.key === ENTER && TODO_INPUT.value.trim() !== "") {
 
         const dataObject = {
-            value: TODO_INPUT.value.trim(), 
-            listClassName: "false",
-            isChecked: false,
+            text: TODO_INPUT.value.trim(), 
+            className: "false",
         }
 
         createTempliate(dataObject)
@@ -33,12 +33,12 @@ function addItem(event) {
 }
 
 function createTempliate(dataObject) {
-    const newList = createList(dataObject.listClassName);
+    const newList = createList(dataObject.className);
     const newDiv = createDiv();
-    const newCheckbox = createCheckbox(dataObject.isChecked);
-    const newLabel = createLabel(dataObject.value);
+    const newCheckbox = createCheckbox(dataObject.className === "completed");
+    const newLabel = createLabel(dataObject.text);
     const newButton = createButton();
-    const hideInput = createHideInput(dataObject.value);
+    const hideInput = createHideInput(dataObject.text);
     
     newDiv.appendChild(newCheckbox);
     newDiv.appendChild(newLabel);
@@ -132,6 +132,7 @@ function countChange(urlType) {
         countClass("completed");
     }
     chagneDisplay(urlType);
+    saveLocalStorage();
 }
 
 function countAll() {
@@ -178,4 +179,28 @@ function chagneDisplay(urlType) {
 
 function getUrlType() {
     return window.location.href.split("/")[3];
+}
+
+function loadLocalStorage() {
+    if (localStorage.length === 0) {
+        return;
+    }
+    const objects = JSON.parse(localStorage.getItem("todo"));
+    for (const key in objects) {
+        createTempliate(objects[key]);
+    }
+    countChange(getUrlType());
+}
+
+function saveLocalStorage() {
+    const objects = {};
+    const todoList = TODO.children;
+    for (let i = 0; i < todoList.length; i++) {
+        const item = todoList[i];
+        objects[i] = {
+            text: item.querySelector(".label").textContent,
+            className: item.className
+        };
+    }
+    localStorage.setItem("todo", JSON.stringify(objects));
 }
