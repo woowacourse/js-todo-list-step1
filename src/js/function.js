@@ -178,6 +178,11 @@ function chagneDisplay(urlType) {
 }
 
 function getUrlType() {
+    const urls = window.location.href.split("/");
+    console.log(urls);
+    if (urls[3] === "") {
+        return "#";
+    }
     return window.location.href.split("/")[3];
 }
 
