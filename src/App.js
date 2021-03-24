@@ -1,7 +1,7 @@
 window.onload = function() {
     const newTodo = document.getElementById("new-todo-title");
     const todoList = document.getElementById("todo-list");
-    const listCount = document.getElementsByClassName("todo-count");
+    const listCount = document.getElementsByClassName("todo-count")[0].childNodes[1];
 
     newTodo.addEventListener("keydown",inputTodo);
     function inputTodo(e) {
@@ -18,11 +18,9 @@ window.onload = function() {
             <input class="edit" value="${inputText}" />`;
             newTodoLI.addEventListener("keydown", changeMode);
             todoList.appendChild(newTodoLI);
-            
+            listCount.innerHTML = parseInt(listCount.innerHTML) + 1;
         }
     }
-    
-    
 }
 function changeMode(e){
     const originalValue = this.getElementsByTagName("label")[0].innerHTML;
@@ -47,7 +45,9 @@ function check(box) {
 
 function destroyTodo(todo) {
     const todoParent  = todo.parentNode.parentNode;
+    const listCount = document.getElementsByClassName("todo-count")[0].childNodes[1];
     todoParent.parentNode.removeChild(todoParent);
+    listCount.innerHTML = parseInt(listCount.innerHTML) - 1;
 }
 
 function editTodo(editInput) {
