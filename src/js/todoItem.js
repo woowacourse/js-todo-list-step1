@@ -40,20 +40,20 @@ document.getElementById("todo-list")
 
 document.getElementById("todo-list")
     .addEventListener("dblclick", function (e) {
+        const originalValue = e.target.innerText;
         e.target.closest("li").classList.toggle("editing");
         const editInput = e.target.closest("li").getElementsByClassName("edit")[0];
-        editInput.addEventListener("keyup", edit);
+        editInput.addEventListener("keyup", function (event){
+            const item = event.target.value;
+            if (event.key === "Enter" && item !== "") {
+                const parent = event.target.parentNode;
+                const label = parent.getElementsByClassName("label")[0];
+                label.innerText = item;
+                parent.classList.remove("editing");
+            }
+            if (event.key === "Escape") {
+                event.target.value = originalValue;
+                event.target.parentNode.classList.remove("editing");
+            }
+        });
     });
-
-function edit(event) {
-    const item = event.target.value;
-    if (event.key === "Enter" && item !== "") {
-        const parent = event.target.parentNode;
-        const label = parent.getElementsByClassName("label")[0];
-        label.innerText = item;
-        parent.classList.toggle("editing");
-    }
-    if (event.key === "Escape") {
-        event.target.parentNode.classList.toggle("editing");
-    }
-}
