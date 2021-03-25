@@ -1,8 +1,8 @@
 const deleteToDos = () => {
-    let xMarks = document.getElementsByClassName("destroy");
+    const $xMarks = document.getElementsByClassName("destroy");
 
-    Array.prototype.forEach.call(xMarks, function(xMark) {
-        xMark.addEventListener('click', clickXMark);
+    Array.prototype.forEach.call($xMarks, function($xMark) {
+        $xMark.addEventListener('click', clickXMark);
     })
 }
 

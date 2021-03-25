@@ -1,5 +1,3 @@
-
-
 const enterToDoItem = (event) => {
     if (event.key == "Enter") {
         const toDoParent = document.getElementById("todo-list");
@@ -14,53 +12,53 @@ const enterToDoItem = (event) => {
 }
 
 const foamToggleInput = () => {
-    const elementCheckBox = document.createElement("input");
-    elementCheckBox.setAttribute("class", "toggle");
-    elementCheckBox.setAttribute("type", "checkbox");
+    const $elementCheckBox = document.createElement("input");
+    $elementCheckBox.setAttribute("class", "toggle");
+    $elementCheckBox.setAttribute("type", "checkbox");
 
-    return elementCheckBox;
+    return $elementCheckBox;
 }
 
 const foamLabel = (newTitle) => {
-    const elementLabel = document.createElement("label");
-    elementLabel.setAttribute("class", "label");
-    elementLabel.innerHTML = newTitle;
+    const $elementLabel = document.createElement("label");
+    $elementLabel.setAttribute("class", "label");
+    $elementLabel.innerHTML = newTitle;
 
-    return elementLabel;
+    return $elementLabel;
 }
 
 const foamButton = () => {
-    const elementButton = document.createElement("button");
-    elementButton.setAttribute("class", "destroy");
+    const $elementButton = document.createElement("button");
+    $elementButton.setAttribute("class", "destroy");
 
-    return elementButton;
+    return $elementButton;
 }
 
 const foamViewDiv = (newTitle) => {
-    const elementViewDiv = document.createElement("div");
+    const $elementViewDiv = document.createElement("div");
     
-    elementViewDiv.setAttribute("class", "view");
-    elementViewDiv.appendChild(foamToggleInput());
-    elementViewDiv.appendChild(foamLabel(newTitle));
-    elementViewDiv.appendChild(foamButton());
+    $elementViewDiv.setAttribute("class", "view");
+    $elementViewDiv.appendChild(foamToggleInput());
+    $elementViewDiv.appendChild(foamLabel(newTitle));
+    $elementViewDiv.appendChild(foamButton());
 
-    return elementViewDiv;
+    return $elementViewDiv;
 }
 
 const foamInputEdit = (newTitle) => {
-    const elementInputEdit = document.createElement("input");
-    elementInputEdit.setAttribute("class", "edit");
-    elementInputEdit.setAttribute("value", newTitle);
+    const $elementInputEdit = document.createElement("input");
+    $elementInputEdit.setAttribute("class", "edit");
+    $elementInputEdit.setAttribute("value", newTitle);
 
-    return elementInputEdit;
+    return $elementInputEdit;
 }
 
 const foamToDoSingle = (newTitle) => {
-    const elementToDoSingle = document.createElement("li");
-    elementToDoSingle.appendChild(foamViewDiv(newTitle));
-    elementToDoSingle.appendChild(foamInputEdit(newTitle));
+    const $elementToDoSingle = document.createElement("li");
+    $elementToDoSingle.appendChild(foamViewDiv(newTitle));
+    $elementToDoSingle.appendChild(foamInputEdit(newTitle));
 
-    return elementToDoSingle;
+    return $elementToDoSingle;
 }
 
 const $newToDo = document.getElementById("new-todo-title");
