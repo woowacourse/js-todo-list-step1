@@ -27,7 +27,7 @@
 
 ## 🎯 요구사항
 
-- [ ] todo list에 todoItem을 키보드로 입력하여 추가하기
+- [x] todo list에 todoItem을 키보드로 입력하여 추가하기
 - [ ] todo list의 체크박스를 클릭하여 complete 상태로 변경. (li tag 에 completed class 추가, input 태그에 checked 속성 추가)
 - [ ] todo list의 x버튼을 이용해서 해당 엘리먼트를 삭제
 - [ ] todo list를 더블클릭했을 때 input 모드로 변경. (li tag 에 editing class 추가) 단 이때 수정을 완료하지 않은 상태에서 esc키를 누르면 수정되지 않은 채로 다시 view 모드로 복귀
@@ -36,6 +36,9 @@
 - [ ] localStorage에 데이터를 저장하여, TodoItem의 CRUD를 반영하기. 따라서 새로고침하여도 저장된 데이터를 확인할 수 있어야 함
 
 <br/>
+
+## 리팩토링 해야할 목록
+- [ ] 의도적으로 비어있는 Todo를 넣을 수 있도록 만들었는데, 글씨가 없는 경우와 크기가 다르게 추가된다.
 
 ## 🔔 참고사항
 `TodoItem`을 추가할 시 아래 템플릿을 활용하면 됩니다.
