@@ -29,7 +29,7 @@ const addTodoInput = ({key}) => {
             'completed': false,
             'contents': value
         }
-        todos = {... temporary}
+        todos = {...temporary}
         console.log(todos)
         $todoInput.value = '';
         updateCount()
