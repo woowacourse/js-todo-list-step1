@@ -11,21 +11,21 @@ const countLabel = document.querySelector("strong");
 const buttonBox = document.querySelector(".filters")
 
 window.onload = () => {
-    hangKeyDownEvent()
-    hangKeyUpEvent()
-    hangClickEvent()
-    hangEditEvent()
-    hangClickButtonEvent()
+    enterDownNewTodo()
+    enterUpNewTodo()
+    clickCheckBoxOrDestroy()
+    doubleClickEditTodo()
+    clickStateSelectButton()
     refreshCount()
 };
 
-function hangKeyDownEvent() {
+function enterDownNewTodo() {
     newTodo.addEventListener("keydown", function (e) {
         if (e.keyCode === 229) {
             return
         }
         if (e.keyCode !== ENTER_CODE) {
-            hangKeyDownEvent()
+            enterDownNewTodo()
             return
         }
         todoBox.insertAdjacentHTML("beforeend", makeTodo(newTodo.value))
@@ -34,12 +34,12 @@ function hangKeyDownEvent() {
     }, {once: true})
 }
 
-function hangKeyUpEvent() {
+function enterUpNewTodo() {
     newTodo.addEventListener("keyup", function (e) {
         if (e.keyCode !== ENTER_CODE) {
             return
         }
-        hangKeyDownEvent()
+        enterDownNewTodo()
     })
 }
 
@@ -55,7 +55,7 @@ function makeTodo(value) {
 </li>`
 }
 
-function hangClickEvent() {
+function clickCheckBoxOrDestroy() {
     todoBox.addEventListener("click", function (e) {
         const clickedClass = e.target.getAttribute("class")
         if (clickedClass === CHECKBOX_CLASS_NAME) {
@@ -70,7 +70,7 @@ function hangClickEvent() {
     })
 }
 
-function hangEditEvent() {
+function doubleClickEditTodo() {
     todoBox.addEventListener("dblclick", function (e) {
         const clickedClass = e.target.getAttribute("class")
         if (clickedClass === TODO_CONTENT_CLASS_NAME) {
@@ -80,12 +80,12 @@ function hangEditEvent() {
             editTodo.value = labelTodo.innerText
             todo.classList.add("editing")
             editTodo.focus()
-            editTodo.addEventListener("keyup", keyUpAtEditTodo)
+            editTodo.addEventListener("keyup", enterUpEditTodo)
         }
     })
 }
 
-function keyUpAtEditTodo(e) {
+function enterUpEditTodo(e) {
     if (e.keyCode !== ENTER_CODE && e.keyCode !== ESC_CODE) {
         return
     }
@@ -120,7 +120,7 @@ function refreshCount() {
     countLabel.innerText = counting.toString();
 }
 
-function hangClickButtonEvent() {
+function clickStateSelectButton() {
     buttonBox.addEventListener("click", function (e) {
         if (e.target.tagName !== "A") {
             return
@@ -138,7 +138,7 @@ function hangClickButtonEvent() {
 function refreshView() {
     const todos = todoBox.querySelectorAll("li")
     const hidden = "hidden"
-    const state = getCurrentState()
+    const state = getSelectedState()
 
     todos.forEach(todo => todo.classList.remove("hidden"))
     if (state === "completed") {
@@ -154,7 +154,7 @@ function refreshView() {
     refreshCount()
 }
 
-function getCurrentState() {
+function getSelectedState() {
     const button = Array.from(buttonBox.querySelectorAll("A"))
         .find(button => button.classList.contains("selected"));
 
