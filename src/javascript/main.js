@@ -4,10 +4,46 @@ const toDoList = document.querySelector('#todo-list');
 
 addInput.addEventListener('keyup', (event) => {
   event.preventDefault();
-  if (event.key === 'Enter') {
+  if (!event.isComposing && event.key === 'Enter') {
     addList();
   }
-})
+});
+
+toDoList.addEventListener("change", function (e) {
+  if (e.target && e.target.className == "toggle") {
+    checkBox(e.target);
+  }
+});
+
+toDoList.addEventListener('click', function(e) {
+  if (e.target && e.target.className == "destroy") {
+    remove(e.target);
+  }
+});
+
+function checkBox(target) {
+  if (target.checked) {
+   target.parentNode.parentNode.className = 'completed';
+  } else {
+   target.parentNode.parentNode.className = 'false';
+  }
+}
+
+function remove(target) {
+  const li = target.parentNode.parentNode;
+  li.parentNode.removeChild(li);
+}
+
+function addList() {
+  if (addInput.value === '') {
+    alert("입력값이 필요합니다.")
+  } else {
+    const ul = document.querySelector('#todo-list');
+    const li = createLi();
+    addInput.value = '';
+    ul.appendChild(li);
+  }
+}
 
 // create list
 function createLi() {
@@ -23,14 +59,6 @@ function createLi() {
   input.id = id;
   input.className = 'toggle';
 
-  input.addEventListener('change', function() {
-    if (input.checked) {
-      li.className = 'completed';
-    } else {
-      li.className = 'false';
-    }
-  });
-
   const label = document.createElement('label');
   label.className = 'label';
   label.textContent = addInput.value;
@@ -38,10 +66,6 @@ function createLi() {
   const button = document.createElement('button');
   button.className = 'destroy';
   button.id = 'id';
-  button.addEventListener('click', function() {
-    const li = button.parentNode.parentNode;
-    li.parentNode.removeChild(li);
-  });
 
   div.appendChild(input);
   div.appendChild(label);
@@ -51,11 +75,4 @@ function createLi() {
   id = id + 1;
 
   return li
-}
-
-function addList() {
-  const ul = document.querySelector('#todo-list');
-  const li = createLi();
-  addInput.value = '';
-  ul.appendChild(li);
 }
