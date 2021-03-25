@@ -8,7 +8,7 @@ function onAddTodoItem(event) {
   if (event.key === "Enter" && todoTitle !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
     event.target.value = "";
-    document.getElementsByTagName("strong")[0].textContent = document.querySelector("#todo-list").childElementCount;
+    onClickShowAll();
   }
 }
 
@@ -39,11 +39,12 @@ $changeInput.addEventListener("click", function (e) {
 function onToggleTodoItem(event) {
   event.target.closest("li").classList.toggle("completed");
   event.target.closest("input").toggleAttribute("checked");
+  onClickShowAll();
 }
 
 function onDestroyTodoItem(event) {
   event.target.closest("li").parentNode.removeChild(event.target.closest("li"));
-  document.getElementsByTagName("strong")[0].textContent = document.querySelector("#todo-list").childElementCount;
+  onClickShowAll();
 }
 
 $changeInput.addEventListener("dblclick", function (e) {
@@ -72,4 +73,76 @@ function onEditTodoItem(event) {
     event.target.closest("li").classList.toggle("editing");
     return;
   }
+}
+
+const $showAllInput = document.querySelector("a.all");
+
+$showAllInput.addEventListener("click", onClickShowAll);
+
+function onClickShowAll() {
+  cleanButtons();
+  document.querySelector(".all").classList.add("selected");
+  const todoList = document.getElementById("todo-list");
+  const children = todoList.childNodes;
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeName == "LI") {
+      children[i].classList.remove("hidden");
+    }
+  };
+  document.getElementsByTagName("strong")[0].textContent = document.querySelector("#todo-list").childElementCount;
+}
+
+const $showUncheckedInput = document.querySelector("a.active");
+
+$showUncheckedInput.addEventListener("click", onClickUnchecked);
+
+function onClickUnchecked() {
+  cleanButtons();
+  document.querySelector(".active").classList.add("selected");
+  const todoList = document.getElementById("todo-list");
+  const children = todoList.childNodes;
+  var count = 0;
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeName == "LI") {
+      children[i].classList.remove("hidden");
+    }
+  };
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeName == "LI" && children[i].className === "completed") {
+      count++;
+      children[i].classList.add("hidden");
+    }
+  };
+  document.getElementsByTagName("strong")[0].textContent = document.querySelector("#todo-list").childElementCount - count;
+}
+
+const $showCheckedInput = document.querySelector("a.completed");
+
+$showCheckedInput.addEventListener("click", onClickChecked);
+
+function onClickChecked() {
+  cleanButtons();
+  document.querySelector("a.completed").classList.add("selected");
+  const todoList = document.getElementById("todo-list");
+  const children = todoList.childNodes;
+  var count = 0;
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeName == "LI") {
+      children[i].classList.remove("hidden");
+    }
+  };
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeName == "LI" && children[i].className === "") {
+      count++;
+      children[i].classList.add("hidden");
+    }
+  };
+  document.getElementsByTagName("strong")[0].textContent = document.querySelector("#todo-list").childElementCount - count;
+}
+
+function cleanButtons() {
+    const buttons = document.getElementsByTagName("a");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("selected");
+    }
 }
