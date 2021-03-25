@@ -2,7 +2,7 @@ const $todoInput = document.querySelector(".new-todo");
 const $todoUl = document.querySelector(".todo-list");
 const date = new Date();
 
-function getTodoInput({key}) {
+function addTodoInput({key}) {
     if (key === "Enter" && $todoInput.value !== "") {
         const id = date.getTime();
         const value = $todoInput.value;
@@ -20,9 +20,9 @@ function getTodoInput({key}) {
     }
 }
 
-$todoInput.addEventListener("keyup", getTodoInput);
+$todoInput.addEventListener("keyup", addTodoInput);
 
-function modifyList({target}) {
+function modifyTodoState({target}) {
     if (target.className === 'toggle') {
         target.closest("li").classList.toggle("completed");
         target.closest("li").classList.toggle("false");
@@ -35,27 +35,26 @@ function modifyList({target}) {
     }
 }
 
-$todoUl.addEventListener("click", modifyList)
+$todoUl.addEventListener("click", modifyTodoState)
 
-function editLogic(event) {
+function editContent(event) {
     const {key} = event
-    const previousInput = event.currentTarget.querySelector(".label");
+    const {currentTarget} = event
+    const previousInput = currentTarget.querySelector(".label");
     if (key === "Enter") {
-        const currentValue = event.target.value;
-        previousInput.innerText = currentValue;
-        event.currentTarget.classList.toggle("editing")
+        previousInput.innerText =  event.target.value;
+        currentTarget.classList.toggle("editing")
     }
     if (key === "Escape") {
-        event.currentTarget.classList.toggle("editing")
+        currentTarget.classList.toggle("editing")
     }
 
 }
 
-function editList(event) {
-    const {target} = event
+function editingMode({target}) {
     const $li = target.closest("li");
     $li.classList.toggle("editing");
-    $li.addEventListener("keyup", editLogic);
+    $li.addEventListener("keyup", editContent);
 }
 
-$todoUl.addEventListener("dblclick", editList)
+$todoUl.addEventListener("dblclick", editingMode)
