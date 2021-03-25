@@ -33,6 +33,8 @@ function init() {
       todo.appendChild(destroyBtn)
       todoItem.appendChild(todo)
       todoList.appendChild(todoItem)
+
+      inputArea.value
     }
   })
 }
