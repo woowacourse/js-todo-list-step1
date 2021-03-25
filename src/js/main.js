@@ -23,16 +23,39 @@ function getTodoInput({key}) {
 $todoInput.addEventListener("keyup", getTodoInput);
 
 function modifyList({target}) {
-    if(target.className === 'toggle'){
+    if (target.className === 'toggle') {
         target.closest("li").classList.toggle("completed");
         target.closest("li").classList.toggle("false");
 
         target.toggleAttribute("checked")
     }
 
-    if(target.className === 'destroy'){
+    if (target.className === 'destroy') {
         $todoUl.removeChild(target.closest("li"))
     }
 }
 
 $todoUl.addEventListener("click", modifyList)
+
+function editLogic(event) {
+    const {key} = event
+    const previousInput = event.currentTarget.querySelector(".label");
+    if (key === "Enter") {
+        const currentValue = event.target.value;
+        previousInput.innerText = currentValue;
+        event.currentTarget.classList.toggle("editing")
+    }
+    if (key === "Escape") {
+        event.currentTarget.classList.toggle("editing")
+    }
+
+}
+
+function editList(event) {
+    const {target} = event
+    const $li = target.closest("li");
+    $li.classList.toggle("editing");
+    $li.addEventListener("keyup", editLogic);
+}
+
+$todoUl.addEventListener("dblclick", editList)
