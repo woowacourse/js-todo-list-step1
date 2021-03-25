@@ -1,9 +1,14 @@
-function init() {
-  const inputArea = document.querySelector('.new-todo')
-  const todoList = document.querySelector('.todo-list')
+export default class App {
+  constructor() {
+    this.newTodo = document.querySelector('#new-todo-title')
+    this.todoList = document.querySelector('#todo-list')
 
-  inputArea.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
+    this.createTodo( this.newTodo, this.todoList )
+  }
+
+  createTodo( newTodo, todoList ) {
+    newTodo.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter' && newTodo.value) {
       const todoItem = document.createElement('li')
       todoItem.className = 'false'
 
@@ -23,7 +28,7 @@ function init() {
 
       const content = document.createElement('label')
       content.className = 'label'
-      content.innerText = inputArea.value
+      content.innerText = this.newTodo.value
 
       const destroyBtn = document.createElement('button')
       destroyBtn.className = 'destroy'
@@ -37,9 +42,10 @@ function init() {
       todoItem.appendChild(todo)
       todoList.appendChild(todoItem)
 
-      inputArea.value
+      newTodo.value = ''
     }
   })
+  }
 }
 
-init()
+new App()
