@@ -1,9 +1,5 @@
 const $todoInput = document.querySelector("#new-todo-title");
-const $toggleInput = document.querySelector(".todo-list");
-
 $todoInput.addEventListener("keyup", onAddTodoItem);
-$toggleInput.addEventListener("click", onToggleTodoItem);
-
 
 function onAddTodoItem(event) {
   const todoTitle = event.target.value;
@@ -14,18 +10,23 @@ function onAddTodoItem(event) {
   }
 }
 
-function onToggleTodoItem(event) {
-  event.target.closest("li").classList.toggle("completed");
-}
-
 function renderTodoItemTemplate(title) {
   return ` <li>
                   <div class="view">
-                      <input class="toggle" type="checkbox">
+                      <input class="toggle" onclick="onToggleTodoItem(event)" type="checkbox" />
                       <label class="label" ondblclick="edit(event)">${title}</label>
                       <button class="destroy" onclick="deleteCheck(event)"></button>
                   </div>
+                  <input class="edit" value=${title} />
               </li>`;
+}
+
+function onToggleTodoItem(event) {
+  const item = event.target;
+
+  if (item.classList[0] === "toggle") {
+    item.parentElement.parentElement.classList.toggle("completed")
+  }
 }
 
 function deleteCheck(event) {
@@ -33,5 +34,25 @@ function deleteCheck(event) {
 
   if (item.classList[0] === "destroy") {
     item.parentElement.parentElement.remove();
+  }
+}
+
+function edit(event) {
+  const item = event.target;
+
+  if (item.classList[0] === "label") {
+    item.parentElement.parentElement.classList.add("editing");
+
+    const input = document.querySelector(".edit")
+    input.addEventListener('keyup', function(e) {
+      if (e.key == 'Esc' || e.key == 'Escape') {
+        item.parentElement.parentElement.classList.remove("editing");
+      }
+
+      if (e.key == 'Enter') {
+        item.innerText = input.value;
+        item.parentElement.parentElement.classList.remove("editing");
+      }
+    })
   }
 }
