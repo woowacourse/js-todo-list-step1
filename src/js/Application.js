@@ -1,4 +1,5 @@
 const ENTER_CODE = 13;
+const CHECKBOX_CLASS_NAME = "toggle"
 
 const newTodo = document.querySelector("#new-todo-title")
 const todoBox = document.querySelector("#todo-list");
@@ -6,6 +7,7 @@ const todoBox = document.querySelector("#todo-list");
 window.onload = () => {
     hangKeyDownEvent()
     hangKeyUpEvent()
+    hangCheckEvent()
 };
 
 function hangKeyDownEvent() {
@@ -41,4 +43,14 @@ function makeTodo(value) {
     </div>
     <input class="edit" value="새로운 타이틀"/> 
 </li>`
+}
+
+function hangCheckEvent() {
+    todoBox.addEventListener("click", function (e) {
+        const clickedClass = e.target.getAttribute("class");
+        if (clickedClass === CHECKBOX_CLASS_NAME) {
+            const todo = e.target.closest("li")
+            todo.classList.toggle("completed")
+        }
+    })
 }
