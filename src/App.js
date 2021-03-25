@@ -56,6 +56,7 @@ function createTodo(e) {
     destroyBtn.className = 'destroy'
     destroyBtn.addEventListener('click', () => {
       todoList.removeChild(todoItem)
+      updateTodoCount(todoList)
     })
 
     todo.appendChild(checkBox)
@@ -63,9 +64,16 @@ function createTodo(e) {
     todo.appendChild(destroyBtn)
     todoItem.appendChild(todo)
     todoList.appendChild(todoItem)
+    updateTodoCount(todoList)
 
     e.target.value = ''
   }
+}
+
+function updateTodoCount(todoList) {
+  const todoCount = document.querySelector('strong')
+  console.log(document.querySelectorAll('todo-list > li'))
+  todoCount.innerText = todoList.querySelectorAll('li').length
 }
 
 init()
