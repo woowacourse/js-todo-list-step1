@@ -25,7 +25,7 @@ function renderTodoItemTemplate(title) {
 const $changeInput = document.querySelector("#todo-list");
 
 $changeInput.addEventListener("click", function (e) {
-  if (e.target && e.target.nodeName == "INPUT") {
+  if (e.target && e.target.nodeName == "INPUT" && e.target.className === 'toggle') {
      onToggleTodoItem(e);
      return;
   }
@@ -42,4 +42,33 @@ function onToggleTodoItem(event) {
 
 function onDestroyTodoItem(event) {
   event.target.closest("li").parentNode.removeChild(event.target.closest("li"));
+}
+
+
+$changeInput.addEventListener("dblclick", function (e) {
+  if (e.target && e.target.nodeName == "LABEL") {
+     onDoubleClickTodoItem(e);
+     return;
+  }
+});
+
+function onDoubleClickTodoItem(event) {
+  event.target.closest("li").getElementsByClassName("edit")[0].value = event.target.textContent;
+  event.target.closest("li").getElementsByClassName("edit")[0].toggleAttribute("autoFocus");
+  event.target.closest("li").classList.toggle("editing");
+}
+
+$changeInput.addEventListener("keyup", onEditTodoItem);
+
+function onEditTodoItem(event) {
+  const editTitle = event.target.closest("li").getElementsByClassName("edit")[0].value;
+  if (event.target && event.target.nodeName == "INPUT" && event.target.className === 'edit' && event.key === "Enter" && editTitle !== "") {
+    event.target.closest("li").getElementsByClassName("label")[0].textContent = editTitle;
+    event.target.closest("li").classList.toggle("editing");
+    return;
+  }
+  if (event.target && event.target.nodeName == "INPUT" && event.key === "Escape") {
+    event.target.closest("li").classList.toggle("editing");
+    return;
+  }
 }
