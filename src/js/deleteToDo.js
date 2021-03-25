@@ -1,4 +1,3 @@
-
 const deleteToDos = () => {
     let xMarks = document.getElementsByClassName("destroy");
 

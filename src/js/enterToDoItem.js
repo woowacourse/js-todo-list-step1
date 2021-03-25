@@ -1,6 +1,7 @@
 
-const enterToDoItem = () => {
-    if (window.event.keyCode == 13) {
+
+const enterToDoItem = (event) => {
+    if (event.key == "Enter") {
         const toDoParent = document.getElementById("todo-list");
         const toDoContent = document.getElementById("new-todo-title").value;
         const singleToDo = foamToDoSingle(toDoContent);
@@ -61,3 +62,6 @@ const foamToDoSingle = (newTitle) => {
 
     return elementToDoSingle;
 }
+
+const $newToDo = document.getElementById("new-todo-title");
+$newToDo.addEventListener("keyup", enterToDoItem);

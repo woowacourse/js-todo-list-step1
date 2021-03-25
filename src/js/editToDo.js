@@ -1,4 +1,3 @@
-
 const editToDos = () => {
     let editMarks = document.getElementsByClassName("label");
 
@@ -16,7 +15,7 @@ const clickEdit = (event) => {
 }
 
 const edit = (event) => {
-    if(window.event.keyCode == 13) {
+    if(window.event.key == "Enter") {
         const changedContent = event.currentTarget.value;
         const targetContent = event.currentTarget.parentNode.getElementsByClassName("label")[0];
         targetContent.innerHTML = changedContent;
@@ -25,7 +24,7 @@ const edit = (event) => {
 }
 
 const cancelEdit = (event) => {
-    if (window.event.keyCode == 27) {
+    if (window.event.key == "Esc") {
         event.currentTarget.parentNode.setAttribute("class", "");
     }
 }
