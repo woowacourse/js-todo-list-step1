@@ -8,12 +8,14 @@ const EDIT_CONTENT_CLASS_NAME = "edit"
 const newTodo = document.querySelector("#new-todo-title")
 const todoBox = document.querySelector("#todo-list");
 const countLabel = document.querySelector("strong");
+const buttonBox = document.querySelector(".filters")
 
 window.onload = () => {
     hangKeyDownEvent()
     hangKeyUpEvent()
     hangClickEvent()
     hangEditEvent()
+    hangClickButtonEvent()
     refreshCount()
 };
 
@@ -28,7 +30,7 @@ function hangKeyDownEvent() {
         }
         todoBox.insertAdjacentHTML("beforeend", makeTodo(newTodo.value))
         e.target.value = ""
-        refreshCount()
+        refreshView()
     }, {once: true})
 }
 
@@ -63,8 +65,8 @@ function hangClickEvent() {
         if (clickedClass === DESTROY_BUTTON_CLASS_NAME) {
             const todo = e.target.closest("li")
             todoBox.removeChild(todo)
-            refreshCount()
         }
+        refreshView()
     })
 }
 
@@ -110,5 +112,57 @@ function keyUpAtEditTodo(e) {
 }
 
 function refreshCount() {
-    countLabel.innerText = todoBox.querySelectorAll("li").length.toString();
+    const todos = todoBox.querySelectorAll("li")
+    const counting =
+        Array.from(todos)
+            .filter(todo => !todo.classList.contains("hidden"))
+            .length
+    countLabel.innerText = counting.toString();
+}
+
+function hangClickButtonEvent() {
+    buttonBox.addEventListener("click", function (e) {
+        if (e.target.tagName !== "A") {
+            return
+        }
+        unSelectButtons();
+        e.target.classList.toggle("selected")
+        refreshView()
+    })
+
+    function unSelectButtons() {
+        buttonBox.querySelectorAll("A").forEach(button => button.classList.remove("selected"))
+    }
+}
+
+function refreshView() {
+    const todos = todoBox.querySelectorAll("li")
+    const hidden = "hidden"
+    const state = getCurrentState()
+
+    todos.forEach(todo => todo.classList.remove("hidden"))
+    if (state === "completed") {
+        Array.from(todos)
+            .filter(todo => !todo.classList.contains("completed"))
+            .forEach(todo => todo.classList.add(hidden))
+    }
+    if (state === "active") {
+        Array.from(todos)
+            .filter(todo => todo.classList.contains("completed"))
+            .forEach(todo => todo.classList.add(hidden))
+    }
+    refreshCount()
+}
+
+function getCurrentState() {
+    const button = Array.from(buttonBox.querySelectorAll("A"))
+        .find(button => button.classList.contains("selected"));
+
+    if (button.classList.contains("active")) {
+        return "active"
+    }
+    if (button.classList.contains("completed")) {
+        return "completed"
+    }
+    return "all"
 }
