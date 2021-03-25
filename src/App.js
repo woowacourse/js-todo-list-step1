@@ -1,13 +1,39 @@
 function init() {
   const newTodo = document.querySelector('#new-todo-title')
   const todoList = document.querySelector('#todo-list')
-  const allTodoBtn = document.querySelector('.all')
-  const activeTodoBtn = document.querySelector('active')
-  const completedBtn = document.querySelector('.completed')
+  const filters = document.querySelector('.filters')
 
   newTodo.addEventListener('keyup', createTodo)
   todoList.addEventListener('click', checkTodo)
   todoList.addEventListener('dblclick', editTodo)
+
+  filters.addEventListener('click', function () {
+    filterTodo(event, todoList, filters)
+  })
+}
+
+function filterTodo(e, todoList, filters) {
+  filters
+    .querySelector('.selected')
+    .classList.remove('selected')
+  e.target.classList.add('selected')
+
+  if (e.target.classList.contains('all')) {
+    Array.from(todoList.querySelectorAll('li'))
+      .map(todo => todo.style.display = 'block')
+  }
+  if (e.target.classList.contains('active')) {
+    Array.from(todoList.querySelectorAll('.completed'))
+      .map(todo => todo.style.display = 'none')
+    Array.from(todoList.querySelectorAll('li:not(.completed)'))
+      .map(todo => todo.style.display = 'block')
+  }
+  if (e.target.classList.contains('completed')) {
+    Array.from(todoList.querySelectorAll('.completed'))
+      .map(todo => todo.style.display = 'block')
+    Array.from(todoList.querySelectorAll('li:not(.completed)'))
+      .map(todo => todo.style.display = 'none')
+  }
 }
 
 function editTodo(e) {
