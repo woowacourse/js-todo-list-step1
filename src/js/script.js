@@ -5,8 +5,11 @@ todoInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         const input = document.getElementById('new-todo-title');
         addList(input.value);
+        input.value = "";
     }
 })
+
+
 
 function addList(input) {
     const todoList = document.getElementById('todo-list');
@@ -83,8 +86,7 @@ function onlyToDo() {
 function completed() {
     const todoItems = document.querySelectorAll('.todoapp .todo-list li');
     todoItems.forEach(element => {
-        
-        if (element.classList.contains("active")) {
+        if (!element.classList.contains("completed")) {
             element.style.display = "none";
         } else {
             element.style.display = "block";
