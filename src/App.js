@@ -1,52 +1,46 @@
-export default class App {
-  constructor() {
-    this.newTodo = document.querySelector('#new-todo-title')
-    this.todoList = document.querySelector('#todo-list')
+function init() {
+  const newTodo = document.querySelector('#new-todo-title')
+  const todoList = document.querySelector('#todo-list')
 
-    this.createTodo(this.newTodo, this.todoList)
-    this.editTodo(this.todoList)
-  }
+  newTodo.addEventListener('keyup', createTodo)
+  todoList.addEventListener('click', checkTodo)
+}
 
-  createTodo(newTodo, todoList) {
-    newTodo.addEventListener('keyup', (e) => {
-      if (e.key === 'Enter' && newTodo.value) {
-        const todoItem = document.createElement('li')
-        todoItem.className = 'false'
+function checkTodo(e) {
+  e.target.closest('li').classList.toggle('completed')
+}
 
-        const todo = document.createElement('div')
-        todo.className = 'view'
+function createTodo(e) {
+  if (e.key === 'Enter' && e.target.value) {
+    const todoList = document.querySelector('#todo-list')
 
-        const checkBox = document.createElement('input')
-        checkBox.type = 'checkbox'
-        checkBox.className = 'toggle'
-        checkBox.addEventListener('click', () => {
-          if (checkBox.checked) {
-            todoItem.className = 'completed'
-          } else {
-            todoItem.className = 'false'
-          }
-        })
+    const todoItem = document.createElement('li')
 
-        const content = document.createElement('label')
-        content.className = 'label'
-        content.innerText = this.newTodo.value
+    const todo = document.createElement('div')
+    todo.className = 'view'
 
-        const destroyBtn = document.createElement('button')
-        destroyBtn.className = 'destroy'
-        destroyBtn.addEventListener('click', () => {
-          todoList.removeChild(todoItem)
-        })
+    const checkBox = document.createElement('input')
+    checkBox.type = 'checkbox'
+    checkBox.className = 'toggle'
 
-        todo.appendChild(checkBox)
-        todo.appendChild(content)
-        todo.appendChild(destroyBtn)
-        todoItem.appendChild(todo)
-        todoList.appendChild(todoItem)
+    const content = document.createElement('label')
+    content.className = 'label'
+    content.innerText = e.target.value
 
-        newTodo.value = ''
-      }
+    const destroyBtn = document.createElement('button')
+    destroyBtn.className = 'destroy'
+    destroyBtn.addEventListener('click', () => {
+      todoList.removeChild(todoItem)
     })
+
+    todo.appendChild(checkBox)
+    todo.appendChild(content)
+    todo.appendChild(destroyBtn)
+    todoItem.appendChild(todo)
+    todoList.appendChild(todoItem)
+
+    e.target.value = ''
   }
 }
 
-new App()
+init()
