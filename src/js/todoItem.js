@@ -24,7 +24,11 @@ function todoItemTemplate(item) {
 
 document.getElementById("todo-list")
     .addEventListener("click", function (e) {
-    if(e.target.classList.contains("toggle")) {
+    if (e.target.classList.contains("toggle")) {
         e.target.closest("li").classList.toggle("completed");
+        // 체크박스에 checked 추가
+    }
+    if (e.target.classList.contains("destroy")) {
+        e.target.closest("li").remove();
     }
 });
