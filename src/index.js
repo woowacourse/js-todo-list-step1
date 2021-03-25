@@ -81,14 +81,14 @@ function changeInputMode(e) {
 }
 
 function finishEditMode(e) {
-     if (e.keyCode == 27 ) {
+     if (e.keyCode === 27 ) {
          let todoItem = e.target.parentElement;
          todoItem.removeAttribute('class');
          todoItem.addEventListener('dblclick', changeInputMode);
          return
      }
 
-     if (e.keyCode == 13) {
+     if (e.keyCode === 13) {
          let todoItem = e.target.parentElement;
          const title = todoItem.firstElementChild.getElementsByClassName('label')[0];
          const editTitle = todoItem.getElementsByClassName('edit')[0];
@@ -99,12 +99,22 @@ function finishEditMode(e) {
 }
 
 function countMoveItem() {
+    console.log('countMoveItem() called');
+
     const countContainer = document.getElementsByClassName('count-container')[0];
     const todoList = document.getElementById('todo-list');
+    const todoListItems = todoList.getElementsByTagName('li');
+
+    let count = 0;
+    for (let i = 0; i < todoListItems.length; i++) {
+        console.log(todoListItems[i].style.display);
+        if (todoListItems[i].style.display === '') {
+            count += 1;
+        }
+    }
 
     const todoCount = countContainer.getElementsByClassName('todo-count')[0];
-    console.log(todoCount);
-    todoCount.innerHTML = '총 <strong>' + todoList.childElementCount + '</strong> 개';
+    todoCount.innerHTML = '총 <strong>' + count + '</strong> 개';
 }
 
 function changeFilter(filter) {
@@ -114,7 +124,7 @@ function changeFilter(filter) {
 
     for (let i = 0; i < liList.length; i++) {
         let moveItem = liList[i];
-        moveItem.style.display = 'block';
+        moveItem.style.display = '';
     }
 
     if (filter === '') {
@@ -151,4 +161,6 @@ function changeFilter(filter) {
             }
         }
     }
+
+    countMoveItem();
 }
