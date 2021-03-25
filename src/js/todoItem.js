@@ -1,10 +1,14 @@
 const todoInput = document.getElementById("new-todo-title");
 const todoList = document.getElementById("todo-list");
+const allTodo = document.querySelector(".all");
+const willTodo = document.querySelector(".active");
+const finishTodo = document.querySelector(".completed");
 
 function addTodoItem(event) {
     const item = event.target.value;
     const todoList = document.getElementById("todo-list");
     if (event.key === "Enter" && item !== "") {
+        allTodo.click();
         todoList.insertAdjacentHTML("beforeend", todoItemTemplate(item));
         event.target.value = "";
         updateCount();
@@ -12,7 +16,7 @@ function addTodoItem(event) {
 }
 
 function todoItemTemplate(item) {
-    return `<li>
+    return `<li style="display: block">
                 <div class="view">
                     <input class="toggle" type="checkbox">
                     <label class="label">${item}</label>
@@ -23,8 +27,14 @@ function todoItemTemplate(item) {
 }
 
 function updateCount() {
-    const count = todoList.childElementCount;
-    document.getElementsByClassName("todo-count")[0].innerHTML = countTemplate(count);
+    let count = 0;
+    const allTodoList = todoList.childNodes;
+    for (let todo of allTodoList) {
+        if (todo.style.display === "block") {
+            count++;
+        }
+    }
+    document.querySelector(".todo-count").innerHTML = countTemplate(count);
 }
 
 function countTemplate(count) {
@@ -68,4 +78,48 @@ todoList.addEventListener("dblclick", function (event) {
             li.classList.remove("editing");
         }
     });
+});
+
+allTodo.addEventListener("click", function () {
+    allTodo.classList.add("selected");
+    willTodo.classList.remove("selected");
+    finishTodo.classList.remove("selected");
+
+    const allTodoList = todoList.childNodes;
+    for (let todo of allTodoList) {
+        todo.style.display = "block";
+    }
+    updateCount();
+});
+
+willTodo.addEventListener("click", function () {
+    allTodo.classList.remove("selected");
+    willTodo.classList.add("selected");
+    finishTodo.classList.remove("selected");
+
+    const allTodoList = todoList.childNodes;
+    for (let todo of allTodoList) {
+        if (todo.classList.contains("completed")) {
+            todo.style.display = "none";
+        } else {
+            todo.style.display = "block";
+        }
+    }
+    updateCount();
+});
+
+finishTodo.addEventListener("click", function () {
+    allTodo.classList.remove("selected");
+    willTodo.classList.add("selected");
+    finishTodo.classList.remove("selected");
+
+    const allTodoList = todoList.childNodes;
+    for (let todo of allTodoList) {
+        if (todo.classList.contains("completed")) {
+            todo.style.display = "block";
+        } else {
+            todo.style.display = "none";
+        }
+    }
+    updateCount();
 });
