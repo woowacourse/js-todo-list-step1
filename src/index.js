@@ -11,7 +11,7 @@ function addTodoItem(e) {
         return
     }
     const todoList = document.getElementById('todo-list');
-    const todoTitle = document.getElementById('new-todo-title').value;
+    const todoTitle = document.getElementById('new-todo-title');
 
     const div = document.createElement('div');
     div.setAttribute('class', 'view');
@@ -26,7 +26,7 @@ function addTodoItem(e) {
 
     const title = document.createElement('label');
     title.setAttribute('class', 'label');
-    title.innerHTML = todoTitle;
+    title.innerHTML = todoTitle.value;
 
     const button = document.createElement('button');
     button.setAttribute('class', 'destroy');
@@ -34,7 +34,7 @@ function addTodoItem(e) {
 
     const editInput = document.createElement('input')
     editInput.setAttribute('class', 'edit');
-    editInput.setAttribute('value', todoTitle);
+    editInput.setAttribute('value', todoTitle.value);
 
     div.appendChild(input);
     div.appendChild(title);
@@ -45,6 +45,7 @@ function addTodoItem(e) {
 
     todoList.appendChild(li);
     countMoveItem();
+    todoTitle.value = "";
 }
 
 function toggleTodoItem(e) {
