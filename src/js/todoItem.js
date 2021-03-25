@@ -1,6 +1,5 @@
-const todoInput = document.querySelector("#new-todo-title");
-
-todoInput.addEventListener("keyup", addTodoItem);
+const todoInput = document.getElementById("new-todo-title");
+const todoList = document.getElementById("todo-list");
 
 function addTodoItem(event) {
     const item = event.target.value;
@@ -22,38 +21,40 @@ function todoItemTemplate(item) {
             </li>`;
 }
 
-document.getElementById("todo-list")
-    .addEventListener("click", function (e) {
-        if (e.target.classList.contains("toggle")) {
-            e.target.closest("li").classList.toggle("completed");
-            const toggleInput = e.target.closest("li").getElementsByClassName("toggle")[0];
-            if (toggleInput.hasAttribute("checked")) {
-                toggleInput.removeAttribute("checked");
-            } else {
-                toggleInput.setAttribute("checked", true);
-            }
-        }
-        if (e.target.classList.contains("destroy")) {
-            e.target.closest("li").remove();
-        }
-    });
+todoInput.addEventListener("keyup", addTodoItem);
 
-document.getElementById("todo-list")
-    .addEventListener("dblclick", function (e) {
-        const originalValue = e.target.innerText;
-        e.target.closest("li").classList.toggle("editing");
-        const editInput = e.target.closest("li").getElementsByClassName("edit")[0];
-        editInput.addEventListener("keyup", function (event){
-            const item = event.target.value;
-            if (event.key === "Enter" && item !== "") {
-                const parent = event.target.parentNode;
-                const label = parent.getElementsByClassName("label")[0];
-                label.innerText = item;
-                parent.classList.remove("editing");
-            }
-            if (event.key === "Escape") {
-                event.target.value = originalValue;
-                event.target.parentNode.classList.remove("editing");
-            }
-        });
+todoList.addEventListener("click", function (event) {
+    const li = event.target.closest("li");
+    if (event.target.classList.contains("toggle")) {
+        li.classList.toggle("completed");
+        if (event.target.hasAttribute("checked")) {
+            event.target.removeAttribute("checked");
+        } else {
+            event.target.setAttribute("checked", true);
+        }
+    }
+    if (event.target.classList.contains("destroy")) {
+        li.remove();
+    }
+});
+
+todoList.addEventListener("dblclick", function (event) {
+    const li = event.target.closest("li");
+    const label = li.getElementsByClassName("label")[0];
+    const editInput = li.getElementsByClassName("edit")[0];
+    const originalValue = label.innerText;
+
+    li.classList.toggle("editing");
+
+    editInput.addEventListener("keyup", function (event) {
+        const item = event.target.value;
+        if (event.key === "Enter" && item !== "") {
+            label.innerText = item;
+            li.classList.remove("editing");
+        }
+        if (event.key === "Escape") {
+            event.target.value = originalValue;
+            li.classList.remove("editing");
+        }
     });
+});
