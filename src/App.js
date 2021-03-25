@@ -1,6 +1,9 @@
 function init() {
   const newTodo = document.querySelector('#new-todo-title')
   const todoList = document.querySelector('#todo-list')
+  const allTodoBtn = document.querySelector('.all')
+  const activeTodoBtn = document.querySelector('active')
+  const completedBtn = document.querySelector('.completed')
 
   newTodo.addEventListener('keyup', createTodo)
   todoList.addEventListener('click', checkTodo)
@@ -72,7 +75,6 @@ function createTodo(e) {
 
 function updateTodoCount(todoList) {
   const todoCount = document.querySelector('strong')
-  console.log(document.querySelectorAll('todo-list > li'))
   todoCount.innerText = todoList.querySelectorAll('li').length
 }
 
