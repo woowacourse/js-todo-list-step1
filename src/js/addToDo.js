@@ -8,6 +8,16 @@ user_to_do_input.addEventListener('keypress', function(e) {
     }
 })
 
+to_do_list_view.addEventListener("click", function(e) {
+    if (e.target && e.target.nodeName == "INPUT") {
+        if (e.target.checked) {
+            e.target.parentNode.parentNode.setAttribute("class", "completed");
+        } else {
+            e.target.parentNode.parentNode.setAttribute("class", "");
+        }
+    }
+})
+
 function appendNewListToView() {
     var newToDoList = document.createElement('li');
     newToDoList.innerHTML = 
