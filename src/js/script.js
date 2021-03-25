@@ -18,8 +18,20 @@ function onAddTodoItem(event) {
 }
 
 function onToggleTodoItem(event) {
-    event.target.closest("li").classList.toggle("completed");
+    // event.target.closest("li").classList.toggle("completed");
+    event.target.closest("ul").insertAdjacentHTML("beforeend", renderTodoItemCompletedTemplate(title));
 }  
+
+function renderTodoItemCompletedTemplate(title) {
+    return `<li class="completed"> 
+                <div class="view">
+                <input class="toggle" type="checkbox" checked/>
+                <label class="label">${title}</label>
+                <button class="destroy"></button>
+                </div>
+                <input class="edit" value=${title}/>
+            </li>`;
+}
 
 function renderTodoItemTemplate(title) {
     return `<div class="view">
@@ -27,7 +39,7 @@ function renderTodoItemTemplate(title) {
                 <label class="label">${title}</label>
                 <button class="destroy"></button>
             </div>
-            <input class="edit" value="새로운 타이틀">`;
+            <input class="edit" value=${title}>`;
   }
 
 function updateTotalCount() {
