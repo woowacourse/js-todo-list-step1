@@ -4,10 +4,35 @@ function init() {
 
   newTodo.addEventListener('keyup', createTodo)
   todoList.addEventListener('click', checkTodo)
+  todoList.addEventListener('dblclick', editTodo)
+}
+
+function editTodo(e) {
+  if (e.target.className === 'label') {
+    const content = e.target
+    const todoItem = e.target.closest('li')
+    const editForm = document.createElement('input')
+    editForm.className = 'edit'
+    editForm.value = content.innerText
+    editForm.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        content.innerText = editForm.value
+      }
+      if (e.key === 'Enter' || e.key === 'Escape') {
+        todoItem.removeChild(editForm)
+        todoItem.classList.remove('editing')
+      }
+    })
+
+    todoItem.classList.add('editing')
+    todoItem.appendChild(editForm)
+  }
 }
 
 function checkTodo(e) {
-  e.target.closest('li').classList.toggle('completed')
+  if (e.target.className === 'toggle') {
+    e.target.closest('li').classList.toggle('completed')
+  }
 }
 
 function createTodo(e) {
