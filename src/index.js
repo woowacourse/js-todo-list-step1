@@ -26,7 +26,7 @@ function addTodoItem(e) {
 
     const title = document.createElement('label');
     title.setAttribute('class', 'label');
-    title.append(todoTitle);
+    title.innerHTML = todoTitle;
 
     const button = document.createElement('button');
     button.setAttribute('class', 'destroy');
