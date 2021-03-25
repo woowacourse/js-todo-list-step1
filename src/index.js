@@ -59,9 +59,10 @@ function toggleTodoItem(e) {
     console.log(todoItem);
     if (e.target.checked) {
         todoItem.className = 'completed';
+        todoItem.setAttribute('checked', 'checked');
         return
     }
-
+    todoItem.removeAttribute('checked');
     todoItem.removeAttribute('class');
 }
 
