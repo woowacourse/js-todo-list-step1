@@ -1,20 +1,23 @@
-let toDoItemIndex = 0;
-
-function addTodoList() {
+function addTodoList(event) {
     const ul = document.getElementById('todo-list');
     const input = document.getElementById('new-todo-title');
-    ul.innerHTML += `<li class="false" id="${toDoItemIndex}">
+    if (event.keyCode == 13 && input.value != '') {
+        ul.innerHTML += `<li class="false">
         <div class="view">
-            <input class="toggle" type="checkbox" id="${toDoItemIndex}"/>
+            <input class="toggle" type="checkbox"/>
             <label class="label">${input.value}</label>
-            <button class="destroy" id="${toDoItemIndex}"></button>
+            <button class="destroy"></button>
         </div>
         <input class="edit" value="${input.value}"/>
     </li>`;
-    toDoItemIndex++;
-    input.value = '';
+        input.value = '';
+        setCount(ul.childNodes.length);
+    }
+}
+
+function setCount(value) {
     const span = document.querySelector('.todo-count');
-    span.innerHTML = `<strong>총 ${ul.childNodes.length} 개</strong>`;
+    span.innerHTML = `<strong>총 ${value} 개</strong>`;
 }
 
 function checkTodoItem(event) {
@@ -29,12 +32,22 @@ function checkTodoItem(event) {
 }
 
 function removeTodoItem(event) {
-    const ul = document.getElementById('todo-list');
     if (event.target.className === 'destroy') {
+        const ul = event.target.closest('ul');
+        const li = event.target.closest('li');
         event.target.closest('ul').removeChild(event.target.closest('li'));
-        const span = document.querySelector('.todo-count');
-        span.innerHTML = `<strong>총 ${ul.childNodes.length} 개</strong>`;
+        setCount(countList(ul, li));
     }
+}
+
+function countList(ul, li) {
+    let count = 0;
+    for (let item of ul.children) {
+        if (li.className == item.className) {
+            count++;
+        }
+    }
+    return count;
 }
 
 function showInputTodoItemToEdit(event) {
@@ -56,13 +69,59 @@ function editTodoItem(event) {
     }
 }
 
-document.getElementById('new-todo-title').addEventListener('change', addTodoList);
+function showTodoList() {
+    const allList = document.getElementById('todo-list').children;
+    let count = 0;
+    for (let item of allList) {
+        if (item.className == 'completed') {
+            item.style.display = 'none';
+        }
+        if (item.className == 'false') {
+            item.style.display = 'block';
+            count++;
+        }
+    }
+    setCount(count);
+    this.classList.add('selected');
+    document.querySelector('.all').classList.remove('selected');
+    document.querySelector('li > .completed').classList.remove('selected');
+}
 
+function showDoneList() {
+    const allList = document.getElementById('todo-list').children;
+    let count = 0;
+    for (let item of allList) {
+        if (item.className == 'completed') {
+            item.style.display = 'block';
+            count++;
+        }
+        if (item.className == 'false') {
+            item.style.display = 'none';
+        }
+    }
+    setCount(count);
+    this.classList.add('selected');
+    document.querySelector('.all').classList.remove('selected');
+    document.querySelector('.active').classList.remove('selected');
+}
+
+function showAllList() {
+    const allList = document.getElementById('todo-list').children;
+    for (let item of allList) {
+        item.style.display = 'block';
+    }
+    setCount(allList.length);
+    this.classList.add('selected');
+    document.querySelector('.active').classList.remove('selected');
+    document.querySelector('li > .completed').classList.remove('selected');
+}
+
+document.getElementById('new-todo-title').addEventListener('keyup', addTodoList);
+document.querySelector('.all').addEventListener('click', showAllList);
+document.querySelector('.active').addEventListener('click', showTodoList);
+document.querySelector('li > .completed').addEventListener('click', showDoneList);
 document.addEventListener('click', checkTodoItem);
-
 document.addEventListener('click', removeTodoItem);
-
 document.addEventListener('dblclick', showInputTodoItemToEdit);
-
-document.addEventListener('keydown', editTodoItem);
+document.addEventListener('keyup', editTodoItem);
 
