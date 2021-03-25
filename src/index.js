@@ -1,4 +1,7 @@
 document.getElementById("new-todo-title").addEventListener("keydown", enterkey);
+document.getElementsByClassName("all")[0].addEventListener("click", allListClick);
+document.getElementsByClassName("active")[0].addEventListener("click", todoListClick);
+document.getElementsByClassName("completed")[0].addEventListener("click", completeClick);
 
 function enterkey(event) {
     if (event.keyCode ==  13) {
@@ -57,5 +60,27 @@ function countItems() {
     let items = document.getElementById('todo-list');
     let todoList = items.getElementsByTagName('li');
     let sum = document.getElementsByClassName('todo-count')[0];
-    sum.innerHTML = '총 <st rong>' + todoList.length + '</strong> 개';
+    sum.innerHTML = '총 <strong>' + todoList.length + '</strong> 개';
+}
+
+function todoListClick() {
+    let items = document.getElementById('todo-list');
+    let itemNodes = items.childNodes;
+    for (let i = 0; i < itemNodes.length; i++) {
+        if (itemNodes[i].className == 'completed') {
+            itemNodes[i].style.display = 'none';
+        }
+    }
+}
+
+function allListClick() {
+    let items = document.getElementById('todo-list');
+    let itemNodes = items.childNodes;
+    for (let i = 0; i < itemNodes.length; i++) {
+        itemNodes[i].style.display = 'block';
+    }
+}
+
+function completeClick() {
+    console.log("complete click");
 }

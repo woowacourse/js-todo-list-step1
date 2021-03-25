@@ -23,7 +23,7 @@
   <a href="https://next-step.github.io/js-todo-list-step1/">🖥️ 데모 링크</a>
 </p>
 
-<br/>
+<br/> 
 
 ## 🎯 요구사항
 
