@@ -27,6 +27,9 @@ function init() {
 
       const destroyBtn = document.createElement('button')
       destroyBtn.className = 'destroy'
+      destroyBtn.addEventListener('click', () => {
+        todoList.removeChild(todoItem)
+      })
 
       todo.appendChild(checkBox)
       todo.appendChild(content)
