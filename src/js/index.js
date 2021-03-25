@@ -13,6 +13,8 @@ function addTodoList() {
     </li>`;
     toDoItemIndex++;
     input.value = '';
+    const span = document.querySelector('.todo-count');
+    span.innerHTML = `<strong>총 ${ul.childNodes.length} 개</strong>`;
 }
 
 function checkTodoItem(event) {
@@ -27,8 +29,11 @@ function checkTodoItem(event) {
 }
 
 function removeTodoItem(event) {
+    const ul = document.getElementById('todo-list');
     if (event.target.className === 'destroy') {
         event.target.closest('ul').removeChild(event.target.closest('li'));
+        const span = document.querySelector('.todo-count');
+        span.innerHTML = `<strong>총 ${ul.childNodes.length} 개</strong>`;
     }
 }
 
@@ -39,12 +44,11 @@ function showInputTodoItemToEdit(event) {
 }
 
 function editTodoItem(event) {
-    if (event.keyCode == 27 && event.target.className === 'edit') {
-        console.log(event.target.value)
+    if (event.keyCode === 27 && event.target.className === 'edit') {
         event.target.value = event.target.getAttribute('value');
         event.target.closest('li').classList.remove('editing');
     }
-    if (event.keyCode == 13 && event.target.className === 'edit') {
+    if (event.keyCode === 13 && event.target.className === 'edit') {
         const div = event.target.previousSibling.previousSibling;
         div.childNodes[3].textContent = event.target.value;
         event.target.setAttribute('value', event.target.value);
@@ -61,3 +65,4 @@ document.addEventListener('click', removeTodoItem);
 document.addEventListener('dblclick', showInputTodoItemToEdit);
 
 document.addEventListener('keydown', editTodoItem);
+
