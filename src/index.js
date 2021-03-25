@@ -21,7 +21,6 @@ function addTodoItem(e) {
 
     const li = document.createElement('li');
     li.addEventListener('dblclick', changeInputMode)
-    li.addEventListener('click', clickTodoItem);
 
     const div = document.createElement('div');
     div.setAttribute('class', 'view');
@@ -151,8 +150,4 @@ function changeFilter(filter) {
             }
         }
     }
-}
-
-function clickTodoItem(e) {
-    console.log(e.target);
 }
