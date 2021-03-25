@@ -1,7 +1,16 @@
+document.getElementById('new-todo-title').addEventListener('keyup', addTodoList);
+document.querySelector('.all').addEventListener('click', showAllList);
+document.querySelector('.active').addEventListener('click', showTodoList);
+document.querySelector('li > .completed').addEventListener('click', showDoneList);
+document.addEventListener('click', checkTodoItem);
+document.addEventListener('click', removeTodoItem);
+document.addEventListener('dblclick', showInputTodoItemToEdit);
+document.addEventListener('keyup', editTodoItem);
+
 function addTodoList(event) {
     const ul = document.getElementById('todo-list');
     const input = document.getElementById('new-todo-title');
-    if (event.keyCode == 13 && input.value != '') {
+    if (event.keyCode === 13 && input.value !== '') {
         ul.innerHTML += `<li class="false">
         <div class="view">
             <input class="toggle" type="checkbox"/>
@@ -43,7 +52,7 @@ function removeTodoItem(event) {
 function countList(ul, li) {
     let count = 0;
     for (let item of ul.children) {
-        if (li.className == item.className) {
+        if (li.className === item.className) {
             count++;
         }
     }
@@ -73,10 +82,10 @@ function showTodoList() {
     const allList = document.getElementById('todo-list').children;
     let count = 0;
     for (let item of allList) {
-        if (item.className == 'completed') {
+        if (item.className === 'completed') {
             item.style.display = 'none';
         }
-        if (item.className == 'false') {
+        if (item.className === 'false') {
             item.style.display = 'block';
             count++;
         }
@@ -91,11 +100,11 @@ function showDoneList() {
     const allList = document.getElementById('todo-list').children;
     let count = 0;
     for (let item of allList) {
-        if (item.className == 'completed') {
+        if (item.className === 'completed') {
             item.style.display = 'block';
             count++;
         }
-        if (item.className == 'false') {
+        if (item.className === 'false') {
             item.style.display = 'none';
         }
     }
@@ -115,13 +124,4 @@ function showAllList() {
     document.querySelector('.active').classList.remove('selected');
     document.querySelector('li > .completed').classList.remove('selected');
 }
-
-document.getElementById('new-todo-title').addEventListener('keyup', addTodoList);
-document.querySelector('.all').addEventListener('click', showAllList);
-document.querySelector('.active').addEventListener('click', showTodoList);
-document.querySelector('li > .completed').addEventListener('click', showDoneList);
-document.addEventListener('click', checkTodoItem);
-document.addEventListener('click', removeTodoItem);
-document.addEventListener('dblclick', showInputTodoItemToEdit);
-document.addEventListener('keyup', editTodoItem);
 
