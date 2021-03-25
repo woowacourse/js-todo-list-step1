@@ -29,6 +29,10 @@ function modifyList({target}) {
 
         target.toggleAttribute("checked")
     }
+
+    if(target.className === 'destroy'){
+        $todoUl.removeChild(target.closest("li"))
+    }
 }
 
 $todoUl.addEventListener("click", modifyList)
