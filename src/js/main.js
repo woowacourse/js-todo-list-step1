@@ -4,14 +4,16 @@ const date = new Date();
 
 function getTodoInput({key}) {
     if (key === "Enter" && $todoInput.value !== "") {
+        const id = date.getTime();
+        const value = $todoInput.value;
         const list = `
-            <li id="${date.getTime()}" class="false">
+            <li id="${id}" class="false">
                 <div class="view">
-                    <input class="toggle" type="checkbox"/>
-                    <label class="label">${$todoInput.value}</label>
-                    <button class="destroy"></button>
+                    <input class="toggle" type="checkbox" id="${id}"/>
+                    <label class="label">${value}</label>
+                    <button class="destroy" id="${id}"></button>
                 </div>
-                <input class="edit" value="새로운 타이틀" />
+                <input class="edit" value="${value}" />
             </li>`;
         $todoUl.insertAdjacentHTML('beforeend', list);
         $todoInput.value = '';
