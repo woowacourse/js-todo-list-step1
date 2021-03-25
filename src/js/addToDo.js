@@ -9,12 +9,17 @@ user_to_do_input.addEventListener('keypress', function(e) {
 })
 
 to_do_list_view.addEventListener("click", function(e) {
+    console.log(e.target);
+    console.log(e.target.nodeName);
     if (e.target && e.target.nodeName == "INPUT") {
         if (e.target.checked) {
             e.target.parentNode.parentNode.setAttribute("class", "completed");
         } else {
             e.target.parentNode.parentNode.setAttribute("class", "");
         }
+    }
+    if (e.target && e.target.nodeName == "BUTTON") {
+        e.target.parentNode.parentNode.remove();
     }
 })
 
