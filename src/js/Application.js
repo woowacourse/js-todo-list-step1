@@ -1,5 +1,6 @@
 const ENTER_CODE = 13;
 const CHECKBOX_CLASS_NAME = "toggle"
+const DESTROY_BUTTON_CLASS_NAME = "destroy"
 
 const newTodo = document.querySelector("#new-todo-title")
 const todoBox = document.querySelector("#todo-list");
@@ -51,6 +52,10 @@ function hangCheckEvent() {
         if (clickedClass === CHECKBOX_CLASS_NAME) {
             const todo = e.target.closest("li")
             todo.classList.toggle("completed")
+        }
+        if (clickedClass === DESTROY_BUTTON_CLASS_NAME) {
+            const todo = e.target.closest("li")
+            todoBox.removeChild(todo)
         }
     })
 }
