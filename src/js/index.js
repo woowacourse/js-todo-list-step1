@@ -34,7 +34,9 @@ to_do_list_view.addEventListener("click", function(e) {
         }
     }
     if (e.target && e.target.nodeName == "BUTTON") {
-        e.target.parentNode.parentNode.remove();
+        if (confirm("삭제 하시겠습니까?")) {
+            e.target.parentNode.parentNode.remove();
+        }
     }
     updateListNumber();
 })
@@ -43,3 +45,36 @@ function updateListNumber() {
     number_of_list.innerHTML = to_do_list_view.getElementsByTagName("li").length;
 }
 
+// CHANGE 창
+let show_all_list = document.getElementsByClassName("all selected")[0];
+let show_active_list = document.getElementsByClassName("active")[0];
+let show_completed_list = document.getElementsByClassName("completed")[0];
+
+show_all_list.addEventListener('click', function(e) {
+    const to_do_list = to_do_list_view.getElementsByTagName("li");
+    for (let i = 0; i < to_do_list.length; i++) {
+        to_do_list[i].style.display = "block";
+    }
+})
+
+show_active_list.addEventListener('click', function(e) {
+    const to_do_list = to_do_list_view.getElementsByTagName("li");
+    for (let i = 0; i < to_do_list.length; i++) {
+        if (to_do_list[i].getAttribute("class") !== null) {
+            to_do_list[i].style.display = "none";
+        } else {
+            to_do_list[i].style.display = "block";
+        }
+    }
+})
+
+show_completed_list.addEventListener('click', function(e) {
+    const to_do_list = to_do_list_view.getElementsByTagName("li");
+    for (let i = 0; i < to_do_list.length; i++) {
+        if (to_do_list[i].getAttribute("class") === null) {
+            to_do_list[i].style.display = "none";
+        } else {
+            to_do_list[i].style.display = "block";
+        }
+    }
+})
