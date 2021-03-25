@@ -8,6 +8,7 @@ function onAddTodoItem(event) {
   if (event.key === "Enter" && todoTitle !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
     event.target.value = "";
+    document.getElementsByTagName("strong")[0].textContent = document.querySelector("#todo-list").childElementCount;
   }
 }
 
@@ -42,8 +43,8 @@ function onToggleTodoItem(event) {
 
 function onDestroyTodoItem(event) {
   event.target.closest("li").parentNode.removeChild(event.target.closest("li"));
+  document.getElementsByTagName("strong")[0].textContent = document.querySelector("#todo-list").childElementCount;
 }
-
 
 $changeInput.addEventListener("dblclick", function (e) {
   if (e.target && e.target.nodeName == "LABEL") {
