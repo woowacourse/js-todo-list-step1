@@ -7,6 +7,7 @@ function addTodoItem(event) {
     if (event.key === "Enter" && item !== "") {
         todoList.insertAdjacentHTML("beforeend", todoItemTemplate(item));
         event.target.value = "";
+        updateCount();
     }
 }
 
@@ -19,6 +20,15 @@ function todoItemTemplate(item) {
                 </div>
                 <input class="edit" value="${item}" placeholder="새로운 타이틀">
             </li>`;
+}
+
+function updateCount() {
+    const count = todoList.childElementCount;
+    document.getElementsByClassName("todo-count")[0].innerHTML = countTemplate(count);
+}
+
+function countTemplate(count) {
+    return `총<strong>${count}</strong>개`;
 }
 
 todoInput.addEventListener("keyup", addTodoItem);
@@ -35,6 +45,7 @@ todoList.addEventListener("click", function (event) {
     }
     if (event.target.classList.contains("destroy")) {
         li.remove();
+        updateCount();
     }
 });
 
