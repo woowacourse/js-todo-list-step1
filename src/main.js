@@ -16,7 +16,7 @@ function onAddTodoItem(event) {
 }
 
 function renderTodoItemTemplate(title) {
-  return ` <li>
+  return ` <li class="todo-item">
                   <div class="view">
                       <input class="toggle" onclick="onToggleTodoItem(event)" type="checkbox" />
                       <label class="label" ondblclick="edit(event)">${title}</label>
@@ -64,6 +64,6 @@ function edit(event) {
 }
 
 function updateCount() {
-  const count = document.querySelectorAll('.view').length;
+  const count = document.querySelectorAll('.todo-item').length;
   document.querySelector('.todo-count-text').innerHTML = count;
 }
