@@ -72,6 +72,8 @@ function clickCheckBoxOrDestroy() {
 
 function doubleClickEditTodo() {
     todoBox.addEventListener("dblclick", function (e) {
+        todoBox.querySelectorAll("LI").forEach(todo => todo.classList.remove("editing"))
+
         const clickedClass = e.target.getAttribute("class")
         if (clickedClass === TODO_CONTENT_CLASS_NAME) {
             const todo = e.target.closest("li")
