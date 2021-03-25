@@ -3,6 +3,7 @@ const $toggleInput = document.querySelector("#todo-list");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
 $toggleInput.addEventListener("click", onToggleTodoItem);
+$toggleInput.addEventListener("click", onDestroyTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -16,6 +17,14 @@ function onAddTodoItem(event) {
 function onToggleTodoItem(event) {
     if (event.target.className == 'toggle'){
         event.target.closest("li").classList.toggle("completed");
+    }
+    event.stopPropagation();
+}
+
+function onDestroyTodoItem(event) {
+    if (event.target.className == 'destroy'){
+        $toggleInput.removeChild(event.target.closest("li"))
+        // event.target.closest("li").classList.toggle("completed");
     }
     event.stopPropagation();
 }
