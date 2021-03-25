@@ -1,8 +1,8 @@
 document.getElementById("new-todo-title").addEventListener("keydown", enterkey);
 
-function enterkey() {
-    if (window.event.keyCode ==  13) {
-        const input = document.getElementById("new-todo-title").value;
+function enterkey(event) {
+    if (event.keyCode ==  13) {
+        let input = document.getElementById("new-todo-title");
 
         const li = document.createElement("li");
 
@@ -12,21 +12,41 @@ function enterkey() {
         const toggle = document.createElement("input");
         toggle.setAttribute('class', 'toggle');
         toggle.setAttribute('type', 'checkbox');
+        toggle.addEventListener('click', clicktoggle);
 
         const label = document.createElement('label');
         label.setAttribute('class', 'label');
-        label.innerHTML = input;
+        label.innerHTML = input.value;
 
         const button = document.createElement('button');
         button.setAttribute('class', 'destroy');
+        button.addEventListener('click', clickdelete);
 
         div.appendChild(toggle);
         div.appendChild(label);
         div.appendChild(button);
         li.appendChild(div);
 
-        const ul = document.getElementById("todo-list");
+        const ul = document.getElementById('todo-list');
         ul.appendChild(li);
+
+        input.value = '';
     }
 }
 
+function clicktoggle(event) {
+    let item = event.target.parentElement.parentElement;
+    if (event.target.checked) {
+        item.className = 'completed';
+        item.setAttribute('checked', 'checked');
+        return;
+    }
+    item.removeAttribute('checked');
+    item.removeAttribute('class');
+}
+
+function clickdelete(event) {
+    let item = event.target.parentElement.parentElement;
+    let ul = item.parentElement;
+    ul.removeChild(item);
+}
