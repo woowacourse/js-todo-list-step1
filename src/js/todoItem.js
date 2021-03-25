@@ -26,7 +26,12 @@ document.getElementById("todo-list")
     .addEventListener("click", function (e) {
         if (e.target.classList.contains("toggle")) {
             e.target.closest("li").classList.toggle("completed");
-            // 체크박스에 checked 추가
+            const toggleInput = e.target.closest("li").getElementsByClassName("toggle")[0];
+            if (toggleInput.hasAttribute("checked")) {
+                toggleInput.removeAttribute("checked");
+            } else {
+                toggleInput.setAttribute("checked", true);
+            }
         }
         if (e.target.classList.contains("destroy")) {
             e.target.closest("li").remove();
