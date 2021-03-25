@@ -31,6 +31,7 @@ function enterkey(event) {
         ul.appendChild(li);
 
         input.value = '';
+        countItems();
     }
 }
 
@@ -49,4 +50,12 @@ function clickdelete(event) {
     let item = event.target.parentElement.parentElement;
     let ul = item.parentElement;
     ul.removeChild(item);
+    countItems();
+}
+
+function countItems() {
+    let items = document.getElementById('todo-list');
+    let todoList = items.getElementsByTagName('li');
+    let sum = document.getElementsByClassName('todo-count')[0];
+    sum.innerHTML = '총 <st rong>' + todoList.length + '</strong> 개';
 }
