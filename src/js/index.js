@@ -1,5 +1,7 @@
 const $todoInput = document.querySelector("#new-todo-title");
 const $todoList = document.querySelector("#todo-list");
+const $todoCount = document.querySelector(".todo-count strong")
+const $todoApp = document.querySelector(".todoapp");
 const $filterList = document.querySelector(".filters");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
@@ -7,6 +9,8 @@ $todoList.addEventListener("click", onToggleTodoItem);
 $todoList.addEventListener("click", onDestroyTodoItem);
 $todoList.addEventListener("dblclick", onEditingTodoItem);
 $todoList.addEventListener("keyup", onEditTodoItemComplete);
+$todoApp.addEventListener("click", onCountChange);
+$todoApp.addEventListener("keyup", onCountChange);
 $filterList.addEventListener("click", onFilterTodoItem);
 
 function onAddTodoItem(event) {
@@ -75,42 +79,42 @@ function onEditTodoItemComplete(event) {
 function onFilterTodoItem(event) {
     const className = event.target.className;
     if (className === 'all selected') {
-        showAll()
+        viewAll($todoList.children)
     } else if (className === 'active') {
-        showActive()
+        viewOrHidden($todoList.children, '')
     } else if (className === 'completed') {
-        showCompleted()
+        viewOrHidden($todoList.children, 'completed')
     }
     event.stopPropagation();
 }
 
-function showAll() {
-    for (const $todoItem of $todoList.children) {
-        let $div = $todoItem.querySelector('div');
-        $div.classList.remove('hidden')
-        $div.classList.add('view')
+function viewAll(todoList) {
+    for (const todoItem of todoList) {
+        let div = todoItem.querySelector('div');
+        div.classList.remove('hidden')
+        div.classList.add('view')
     }
 }
 
-function showActive() {
-    for (const $todoItem of $todoList.children) {
-        show($todoItem, '')
+function viewOrHidden(todoList, status) {
+    for (const todoItem of todoList) {
+        let div = todoItem.querySelector('div');
+        if (todoItem.className === status) {
+            div.classList.remove('hidden')
+            div.classList.add('view')
+        } else {
+            div.classList.remove('view')
+            div.classList.add('hidden')
+        }
     }
 }
 
-function showCompleted() {
-    for (const $todoItem of $todoList.children) {
-        show($todoItem, 'completed')
+function onCountChange(event) {
+    let count = 1
+    for (const li of $todoList.children) {
+        if (li.querySelector('div').className === 'view') {
+            count += 1;
+        }
     }
-}
-
-function show(todo, status) {
-    let $div = todo.querySelector('div');
-    if (todo.className === status) {
-        $div.classList.remove('hidden')
-        $div.classList.add('view')
-    } else {
-        $div.classList.remove('view')
-        $div.classList.add('hidden')
-    }
+    $todoCount.innerHTML = count
 }
