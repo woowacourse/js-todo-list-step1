@@ -1,9 +1,9 @@
 const $todoInput = document.querySelector("#new-todo-title");
 const $todoList = document.querySelector("#todo-list");
-// const $toggleInput = document.querySelector(".toggle");
+const $filters = document.querySelector(".filters");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
-$todoList.addEventListener("click", onToggleTodoItem);
+// $todoList.addEventListener("click", onToggleTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -14,8 +14,17 @@ function onAddTodoItem(event) {
         todoList.appendChild(todoItem);
         event.target.value = "";
         updateTotalCount(); 
+
+        addToggleEventOnInputBtn();
         addRemoveEventOnDestroyBtn(todoItem);
     }
+}
+
+function addToggleEventOnInputBtn() {
+    const toggle = document.querySelector(".toggle");
+    toggle.addEventListener('click', function(event) {
+        onToggleTodoItem(event);
+    });
 }
 
 function onToggleTodoItem(event) {
@@ -33,17 +42,6 @@ function renderTodoItemTemplate(title) {
             <input class="edit" value=${title}>`;
 }
 
-// function renderTodoItemTemplate(todo) {
-//     return `<li id=${todo.id} class=${todo.completed && 'completed'} >
-//                 <div class="view">
-//                     <input class="toggle" type="checkbox" 
-//                     id=${todo.id} ${todo.completed && 'checked'} />
-//                     <label class="label">${todo.title}</label>
-//                     <button class="destroy" id=${todo.id}></button>
-//                 </div>
-//                 <input class="edit" value="${todo.title}" />
-//             </li>`;
-// }
 function updateTotalCount() {
     const todoList = document.getElementById("todo-list").getElementsByTagName("li");
     const todoCount = document.getElementsByClassName("todo-count").item(0);
