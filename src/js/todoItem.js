@@ -21,3 +21,10 @@ function todoItemTemplate(item) {
                 <input class="edit" value="새로운 타이틀">
             </li>`;
 }
+
+document.getElementById("todo-list")
+    .addEventListener("click", function (e) {
+    if(e.target.classList.contains("toggle")) {
+        e.target.closest("li").classList.toggle("completed");
+    }
+});
