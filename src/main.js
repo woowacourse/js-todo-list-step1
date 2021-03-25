@@ -1,4 +1,6 @@
 const $todoInput = document.querySelector("#new-todo-title");
+const $todoCount = document.querySelector(".todo-element-count");
+
 $todoInput.addEventListener("keyup", onAddTodoItem);
 
 function onAddTodoItem(event) {
@@ -7,7 +9,10 @@ function onAddTodoItem(event) {
   if (event.key === "Enter" && todoTitle !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
     event.target.value = "";
+    
+    updateCount();
   }
+  
 }
 
 function renderTodoItemTemplate(title) {
@@ -34,6 +39,7 @@ function deleteCheck(event) {
 
   if (item.classList[0] === "destroy") {
     item.parentElement.parentElement.remove();
+    updateCount();
   }
 }
 
@@ -55,4 +61,9 @@ function edit(event) {
       }
     })
   }
+}
+
+function updateCount() {
+  const count = document.querySelectorAll('.view').length;
+  document.querySelector('.todo-count-text').innerHTML = count;
 }
