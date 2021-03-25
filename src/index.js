@@ -3,6 +3,11 @@ window.addEventListener('hashchange', function () {
     changeFilter(filter);
 });
 
+const btnAll = document.getElementsByClassName('all')[0];
+const btnActive =     document.getElementsByClassName('active')[0];
+const btnCompleted = document.getElementsByClassName('completed')[0];
+
+
 document.getElementById('new-todo-title').addEventListener('keydown', addTodoItem);
 
 function addTodoItem(e) {
@@ -13,11 +18,13 @@ function addTodoItem(e) {
     const todoList = document.getElementById('todo-list');
     const todoTitle = document.getElementById('new-todo-title');
 
-    const div = document.createElement('div');
-    div.setAttribute('class', 'view');
 
     const li = document.createElement('li');
     li.addEventListener('dblclick', changeInputMode)
+    li.addEventListener('click', clickTodoItem);
+
+    const div = document.createElement('div');
+    div.setAttribute('class', 'view');
 
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
@@ -111,22 +118,23 @@ function changeFilter(filter) {
     }
 
     if (filter === '') {
-        document.getElementsByClassName('all')[0].classList.add('selected');
-        document.getElementsByClassName('completed')[0].classList.remove('selected');
-        document.getElementsByClassName('active')[0].classList.remove('selected');
+        btnAll.classList.add('selected');
+        btnActive.classList.remove('selected');
+        btnCompleted.classList.remove('selected');
         return;
     }
 
     if (filter === 'active') {
-        document.getElementsByClassName('all')[0].classList.remove('selected');
-        document.getElementsByClassName('completed')[0].classList.remove('selected');
-        document.getElementsByClassName('active')[0].classList.add('selected');
+        btnAll.classList.remove('selected');
+        btnActive.classList.add('selected');
+        btnCompleted.classList.remove('selected');
+
     }
 
-    if (filter == 'completed') {
-        document.getElementsByClassName('all')[0].classList.remove('selected');
-        document.getElementsByClassName('active')[0].classList.remove('selected');
-        document.getElementsByClassName('completed')[0].classList.add('selected');
+    if (filter === 'completed') {
+        btnAll.classList.remove('selected');
+        btnActive.classList.remove('selected');
+        btnCompleted.classList.add('selected');
     }
 
     for (let i = 0; i < liList.length; i++) {
@@ -143,4 +151,8 @@ function changeFilter(filter) {
             }
         }
     }
+}
+
+function clickTodoItem(e) {
+    console.log(e.target);
 }
