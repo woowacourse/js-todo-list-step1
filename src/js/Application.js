@@ -7,12 +7,14 @@ const EDIT_CONTENT_CLASS_NAME = "edit"
 
 const newTodo = document.querySelector("#new-todo-title")
 const todoBox = document.querySelector("#todo-list");
+const countLabel = document.querySelector("strong");
 
 window.onload = () => {
     hangKeyDownEvent()
     hangKeyUpEvent()
     hangClickEvent()
     hangEditEvent()
+    refreshCount()
 };
 
 function hangKeyDownEvent() {
@@ -26,6 +28,7 @@ function hangKeyDownEvent() {
         }
         todoBox.insertAdjacentHTML("beforeend", makeTodo(newTodo.value))
         e.target.value = ""
+        refreshCount()
     }, {once: true})
 }
 
@@ -60,6 +63,7 @@ function hangClickEvent() {
         if (clickedClass === DESTROY_BUTTON_CLASS_NAME) {
             const todo = e.target.closest("li")
             todoBox.removeChild(todo)
+            refreshCount()
         }
     })
 }
@@ -80,8 +84,6 @@ function hangEditEvent() {
 }
 
 function keyUpAtEditTodo(e) {
-    const todo = e.target.closest("li")
-
     if (e.keyCode !== ENTER_CODE && e.keyCode !== ESC_CODE) {
         return
     }
@@ -93,6 +95,7 @@ function keyUpAtEditTodo(e) {
     }
 
     function enterKeyUp() {
+        const todo = e.target.closest("li")
         const labelTodo = todo.getElementsByClassName(TODO_CONTENT_CLASS_NAME).item(0)
         const editTodo = todo.getElementsByClassName(EDIT_CONTENT_CLASS_NAME).item(0)
         labelTodo.innerText = editTodo.value;
@@ -101,7 +104,11 @@ function keyUpAtEditTodo(e) {
     }
 
     function escKeyUp() {
+        const todo = e.target.closest("li")
         todo.classList.remove("editing")
     }
 }
 
+function refreshCount() {
+    countLabel.innerText = todoBox.querySelectorAll("li").length.toString();
+}
