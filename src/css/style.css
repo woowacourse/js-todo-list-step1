@@ -51,8 +51,8 @@ body {
 
 .todoapp input::-webkit-input-placeholder {
     font-style: italic;
-    font-weight: 300;
-    color: #e6e6e6;
+    font-weight: 500;
+    color: #3e8fc4;
 }
 
 .todoapp h1 {
