@@ -23,6 +23,15 @@ function addList(input) {
         <input class="edit" value="${input}" />
     `
     todoList.appendChild(temp);
+    const $editInput = temp.getElementsByClassName("edit")[0];
+    $editInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            const $labelInput = temp.getElementsByClassName("label")[0];
+            $labelInput.textContent = $editInput.value;
+            e.target.closest("li").classList.remove("editing");
+            $editInput.value = $labelInput.textContent;
+        }
+    })
     updateCount();
 }
 
