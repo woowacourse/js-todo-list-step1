@@ -66,6 +66,7 @@ function countItems() {
 function todoListClick() {
     let items = document.getElementById('todo-list');
     let itemNodes = items.childNodes;
+    allListClick();
     for (let i = 0; i < itemNodes.length; i++) {
         if (itemNodes[i].className == 'completed') {
             itemNodes[i].style.display = 'none';
@@ -83,4 +84,12 @@ function allListClick() {
 
 function completeClick() {
     console.log("complete click");
+    let items = document.getElementById('todo-list');
+    let itemNodes = items.childNodes;
+    allListClick();
+    for (let i = 0; i < itemNodes.length; i++) {
+        if (itemNodes[i].className != 'completed') {
+            itemNodes[i].style.display = 'none';
+        }
+    }
 }
