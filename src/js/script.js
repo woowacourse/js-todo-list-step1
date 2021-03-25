@@ -1,8 +1,9 @@
 const $todoInput = document.querySelector("#new-todo-title");
-const $toggleInput = document.querySelector("#todo-list");
+const $todoList = document.querySelector("#todo-list");
+// const $toggleInput = document.querySelector(".toggle");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
-$toggleInput.addEventListener("click", onToggleTodoItem);
+$todoList.addEventListener("click", onToggleTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -18,20 +19,10 @@ function onAddTodoItem(event) {
 }
 
 function onToggleTodoItem(event) {
-    // event.target.closest("li").classList.toggle("completed");
-    event.target.closest("ul").insertAdjacentHTML("beforeend", renderTodoItemCompletedTemplate(title));
+    const input = event.target.closest("input");
+    input.setAttribute("checked", "");
+    event.target.closest("li").classList.toggle("completed");
 }  
-
-function renderTodoItemCompletedTemplate(title) {
-    return `<li class="completed"> 
-                <div class="view">
-                <input class="toggle" type="checkbox" checked/>
-                <label class="label">${title}</label>
-                <button class="destroy"></button>
-                </div>
-                <input class="edit" value=${title}/>
-            </li>`;
-}
 
 function renderTodoItemTemplate(title) {
     return `<div class="view">
@@ -40,8 +31,19 @@ function renderTodoItemTemplate(title) {
                 <button class="destroy"></button>
             </div>
             <input class="edit" value=${title}>`;
-  }
+}
 
+// function renderTodoItemTemplate(todo) {
+//     return `<li id=${todo.id} class=${todo.completed && 'completed'} >
+//                 <div class="view">
+//                     <input class="toggle" type="checkbox" 
+//                     id=${todo.id} ${todo.completed && 'checked'} />
+//                     <label class="label">${todo.title}</label>
+//                     <button class="destroy" id=${todo.id}></button>
+//                 </div>
+//                 <input class="edit" value="${todo.title}" />
+//             </li>`;
+// }
 function updateTotalCount() {
     const todoList = document.getElementById("todo-list").getElementsByTagName("li");
     const todoCount = document.getElementsByClassName("todo-count").item(0);
@@ -55,4 +57,23 @@ function addRemoveEventOnDestroyBtn(todoItem) {
         todoList.removeChild(todoItem);
         updateTotalCount();
     });
+}
+
+
+// 모든 목록을 보여주는 함수
+function showAllTodoItems() {
+    todoItems = $todoList.children;
+    for (let i = 0; i < todoItems.length; i++) {
+        todoItems[i].style.display;
+    }
+}
+
+// 해야할 일만 보여주는 함수
+function showTodoItems() {
+
+}
+
+// 완료된 일만 보여주는 함수
+function showDoneTodoItems() {
+
 }
