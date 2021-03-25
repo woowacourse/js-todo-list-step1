@@ -26,6 +26,8 @@ function modifyList({target}) {
     if(target.className === 'toggle'){
         target.closest("li").classList.toggle("completed");
         target.closest("li").classList.toggle("false");
+
+        target.toggleAttribute("checked")
     }
 }
 
