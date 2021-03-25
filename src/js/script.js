@@ -17,6 +17,7 @@ function onAddTodoItem(event) {
 
         addToggleEventOnInputBtn();
         addRemoveEventOnDestroyBtn(todoItem);
+        addEditEventOnLabel(todoItem);
     }
 }
 
@@ -33,6 +34,39 @@ function onToggleTodoItem(event) {
     event.target.closest("li").classList.toggle("completed");
 }  
 
+function addEditEventOnLabel(todoItem) {
+    // label을 더블 클릭 할 때 이벤트 발생하도록 하기
+    const label = todoItem.querySelector(".view > label");
+    label.addEventListener('dblclick', function(event) {
+        const li = todoItem.closest("li");
+        li.classList.add("editing");
+        onEditTodoItem(label, li);
+    });
+}
+
+function onEditTodoItem(label, li) {
+    const input = $todoList.querySelector(".edit");
+    input.addEventListener('keyup', function(event) {
+        if (event.keyCode == 27) { // esc
+            li.classList.remove("editing");
+        }
+        if (event.keyCode == 13) { // enter
+            li.classList.remove("editing");
+            label.innerHTML = input.value;
+        }
+    });
+}
+
+
+function addRemoveEventOnDestroyBtn(todoItem) {
+    const removeBtn = todoItem.getElementsByClassName("destroy").item(0);
+    removeBtn.addEventListener('click', function() {
+        const todoList = document.getElementById("todo-list");
+        todoList.removeChild(todoItem);
+        updateTotalCount();
+    });
+}
+
 function renderTodoItemTemplate(title) {
     return `<div class="view">
                 <input class="toggle" type="checkbox">
@@ -47,16 +81,6 @@ function updateTotalCount() {
     const todoCount = document.getElementsByClassName("todo-count").item(0);
     todoCount.innerHTML = "총 <strong>" + todoList.length + "</strong> 개";
 }
-
-function addRemoveEventOnDestroyBtn(todoItem) {
-    const removeBtn = todoItem.getElementsByClassName("destroy").item(0);
-    removeBtn.addEventListener('click', function() {
-        const todoList = document.getElementById("todo-list");
-        todoList.removeChild(todoItem);
-        updateTotalCount();
-    });
-}
-
 
 // 모든 목록을 보여주는 함수
 function showAllTodoItems() {
