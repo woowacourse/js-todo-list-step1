@@ -22,7 +22,9 @@ window.onload = function() {
             newTodoLI.addEventListener("keydown", changeMode);
             todoList.appendChild(newTodoLI);
             listCount.innerHTML = parseInt(listCount.innerHTML) + 1;
+            e.target.value = "";
         }
+        
     }
 
     all.addEventListener("click", filterAll);
