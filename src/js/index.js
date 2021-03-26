@@ -2,7 +2,9 @@ const $input = document.getElementById("new-todo-title");
 $input.addEventListener('keyup', addTodoItem);
 
 const $ul = document.getElementById("todo-list");
-$ul.addEventListener('click', makeCompleted)
+
+$ul.addEventListener('click', makeItemCompleted)
+$ul.addEventListener('click', deleteItem)
 
 
 function addTodoItem(event) {
@@ -24,9 +26,15 @@ function getTodoItem(itemTitle) {
   </li>`
 }
 
-function makeCompleted(event) {
+function makeItemCompleted(event) {
     if (event.target.tagName === 'INPUT') {
         event.target.closest("li").classList.toggle("completed");
+    }
+}
+
+function deleteItem(event) {
+    if (event.target.tagName === 'BUTTON') {
+        event.target.closest("li").remove();
     }
 }
 
