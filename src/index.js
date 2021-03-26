@@ -6,6 +6,9 @@ const ELEMENT = "li";
 const $todoTitle = document.getElementById("new-todo-title");
 const $todoList = document.getElementById("todo-list");
 
+const $todoApp = document.querySelector(".todoapp");
+const $showType = document.querySelector(".filters");
+
 const $todoCount = document.querySelector(".todo-count");
 const $allTodo = document.querySelector(".all");
 const $activeTodo = document.querySelector(".active");
@@ -43,7 +46,6 @@ function check(e) {
     }
     else {
         e.target.setAttribute("checked", '');
-
     }
 }
 
@@ -124,6 +126,20 @@ function showCompleteTodo() {
     }
 }
 
+function changeSelected(e) {
+    if ($allTodo.classList.contains("selected")) {
+        $allTodo.classList.remove("selected");
+    }
+    if ($activeTodo.classList.contains("selected")) {
+        $activeTodo.classList.remove("selected");
+    }
+    if ($completedTodo.classList.contains("selected")) {
+        $completedTodo.classList.remove("selected");
+    }
+
+    e.target.classList.add("selected");
+}
+
 $todoTitle.addEventListener("keyup", addTodo);
 document.addEventListener("click", check);
 document.addEventListener("click", destroy);
@@ -131,5 +147,6 @@ document.addEventListener("dblclick", edit);
 $allTodo.addEventListener("click", showAllTodo);
 $activeTodo.addEventListener("click", showActiveTodo);
 $completedTodo.addEventListener("click", showCompleteTodo);
-document.addEventListener("click", count);
-document.addEventListener("keyup", count);
+$todoApp.addEventListener("click", count);
+$todoApp.addEventListener("keyup", count);
+$showType.addEventListener("click", changeSelected);
