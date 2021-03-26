@@ -1,5 +1,8 @@
 document.getElementById('new-todo-title').addEventListener('keyup',addList)
 
+function updateCount(count) {
+    document.querySelector(".todo-count").innerHTML = "총 " + `<strong>${count}</strong>` + " 개";
+}
 
 function completeTodo(e) {
     if(e.target.checked){
@@ -8,6 +11,24 @@ function completeTodo(e) {
     }
     e.target.parentElement.parentElement.removeAttribute('class');
 }
+
+function deletedSelected(e) {
+    e.target.parentElement.parentElement.remove();
+    let sample = document.querySelector(".todo-list").querySelectorAll("li");
+    let count = sample.length;
+
+    if(document.querySelector(".selected").className.startsWith('active')){
+        count -= document.querySelector(".todo-list").querySelectorAll("li.completed").length;
+    }
+    if(document.querySelector(".selected").className.startsWith('completed')) {
+        count -= document.querySelector(".todo-list").querySelectorAll("li.false").length;
+    }
+
+    updateCount(count);
+}
+
+
+
 
 function addList(e) {
     if(e.key === 'Escape') {
@@ -44,7 +65,7 @@ function addList(e) {
 
     const button = document.createElement('button');
     button.setAttribute('class', 'destroy');
-
+    button.addEventListener('click', deletedSelected);
     div.appendChild(button);
     li.appendChild(div);
 
