@@ -2,6 +2,8 @@ const $input = document.getElementById("new-todo-title");
 $input.addEventListener('keyup', addTodoItem);
 
 const $ul = document.getElementById("todo-list");
+$ul.addEventListener('click', makeCompleted)
+
 
 function addTodoItem(event) {
     if (event.key === 'Enter' && event.target.value !== "") {
@@ -20,5 +22,11 @@ function getTodoItem(itemTitle) {
     </div>
     <input class="edit" value="새로운 타이틀" />
   </li>`
+}
+
+function makeCompleted(event) {
+    if (event.target.tagName === 'INPUT') {
+        event.target.closest("li").classList.toggle("completed");
+    }
 }
 
