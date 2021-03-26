@@ -6,6 +6,7 @@ function init () {
   newTodo.addEventListener('keyup', createTodo)
   todoList.addEventListener('click', checkTodo)
   todoList.addEventListener('dblclick', editTodo)
+  todoList.addEventListener('click', deleteTodo)
 
   filters.addEventListener('click', function () {
     filterTodo(event, todoList, filters)
@@ -13,6 +14,16 @@ function init () {
 
   const todos = JSON.parse(localStorage.getItem('todos')) ?? []
   updateTodo(todos)
+}
+
+function deleteTodo (e) {
+  if (e.target.className === 'destroy') {
+    const todos = JSON.parse(localStorage.getItem('todos')) ?? []
+    const todo = todos.find(todo => todo.id === e.target.id)
+    todos.splice(todos.indexOf(todo), 1)
+    localStorage.setItem('todos', JSON.stringify(todos))
+    updateTodo(todos)
+  }
 }
 
 function filterTodo (e, todoList, filters) {
@@ -81,7 +92,6 @@ function checkTodo (e) {
 function updateTodo (todos) {
   const todoList = document.querySelector('#todo-list')
   todoList.innerHTML = ''
-  console.log(todos)
   todos.map(
     todo => todoList.insertAdjacentHTML('beforeend', todoItemTemplate(todo)),
   )
@@ -96,7 +106,7 @@ function createTodo (e) {
       content: e.target.value,
     }
     todos.push(todoItem)
-    localStorage.setItem('todoList', JSON.stringify(todos))
+    localStorage.setItem('todos', JSON.stringify(todos))
     e.target.value = ''
 
     updateTodo(todos)
