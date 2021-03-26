@@ -30,13 +30,6 @@ function onToggleTodoItem(event) {
     }
 }
 
-function deleteTodoItem(event) {
-    const target = event.target;
-    if (target.className === "destroy") {
-        target.closest("li").remove();
-    }
-}
-
 function updateTodoItem(event) {
     const target = event.target;
     if (target.className === "label") {
@@ -52,5 +45,15 @@ function updateTodoItem(event) {
                 target.closest("li").classList.remove("editing");
             }
         })
+    }
+}
+
+function deleteTodoItem(event) {
+    const target = event.target;
+    if (target.className === "destroy") {
+        const choice = confirm("정말로 삭제하시겠습니까?");
+        if (choice === true) {
+            target.closest("li").remove();
+        }
     }
 }
