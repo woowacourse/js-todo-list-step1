@@ -11,28 +11,25 @@ function init () {
     filterTodo(event, todoList, filters)
   })
 
-  updateTodo()
+  const todos = JSON.parse(localStorage.getItem('todos')) ?? []
+  updateTodo(todos)
 }
 
 function filterTodo (e, todoList, filters) {
   filters.querySelector('.selected').classList.remove('selected')
   e.target.classList.add('selected')
 
+  let todos = JSON.parse(localStorage.getItem('todos')) ?? []
   if (e.target.classList.contains('all')) {
-    Array.from(todoList.querySelectorAll('li')).
-      map(todo => todo.style.display = 'block')
+    updateTodo(todos)
   }
   if (e.target.classList.contains('active')) {
-    Array.from(todoList.querySelectorAll('.completed')).
-      map(todo => todo.style.display = 'none')
-    Array.from(todoList.querySelectorAll('li:not(.completed)')).
-      map(todo => todo.style.display = 'block')
+    todos = todos.filter(todo => !todo.completed)
+    updateTodo(todos)
   }
   if (e.target.classList.contains('completed')) {
-    Array.from(todoList.querySelectorAll('.completed')).
-      map(todo => todo.style.display = 'block')
-    Array.from(todoList.querySelectorAll('li:not(.completed)')).
-      map(todo => todo.style.display = 'none')
+    todos = todos.filter(todo => todo.completed)
+    updateTodo(todos)
   }
 }
 
@@ -81,10 +78,10 @@ function checkTodo (e) {
   }
 }
 
-function updateTodo () {
-  const todos = JSON.parse(localStorage.getItem('todoList')) ?? []
+function updateTodo (todos) {
   const todoList = document.querySelector('#todo-list')
   todoList.innerHTML = ''
+  console.log(todos)
   todos.map(
     todo => todoList.insertAdjacentHTML('beforeend', todoItemTemplate(todo)),
   )
@@ -92,18 +89,18 @@ function updateTodo () {
 
 function createTodo (e) {
   if (e.key === 'Enter' && e.target.value) {
-    const todoList = JSON.parse(localStorage.getItem('todoList')) ?? []
+    const todos = JSON.parse(localStorage.getItem('todos')) ?? []
     const todoItem = {
       id: Date.now(),
       completed: false,
       content: e.target.value,
     }
-    todoList.push(todoItem)
-    localStorage.setItem('todoList', JSON.stringify(todoList))
+    todos.push(todoItem)
+    localStorage.setItem('todoList', JSON.stringify(todos))
     e.target.value = ''
 
-    updateTodo()
-    updateTodoCount(todoList)
+    updateTodo(todos)
+    updateTodoCount(todos)
   }
 }
 
