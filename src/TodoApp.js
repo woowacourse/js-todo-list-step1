@@ -30,13 +30,7 @@ const app = function Contoller() {
     const filters = document.querySelector('.filters');
 
     const newTodoList = (todoItems) => {
-        var result = "";
-        
-        todoItems.forEach(todo =>
-            result += todoTemplate(todo)
-        );
-
-        return result;
+        return todoItems.map(todo => todoTemplate(todo)).join("");
     };
 
     const updateTodoList = () => {
@@ -55,12 +49,7 @@ const app = function Contoller() {
     };
 
     const newFilters = () => {
-        var result = "";
-
-        Object.keys(allFilters).forEach(filter =>
-            result += filterTemplate(filter)
-        );
-        return result;
+        return Object.keys(allFilters).map(filter => filterTemplate(filter)).join("");
     };
 
     const updateFilters = () => {
