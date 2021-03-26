@@ -1,7 +1,70 @@
 document.getElementById('new-todo-title').addEventListener('keyup',addList)
+document.getElementsByClassName('completed')[0].addEventListener('click', completeTodoList);
+document.getElementsByClassName('active')[0].addEventListener('click', activeTodoList);
+document.getElementsByClassName('all')[0].addEventListener('click', allSelectedTodoList);
 
 function updateCount(count) {
     document.querySelector(".todo-count").innerHTML = "총 " + `<strong>${count}</strong>` + " 개";
+}
+
+function allSelectedTodoList() {
+    const todoList = document.getElementById('todo-list');
+    const childList = todoList.getElementsByTagName('li');
+
+    for (let i = 0; i < childList.length; i++) {
+        if (childList[i].classList.contains('completed')) {
+            childList[i].style.display = 'block';
+        }
+        if (childList[i].classList.contains('false')) {
+            childList[i].style.display = 'block';
+        }
+    }
+
+    document.querySelector(".selected").classList.remove("selected");
+    document.querySelector(".all").classList.add("selected");
+    updateCount(document.getElementById("todo-list").childNodes.length);
+}
+
+function activeTodoList() {
+    const todoList = document.getElementById('todo-list');
+    const childList = todoList.getElementsByTagName('li');
+
+    let count = 0;
+    for (let i = 0 ; i< childList.length; i++) {
+        if(childList[i].classList.contains('completed')){
+            childList[i].style.display = 'none';
+        }
+        if(childList[i].classList.contains('false')) {
+            childList[i].style.display = 'block';
+            count++;
+        }
+    }
+    document.querySelector(".selected").classList.remove("selected");
+    document.querySelector(".active").classList.add("selected");
+
+    updateCount(count);
+}
+
+function completeTodoList() {
+    const todoList = document.getElementById('todo-list');
+    const childList = todoList.getElementsByTagName('li');
+
+    let count = 0;
+
+    for (let i = 0 ; i< childList.length; i++) {
+        if(childList[i].classList.contains('false')){
+            childList[i].style.display = 'none';
+        }
+        if(childList[i].classList.contains('completed')) {
+            childList[i].style.display = 'block';
+            count++;
+        }
+    }
+
+    document.querySelector(".selected").classList.remove("selected");
+    document.querySelector("a.completed").classList.add("selected");
+
+    updateCount(count);
 }
 
 function completeTodo(e) {
