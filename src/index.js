@@ -78,46 +78,52 @@ function changeSum(value) {
     sum.innerHTML = '총 <strong>' + value + '</strong> 개';
 }
 
-function todoListClick() {
+function todoListClick(event) {
     let items = document.getElementById('todo-list');
     let itemNodes = items.childNodes;
     let count = itemNodes.length;
-    allListClick();
     for (let i = 0; i < itemNodes.length; i++) {
         if (itemNodes[i].className == 'completed') {
             itemNodes[i].style.display = 'none';
             count -= 1;
+        } else {
+            itemNodes[i].style.display = 'block';
         }
     }
     changeSum(count);
+    document.querySelector(".selected").classList.remove("selected");
+    document.querySelector(".active").classList.add("selected");
 }
 
-function allListClick() {
+function allListClick(event) {
     let items = document.getElementById('todo-list');
     let itemNodes = items.childNodes;
     for (let i = 0; i < itemNodes.length; i++) {
         itemNodes[i].style.display = 'block';
     }
     changeSum(itemNodes.length);
+    document.querySelector(".selected").classList.remove("selected");
+    document.querySelector(".all").classList.add("selected");
 }
 
-function completeClick() {
-    console.log("complete click");
+function completeClick(event) {
     let items = document.getElementById('todo-list');
     let itemNodes = items.childNodes;
-    allListClick();
     let count = itemNodes.length;
     for (let i = 0; i < itemNodes.length; i++) {
         if (itemNodes[i].className != 'completed') {
             itemNodes[i].style.display = 'none';
             count -= 1;
+        } else {
+            itemNodes[i].style.display = 'block';
         }
     }
     changeSum(count);
+    document.querySelector(".selected").classList.remove("selected");
+    document.querySelector("a.completed").classList.add("selected");
 }
 
 function clicklabel(event) {
     let li = event.target.parentElement.parentElement;
     li.setAttribute('class', 'editing')
-    console.log(li);
 }
