@@ -30,12 +30,14 @@ const list = (id, completed, value) => `
 
 const initialAddTodoInput = (id, content) => {
     $todoUl.insertAdjacentHTML('beforeend', list(id, false, content))
+
     const temporary = {...todos}
     temporary[id] = {
         'completed': false,
         'content': content
     }
     todos = {...temporary}
+
     $todoInput.value = '';
 }
 
@@ -51,6 +53,7 @@ const addTodoInput = ({key}) => {
 const toggleTodo = (item, targetId, boolean) => {
     item.toggle(FALSE);
     item.toggle(COMPLETED);
+
     const temporary = {...todos}
     temporary[targetId][COMPLETED] = boolean
     todos = {...temporary}
@@ -63,7 +66,7 @@ const toggleCase = (target) => {
         target.toggleAttribute(CHECKED)
         if (item.contains(FALSE)) {
             toggleTodo(item, targetId, true)
-            return;
+            return
         }
         if (item.contains(COMPLETED)) {
             toggleTodo(item, targetId, false)
@@ -75,9 +78,11 @@ const destroyCase = (target) => {
     if (target.className === 'destroy') {
         const targetId = target.closest("li").getAttribute(ID)
         $todoUl.removeChild(target.closest("li"))
+
         const temporary = {...todos}
         delete temporary[targetId]
         todos = {...temporary}
+
         updateCount(Object.keys(todos).length)
     }
 }
@@ -92,6 +97,7 @@ const enterCase = (key, event, currentTarget, previousInput, targetId) => {
         const currentContent = event.target.value;
         previousInput.innerText = currentContent;
         currentTarget.classList.toggle(EDITING)
+
         const temporary = {...todos}
         temporary[targetId][CONTENT] = currentContent
         todos = {...temporary}
@@ -109,6 +115,7 @@ const editContent = (event) => {
     const {currentTarget} = event
     const previousInput = currentTarget.querySelector(".label")
     const targetId = event.currentTarget.getAttribute(ID)
+
     enterCase(key, event, currentTarget, previousInput, targetId)
     escapeCase(key, currentTarget)
 }
@@ -122,6 +129,7 @@ const editingMode = ({target}) => {
 $todoUl.addEventListener("click", modifyTodoState)
 $todoInput.addEventListener("keyup", addTodoInput)
 $todoUl.addEventListener("dblclick", editingMode)
+
 
 const toggleOnClickedButton = (target) => {
     $filters.querySelector(".selected").classList.remove(SELECTED)
