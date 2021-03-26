@@ -1,27 +1,35 @@
-document.getElementById('new-todo-title').addEventListener('keyup', addTodoList);
-document.querySelector('.all').addEventListener('click', showAllList);
-document.querySelector('.active').addEventListener('click', showTodoList);
-document.querySelector('li > .completed').addEventListener('click', showDoneList);
+const $ul = document.getElementById('todo-list');
+const $input = document.getElementById('new-todo-title');
+const $allSelect = document.querySelector('.all');
+const $activeSelect = document.querySelector('.active');
+const $completedSelect = document.querySelector('li > .completed');
+
+$input.addEventListener('keyup', addTodoList);
+$allSelect.addEventListener('click', showAllList);
+$activeSelect.addEventListener('click', showTodoList);
+$completedSelect.addEventListener('click', showDoneList);
 document.addEventListener('click', checkTodoItem);
 document.addEventListener('click', removeTodoItem);
 document.addEventListener('dblclick', showInputTodoItemToEdit);
 document.addEventListener('keyup', editTodoItem);
 
 function addTodoList(event) {
-    const ul = document.getElementById('todo-list');
-    const input = document.getElementById('new-todo-title');
-    if (event.keyCode === 13 && input.value !== '') {
-        ul.innerHTML += `<li class="false">
+    if (event.keyCode === 13 && $input.value !== '') {
+        $ul.innerHTML += returnTodoItem($input.value);
+        $input.value = '';
+        setCount($ul.childNodes.length);
+    }
+}
+
+function returnTodoItem(value) {
+    return `<li class="false">
         <div class="view">
             <input class="toggle" type="checkbox"/>
-            <label class="label">${input.value}</label>
+            <label class="label">${value}</label>
             <button class="destroy"></button>
         </div>
-        <input class="edit" value="${input.value}"/>
+        <input class="edit" value="${value}"/>
     </li>`;
-        input.value = '';
-        setCount(ul.childNodes.length);
-    }
 }
 
 function setCount(value) {
@@ -79,9 +87,9 @@ function editTodoItem(event) {
 }
 
 function showTodoList() {
-    const allList = document.getElementById('todo-list').children;
+    const $allList = $ul.children;
     let count = 0;
-    for (let item of allList) {
+    for (let item of $allList) {
         if (item.className === 'completed') {
             item.style.display = 'none';
         }
@@ -92,14 +100,14 @@ function showTodoList() {
     }
     setCount(count);
     this.classList.add('selected');
-    document.querySelector('.all').classList.remove('selected');
-    document.querySelector('li > .completed').classList.remove('selected');
+    $allSelect.classList.remove('selected');
+    $completedSelect.classList.remove('selected');
 }
 
 function showDoneList() {
-    const allList = document.getElementById('todo-list').children;
+    const $allList = $ul.children;
     let count = 0;
-    for (let item of allList) {
+    for (let item of $allList) {
         if (item.className === 'completed') {
             item.style.display = 'block';
             count++;
@@ -110,18 +118,18 @@ function showDoneList() {
     }
     setCount(count);
     this.classList.add('selected');
-    document.querySelector('.all').classList.remove('selected');
-    document.querySelector('.active').classList.remove('selected');
+    $allSelect.classList.remove('selected');
+    $activeSelect.classList.remove('selected');
 }
 
 function showAllList() {
-    const allList = document.getElementById('todo-list').children;
-    for (let item of allList) {
+    const $allList = $ul.children;
+    for (let item of $allList) {
         item.style.display = 'block';
     }
-    setCount(allList.length);
+    setCount($allList.length);
     this.classList.add('selected');
-    document.querySelector('.active').classList.remove('selected');
-    document.querySelector('li > .completed').classList.remove('selected');
+    $activeSelect.classList.remove('selected');
+    $completedSelect.classList.remove('selected');
 }
 
