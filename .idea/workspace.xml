@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5bfc552-5e6d-4855-bdb1-57c8b2665e9f" name="Default Changelist" comment="feat : 체크박스 기능 구현">
+    <list default="true" id="f5bfc552-5e6d-4855-bdb1-57c8b2665e9f" name="Default Changelist" comment="feat : 더블클릭했을 때 수정가능한 기능 구현">
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/todo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/todo.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +73,7 @@
       <workItem from="1616722200033" duration="15000" />
       <workItem from="1616722245655" duration="848000" />
       <workItem from="1616740527263" duration="5894000" />
-      <workItem from="1616749667958" duration="632000" />
+      <workItem from="1616749667958" duration="939000" />
     </task>
     <task id="LOCAL-00001" summary="feat : 사용자에게 입력받아 todoList 목록 보여주는 기능 구현">
       <created>1616645917152</created>
@@ -102,7 +103,21 @@
       <option name="project" value="LOCAL" />
       <updated>1616750153391</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat : x버튼을 이용해서 삭제기능 구현">
+      <created>1616750399696</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1616750399696</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat : 더블클릭했을 때 수정가능한 기능 구현">
+      <created>1616750559004</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1616750559004</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +152,8 @@
     <MESSAGE value="feat : todoList 구현" />
     <MESSAGE value="feat : todo list에 todoItem을 키보드로 입력하여 추가기능 구현" />
     <MESSAGE value="feat : 체크박스 기능 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : 체크박스 기능 구현" />
+    <MESSAGE value="feat : x버튼을 이용해서 삭제기능 구현" />
+    <MESSAGE value="feat : 더블클릭했을 때 수정가능한 기능 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : 더블클릭했을 때 수정가능한 기능 구현" />
   </component>
 </project>

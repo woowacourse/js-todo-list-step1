@@ -94,5 +94,5 @@ function addList(e) {
     contents.appendChild(li);
     document.getElementById('new-todo-title').value = "";
 
-
+    updateCount(document.getElementById("todo-list").childNodes.length)
 }
