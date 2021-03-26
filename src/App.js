@@ -10,6 +10,8 @@ function init () {
   filters.addEventListener('click', function () {
     filterTodo(event, todoList, filters)
   })
+
+  updateTodo()
 }
 
 function filterTodo (e, todoList, filters) {
@@ -32,6 +34,21 @@ function filterTodo (e, todoList, filters) {
     Array.from(todoList.querySelectorAll('li:not(.completed)')).
       map(todo => todo.style.display = 'none')
   }
+}
+
+function todoItemTemplate (todo) {
+  return ` <li id=${todo.id} class=${todo.completed && 'completed'}>
+            <div class="view">
+              <input 
+                class="toggle" 
+                type="checkbox" 
+                id=${todo.id}
+                ${todo.checked && 'checked'}>
+              <label class="label">${todo.content}</label>
+              <button class="destroy" id=${todo.id}></button>
+            </div>
+            <input class="edit" value=${todo.content}>
+          </li>`
 }
 
 function editTodo (e) {
@@ -64,18 +81,28 @@ function checkTodo (e) {
   }
 }
 
+function updateTodo () {
+  const todos = JSON.parse(localStorage.getItem('todoList')) ?? []
+  const todoList = document.querySelector('#todo-list')
+  todoList.innerHTML = ''
+  todos.map(
+    todo => todoList.insertAdjacentHTML('beforeend', todoItemTemplate(todo)),
+  )
+}
+
 function createTodo (e) {
   if (e.key === 'Enter' && e.target.value) {
     const todoList = JSON.parse(localStorage.getItem('todoList')) ?? []
-    console.log(todoList)
     const todoItem = {
       id: Date.now(),
       completed: false,
-      content: e.target.value
-    };
+      content: e.target.value,
+    }
     todoList.push(todoItem)
     localStorage.setItem('todoList', JSON.stringify(todoList))
     e.target.value = ''
+
+    updateTodo()
     updateTodoCount(todoList)
   }
 }
