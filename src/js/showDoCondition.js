@@ -1,9 +1,12 @@
 window.onload = function(){
     const $filters = document.getElementsByClassName('filters')[0];
+    
     const $allFilters = $filters.getElementsByClassName('all')[0];
     $allFilters.addEventListener('click', showAll);
+
     const $activeFilters = $filters.getElementsByClassName('active')[0];
     $activeFilters.addEventListener('click', showActive);
+
     const $completeFilters = $filters.getElementsByClassName('completed')[0];
     $completeFilters.addEventListener('click', showComplete);
 };
