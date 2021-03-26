@@ -9,9 +9,9 @@ $todoList.addEventListener("click", onToggleTodoItem);
 $todoList.addEventListener("click", onDestroyTodoItem);
 $todoList.addEventListener("dblclick", onEditingTodoItem);
 $todoList.addEventListener("keyup", onEditTodoItemComplete);
+$filterList.addEventListener("click", onFilterTodoItem);
 $todoApp.addEventListener("click", onCountChange);
 $todoApp.addEventListener("keyup", onCountChange);
-$filterList.addEventListener("click", onFilterTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -19,6 +19,7 @@ function onAddTodoItem(event) {
         $todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
         event.target.value = "";
     }
+    onCountChange();
 }
 
 function renderTodoItemTemplate(title) {
@@ -37,6 +38,7 @@ function onToggleTodoItem(event) {
         event.target.closest("li").classList.toggle("completed");
     }
     event.stopPropagation();
+    onCountChange();
 }
 
 function onDestroyTodoItem(event) {
@@ -44,6 +46,7 @@ function onDestroyTodoItem(event) {
         $todoList.removeChild(event.target.closest("li"))
     }
     event.stopPropagation();
+    onCountChange();
 }
 
 function onEditingTodoItem(event) {
@@ -54,6 +57,7 @@ function onEditingTodoItem(event) {
         $edit.value = beforeText
     }
     event.stopPropagation();
+    onCountChange();
 }
 
 function onEditTodoItemComplete(event) {
@@ -74,18 +78,25 @@ function onEditTodoItemComplete(event) {
     }
 
     event.stopPropagation();
+    onCountChange();
 }
 
 function onFilterTodoItem(event) {
+    let selectedButton = $filterList.querySelector('.selected');
+    selectedButton.classList.remove('selected')
+
     const className = event.target.className;
-    if (className === 'all selected') {
+    if (className === 'all') {
         viewAll($todoList.children)
     } else if (className === 'active') {
         viewOrHidden($todoList.children, '')
     } else if (className === 'completed') {
         viewOrHidden($todoList.children, 'completed')
     }
+
+    event.target.classList.add('selected')
     event.stopPropagation();
+    onCountChange();
 }
 
 function viewAll(todoList) {
@@ -109,10 +120,12 @@ function viewOrHidden(todoList, status) {
     }
 }
 
-function onCountChange(event) {
-    let count = 1
-    for (const li of $todoList.children) {
-        if (li.querySelector('div').className === 'view') {
+function onCountChange() {
+    const todos = $todoList.querySelectorAll('div');
+    let count = 0
+    for (const todo of todos) {
+        console.log(todo)
+        if (todo.className === 'view') {
             count += 1;
         }
     }
