@@ -12,6 +12,7 @@ function enterkey(event) {
         }   
 
         const li = document.createElement("li");
+        li.setAttribute('style', "display: block;");
 
         const div = document.createElement('div');
         div.setAttribute('class', 'view');
@@ -37,15 +38,14 @@ function enterkey(event) {
 
         let editinput = document.createElement('input');
         editinput.setAttribute('class', 'edit');
-        editinput.setAttribute('value', '새로운 타이틀');
+        editinput.setAttribute('value', input.value);
         li.appendChild(editinput);
 
         const ul = document.getElementById('todo-list');
         ul.appendChild(li);
 
         input.value = '';
-        countItems();
-         // 해야할 일 혹은 전체보기에서만 활성화 되어야함.
+        countItems(); // 해야할 일 혹은 전체보기에서만 활성화 되어야함.
     }
 }
 
@@ -69,8 +69,14 @@ function clickdelete(event) {
 
 function countItems() {
     let items = document.getElementById('todo-list');
-    let todoList = items.getElementsByTagName('li');
-    changeSum(todoList.length);
+    let itemNodes = items.childNodes;
+    let count = 0;
+    for (let i=0; i<itemNodes.length; i++) {
+        if (itemNodes[i].style.display == 'block') {
+            count += 1;
+        }
+    }
+    changeSum(count);
 }
 
 function changeSum(value) {
@@ -123,7 +129,19 @@ function completeClick(event) {
     document.querySelector("a.completed").classList.add("selected");
 }
 
-function clicklabel(event) {
-    let li = event.target.parentElement.parentElement;
+function clicklabel(e) {
+    let li = e.target.parentElement.parentElement;
     li.setAttribute('class', 'editing')
+
+    e.target.parentNode.parentElement.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            e.target.parentNode.parentNode.classList.remove("editing");
+            return;
+        }
+        if (event.key === 'Enter') {
+            e.target.innerHTML = e.target.parentNode.parentElement.querySelector(".edit").value;
+            e.target.parentNode.parentNode.classList.remove("editing");
+            return;
+        }
+    })
 }
