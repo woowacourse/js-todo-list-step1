@@ -1,9 +1,17 @@
-const enterToDoItem = (event) => {
+import {countDo} from "./countDo.js";
+export const enterToDoItem = (event) => {
+    const $toDoSlot = document.getElementById("new-todo-title")
+    $toDoSlot.addEventListener("keydown", function(e) {
+        enrollItem(e, $toDoSlot);
+    });
+}
+
+const enrollItem = (event, $toDoSlot) => {
     if (event.key == "Enter") {
-        const toDoParent = document.getElementById("todo-list");
-        const toDoContent = document.getElementById("new-todo-title").value;
-        const singleToDo = foamToDoSingle(toDoContent);
-        toDoParent.appendChild(singleToDo);
+        const $toDoParent = document.getElementById("todo-list");
+        const $toDoContent = $toDoSlot.value;
+        const $singleToDo = foamToDoSingle($toDoContent);
+        $toDoParent.appendChild($singleToDo);
         countDo();
     }
 }
@@ -57,6 +65,3 @@ const foamToDoSingle = (newTitle) => {
 
     return $elementToDoSingle;
 }
-
-const $newToDo = document.getElementById("new-todo-title");
-$newToDo.addEventListener("keyup", enterToDoItem);
