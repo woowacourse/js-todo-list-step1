@@ -16,7 +16,7 @@ function renderTodoItemTemplate(title) {
     return ` <li class="todo-item">
                   <div class="view">
                       <input class="toggle" onclick="onToggleTodoItem(event)" type="checkbox" >
-                      <label class="label">${title}</label>
+                      <label class="label" ondblclick="updateTodoItem(event)">${title}</label>
                       <button class="destroy" onclick="deleteTodoItem(event)"></button>
                   </div>
                   <input class="edit" value=${title} />
@@ -25,14 +25,32 @@ function renderTodoItemTemplate(title) {
 
 function onToggleTodoItem(event) {
     const target = event.target;
-    if (target.className === 'toggle') {
+    if (target.className === "toggle") {
         target.closest("li").classList.toggle("completed");
     }
 }
 
 function deleteTodoItem(event) {
     const target = event.target;
-    if (target.className === 'destroy') {
+    if (target.className === "destroy") {
         target.closest("li").remove();
+    }
+}
+
+function updateTodoItem(event) {
+    const target = event.target;
+    if (target.className === "label") {
+        target.closest("li").classList.add("editing");
+
+        const editInput = document.querySelector(".edit");
+        editInput.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                target.closest("li").classList.remove("editing");
+            }
+            if (event.key === "Enter") {
+                target.innerText = editInput.value;
+                target.closest("li").classList.remove("editing");
+            }
+        })
     }
 }
