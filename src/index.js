@@ -17,7 +17,7 @@ function renderTodoItemTemplate(title) {
                   <div class="view">
                       <input class="toggle" onclick="onToggleTodoItem(event)" type="checkbox" >
                       <label class="label">${title}</label>
-                      <button class="destroy"></button>
+                      <button class="destroy" onclick="deleteTodoItem(event)"></button>
                   </div>
                   <input class="edit" value=${title} />
               </li>`;
@@ -27,5 +27,12 @@ function onToggleTodoItem(event) {
     const target = event.target;
     if (target.className === 'toggle') {
         target.closest("li").classList.toggle("completed");
+    }
+}
+
+function deleteTodoItem(event) {
+    const target = event.target;
+    if (target.className === 'destroy') {
+        target.closest("li").remove();
     }
 }
