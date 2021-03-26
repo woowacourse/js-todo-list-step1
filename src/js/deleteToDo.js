@@ -1,13 +1,12 @@
-const deleteToDos = () => {
-    const $xMarks = document.getElementsByClassName("destroy");
-
-    Array.prototype.forEach.call($xMarks, function($xMark) {
-        $xMark.addEventListener('click', clickXMark);
+const deleteToDos = ($entireToDo) => {
+    $entireToDo.addEventListener("click", function(e) {
+        if (e.target && e.target.className == "destroy"){
+            clickXMark(e);
+        }
     })
 }
 
 const clickXMark = (event) => {
-    event.currentTarget.parentNode.parentNode.remove();
-
+    event.target.parentNode.parentNode.remove();
     countDo();
 }

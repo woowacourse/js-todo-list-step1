@@ -4,9 +4,6 @@ const enterToDoItem = (event) => {
         const toDoContent = document.getElementById("new-todo-title").value;
         const singleToDo = foamToDoSingle(toDoContent);
         toDoParent.appendChild(singleToDo);
-        checkToDos();
-        deleteToDos();
-        editToDos();
         countDo();
     }
 }
