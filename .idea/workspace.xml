@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5bfc552-5e6d-4855-bdb1-57c8b2665e9f" name="Default Changelist" comment="feat : todoList 구현" />
+    <list default="true" id="f5bfc552-5e6d-4855-bdb1-57c8b2665e9f" name="Default Changelist" comment="feat : todo list에 todoItem을 키보드로 입력하여 추가기능 구현">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,6 +72,7 @@
       <workItem from="1616722200033" duration="15000" />
       <workItem from="1616722245655" duration="848000" />
       <workItem from="1616740527263" duration="5894000" />
+      <workItem from="1616749667958" duration="323000" />
     </task>
     <task id="LOCAL-00001" summary="feat : 사용자에게 입력받아 todoList 목록 보여주는 기능 구현">
       <created>1616645917152</created>
@@ -85,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616748962728</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat : todo list에 todoItem을 키보드로 입력하여 추가기능 구현">
+      <created>1616749955482</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616749955482</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,6 +128,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat : 사용자에게 입력받아 todoList 목록 보여주는 기능 구현" />
     <MESSAGE value="feat : todoList 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : todoList 구현" />
+    <MESSAGE value="feat : todo list에 todoItem을 키보드로 입력하여 추가기능 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : todo list에 todoItem을 키보드로 입력하여 추가기능 구현" />
   </component>
 </project>

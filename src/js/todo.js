@@ -1,6 +1,14 @@
 document.getElementById('new-todo-title').addEventListener('keyup',addList)
 
 
+function completeTodo(e) {
+    if(e.target.checked){
+        e.target.parentElement.parentElement.className = 'completed'
+        return
+    }
+    e.target.parentElement.parentElement.removeAttribute('class');
+}
+
 function addList(e) {
     if(e.key === 'Escape') {
         document.getElementById('new-todo-title').value = "";
@@ -21,7 +29,7 @@ function addList(e) {
     const toggle = document.createElement('input');
     toggle.setAttribute('class', 'toggle');
     toggle.setAttribute('type', 'checkbox');
-
+    toggle.addEventListener('click', completeTodo);
     div.appendChild(toggle);
 
     const label = document.createElement('label');
