@@ -4,6 +4,7 @@ const $todoCount = document.querySelector(".todo-count");
 const $all = document.querySelector(".all");
 const $active = document.querySelector(".active");
 const $completed = document.querySelector(".completed");
+const $filters = document.querySelector(".filters");
 
 const CONTENT = 'content'
 const COMPLETED = 'completed'
@@ -13,9 +14,13 @@ const CHECKED = 'checked'
 
 let todos = {}
 
+//todo : key,value  상수화 접근시 왜 안되는지??
+// todo: 리팩토링
+
 const updateCount = (count) => $todoCount.querySelector("strong").innerText = count
+
 const list = (id, completed, value) => `
-            <li id="${id}" class=${completed ? COMPLETED : FALSE }>
+            <li id="${id}" class=${completed ? COMPLETED : FALSE}>
                 <div class="view">
                     <input class="toggle" type="checkbox" id="${id}"/>
                     <label class="label">${value}</label>
@@ -24,124 +29,142 @@ const list = (id, completed, value) => `
                 <input class="edit" value="${value}" />
             </li>`;
 
+const initialAddTodoInput = (id, content) => {
+    $todoUl.insertAdjacentHTML('beforeend', list(id, false, content))
+    const temporary = {...todos}
+    temporary[id] = {
+        'completed': false,
+        'content': content
+    }
+    todos = {...temporary}
+    $todoInput.value = '';
+}
 
 const addTodoInput = ({key}) => {
     if (key === "Enter" && $todoInput.value !== "") {
         const id = Date.now();
         const content = $todoInput.value;
-
-        $todoUl.insertAdjacentHTML('beforeend', list(id, false, content))
-        const temporary = {...todos}
-        temporary[id] = {
-            'completed': false,
-            'content':  content
-        }
-        todos = {...temporary}
-        $todoInput.value = '';
-
+        initialAddTodoInput(id, content)
         updateCount(Object.keys(todos).length)
     }
 }
 
-const modifyTodoState = ({target}) => {
+const toggleTodo = (item, targetId, boolean) => {
+    item.toggle(FALSE);
+    item.toggle(COMPLETED);
+    const temporary = {...todos}
+    temporary[targetId][COMPLETED] = boolean
+    todos = {...temporary}
+}
+
+const toggleCase = (target) => {
     if (target.className === 'toggle') {
         const item = target.closest("li").classList
-        const targetId = target.closest("li").getAttribute("id");
-        if (item.contains('false')) {
-            item.toggle('false');
-            item.toggle('completed');
-            temporary = {...todos}
-            temporary[targetId]['completed'] = true;
-            todos = {...temporary}
+        const targetId = target.closest("li").getAttribute("id")
+        target.toggleAttribute('checked')
+        if (item.contains(FALSE)) {
+            toggleTodo(item, targetId, true)
             return;
         }
-        if (item.contains('completed')) {
-            item.toggle('false');
-            item.toggle('completed');
-            temporary = {...todos}
-            temporary[targetId]['completed'] = false;
-            todos = {...temporary}
-            return;
+        if (item.contains(COMPLETED)) {
+            toggleTodo(item, targetId, false)
         }
-
-        target.toggleAttribute(CHECKED)
     }
+}
 
+const destroyCase = (target) => {
     if (target.className === 'destroy') {
-        const targetId = target.closest("li").getAttribute("id");
+        const targetId = target.closest("li").getAttribute("id")
         $todoUl.removeChild(target.closest("li"))
-        temporary = {...todos}
+        const temporary = {...todos}
         delete temporary[targetId]
         todos = {...temporary}
         updateCount(Object.keys(todos).length)
     }
 }
 
+const modifyTodoState = ({target}) => {
+    toggleCase(target)
+    destroyCase(target)
+}
 
-const editContent = (event) => {
-    const {key} = event
-    const {currentTarget} = event
-    const previousInput = currentTarget.querySelector(".label");
-    const targetId = event.currentTarget.getAttribute("id");
+const enterCase = (key, event, currentTarget, previousInput, targetId) => {
     if (key === "Enter") {
         const currentContent = event.target.value;
         previousInput.innerText = currentContent;
         currentTarget.classList.toggle("editing")
-        temporary = {...todos}
-        temporary[targetId]['content'] = currentContent;
+        const temporary = {...todos}
+        temporary[targetId]['content'] = currentContent
         todos = {...temporary}
-        console.log(todos)
     }
+}
+
+const escapeCase = (key, currentTarget) => {
     if (key === "Escape") {
         currentTarget.classList.toggle("editing")
     }
 }
 
+const editContent = (event) => {
+    const {key} = event
+    const {currentTarget} = event
+    const previousInput = currentTarget.querySelector(".label")
+    const targetId = event.currentTarget.getAttribute("id")
+    enterCase(key, event, currentTarget, previousInput, targetId)
+    escapeCase(key, currentTarget)
+}
+
 const editingMode = ({target}) => {
-    const $li = target.closest("li");
-    $li.classList.toggle("editing");
-    $li.addEventListener("keyup", editContent);
+    const $li = target.closest("li")
+    $li.classList.toggle("editing")
+    $li.addEventListener("keyup", editContent)
 }
 
 $todoUl.addEventListener("click", modifyTodoState)
 $todoInput.addEventListener("keyup", addTodoInput)
 $todoUl.addEventListener("dblclick", editingMode)
 
-function showAll() {
-    const allTodos = Object.keys(todos)
-        .map(id => list(id, todos[id]['completed'], todos[id]['content']))
-        .join('')
-    $todoUl.innerHTML = allTodos;
+const toggleOnClickedButton = (target) => {
+    $filters.querySelector(".selected").classList.remove("selected")
+    target.classList.add('selected')
+}
+
+const showAll = ({target}) => {
+    $todoUl.innerHTML = Object.keys(todos)
+        .map(id => list(id, todos[id][COMPLETED], todos[id]['content']))
+        .join("")
+
     updateCount(Object.keys(todos).length)
+
+    toggleOnClickedButton(target)
+}
+
+const showActive = ({target}) => {
+    $todoUl.innerHTML = Object.keys(todos)
+        .filter(id => todos[id][COMPLETED] === false)
+        .map(id => list(id, todos[id][COMPLETED], todos[id]['content']))
+        .join("")
+
+    updateCount(Object.keys(todos)
+        .filter(id => todos[id][COMPLETED] === false)
+        .length)
+
+    toggleOnClickedButton(target)
+}
+
+const showCompleted = ({target}) => {
+    $todoUl.innerHTML = Object.keys(todos)
+        .filter(id => todos[id][COMPLETED] === true)
+        .map(id => list(id, todos[id][COMPLETED], todos[id]['content']))
+        .join("")
+
+    updateCount(Object.keys(todos)
+        .filter(id => todos[id][COMPLETED] === true)
+        .length)
+
+    toggleOnClickedButton(target)
 }
 
 $all.addEventListener("click", showAll)
-
-function showActive() {
-
-    const activeList = Object.keys(todos)
-        .filter(id => todos[id]['completed'] === false)
-        .map(id => list(id, todos[id]['completed'], todos[id]['content']))
-        .join("");
-
-    $todoUl.innerHTML = activeList;
-    updateCount(Object.keys(todos).filter(id => todos[id]['completed'] === false).length)
-
-}
-
 $active.addEventListener("click", showActive)
-
-function showCompleted() {
-
-    const completedTodos = Object.keys(todos)
-        .filter(id => todos[id]['completed'] === true)
-        .map(id => list(id, todos[id]['completed'], todos[id]['content']))
-        .join("");
-
-    $todoUl.innerHTML = completedTodos;
-    updateCount(Object.keys(todos).filter(id => todos[id]['completed'] === true).length)
-
-}
-
 $completed.addEventListener("click", showCompleted)
-
