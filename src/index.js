@@ -31,7 +31,6 @@ function addTodo(e) {
     `;
     $todoTitle.value = EMPTY;
     $todoList.append(todoItem);
-    count();
 }
 
 function check(e) {
@@ -53,7 +52,6 @@ function destroy(e) {
         return;
     }
     e.target.parentNode.parentNode.remove();
-    count();
 }
 
 function edit(e) {
@@ -98,8 +96,6 @@ function showAllTodo() {
     for (let i = 0; i < todos.length; i++) {
         todos[i].style.display = "block";
     }
-
-    count();
 }
 
 function showActiveTodo() {
@@ -113,8 +109,6 @@ function showActiveTodo() {
             todos[i].style.display = "block";
         }
     }
-
-    count();
 }
 
 function showCompleteTodo() {
@@ -128,8 +122,6 @@ function showCompleteTodo() {
             todos[i].style.display = "none";
         }
     }
-
-    count();
 }
 
 $todoTitle.addEventListener("keyup", addTodo);
@@ -139,3 +131,5 @@ document.addEventListener("dblclick", edit);
 $allTodo.addEventListener("click", showAllTodo);
 $activeTodo.addEventListener("click", showActiveTodo);
 $completedTodo.addEventListener("click", showCompleteTodo);
+document.addEventListener("click", count);
+document.addEventListener("keyup", count);
