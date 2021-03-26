@@ -9,6 +9,7 @@ function onAddTodoItem(event) {
     if (event.key === "Enter" && todoTitle !== "") {
         todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
         event.target.value = "";
+        updateCount();
     }
 }
 
@@ -36,7 +37,7 @@ function updateTodoItem(event) {
         target.closest("li").classList.add("editing");
 
         const editInput = document.querySelector(".edit");
-        editInput.addEventListener('keydown', function(event) {
+        editInput.addEventListener("keydown", function(event) {
             if (event.key === "Escape") {
                 target.closest("li").classList.remove("editing");
             }
@@ -54,6 +55,12 @@ function deleteTodoItem(event) {
         const choice = confirm("정말로 삭제하시겠습니까?");
         if (choice === true) {
             target.closest("li").remove();
+            updateCount();
         }
     }
+}
+
+function updateCount() {
+    const count = document.querySelectorAll(".todo-item").length;
+    document.querySelector(".todo-count strong").innerText = count.toString();
 }
