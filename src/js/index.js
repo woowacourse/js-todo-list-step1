@@ -2,8 +2,10 @@ const $todoInput = document.querySelector("#new-todo-title");
 const $toggleParentList = document.querySelector(".todo-list");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
+$toggleParentList.addEventListener("keyup", onEditTodoItem)
 $toggleParentList.addEventListener("click", onToggleTodoItem);
-$toggleParentList.addEventListener("click", onRemoveTotoItem);
+$toggleParentList.addEventListener("click", onRemoveTodoItem);
+$toggleParentList.addEventListener("dblclick", onEditModeTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -14,10 +16,30 @@ function onAddTodoItem(event) {
     }
 }
 
-function onRemoveTotoItem(event) {
+function onRemoveTodoItem(event) {
     if (event.target && event.target.className === "destroy") {
         const todoList = document.getElementById("todo-list");
         todoList.removeChild(event.target.closest(".todo-item"));
+    }
+}
+
+function onEditModeTodoItem(event) {
+    event.target.closest(".todo-item").classList.add("editing");
+}
+
+function onEditTodoItem(event) {
+    if (event.target && event.target.className === "edit") {
+        const todoItem = event.target.closest(".todo-item");
+        const todoTitle = event.target.value;
+
+        if (event.key === "Enter" && todoTitle !== "") {
+            event.target.value = todoTitle;
+            todoItem.querySelector(".label").textContent = todoTitle;
+            todoItem.classList.remove("editing");
+        } else if (event.key === "Escape") {
+            event.target.value = todoItem.querySelector(".label").textContent;
+            todoItem.classList.remove("editing");
+        }
     }
 }
 
@@ -34,6 +56,6 @@ function renderTodoItemTemplate(title) {
                       <label class="label">${title}</label>
                       <button class="destroy"></button>
                   </div>
-                  <input class="edit" value="새로운 타이틀">
+                  <input class="edit" value="${title}">
               </li>`;
 }
