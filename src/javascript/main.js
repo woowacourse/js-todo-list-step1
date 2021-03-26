@@ -13,7 +13,14 @@ function onAddTodoItem(event) {
   if (event.key === "Enter" && todoTitle !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
     event.target.value = "";
+    onAddIncreaseTodoItemCount();
   }
+}
+
+function onAddIncreaseTodoItemCount() {
+  const todoCount = document.querySelector('span[class=todo-count]');
+  const strong = todoCount.querySelector('strong');
+  strong.textContent = parseInt(strong.textContent, 10) + 1;
 }
 
 function onToggleTodoItem(event) {
@@ -39,7 +46,14 @@ function onRemoveTodoItem(event) {
   if (target && target.className === "destroy") {
     const li = target.parentNode.parentNode;
     li.parentNode.removeChild(li);
+    onRemoveDecreaseTodoItemCount();
   }
+}
+
+function onRemoveDecreaseTodoItemCount() {
+  const todoCount = document.querySelector('span[class=todo-count]');
+  const strong = todoCount.querySelector('strong');
+  strong.textContent = parseInt(strong.textContent, 10) - 1;
 }
 
 function onChangeToEditMode(event) {
@@ -56,7 +70,7 @@ function onFinishedEditMode(event) {
   const target = event.target;
 
   if (target && target.className === 'edit' && event.key === 'Escape') {
-      document.getSelection().anchorNode.classList.remove('editing');
+    document.getSelection().anchorNode.classList.remove('editing');
   } else if (target && target.value !== "" &&
   target.className === 'edit' && event.key === 'Enter') {
     onUpdate(target);
