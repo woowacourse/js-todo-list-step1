@@ -1,3 +1,5 @@
+# js-todo-list-step1
+
 <p align="middle" >
   <img width="200px;" src="./src/images/check_list.png"/>
 </p>
@@ -8,8 +10,8 @@
   <img src="https://img.shields.io/badge/language-html-red.svg?style=flat-square"/>
   <img src="https://img.shields.io/badge/language-css-blue.svg?style=flat-square"/>
   <img src="https://img.shields.io/badge/language-js-yellow.svg?style=flat-square"/>
-  <a href="https://github.com/daybrush/moveable/blob/master/LICENSE" target="_blank">
-    <img src="https://img.shields.io/github/license/woowacourse/javascript-lotto.svg?style=flat-square&label=license&color=08CE5D"/>
+  <a href="https://github.com/woowacourse/js-todo-list-step1/blob/master/LICENSE" target="_blank">
+    <img src="https://img.shields.io/github/license/woowacourse/js-todo-list-step1.svg?style=flat-square&label=license&color=08CE5D"/>
   </a>
 </p>
 
@@ -32,7 +34,7 @@
 - [x] todoItem의 x버튼을 이용해서 해당 엘리먼트를 삭제
 - [ ] todoItem 수정
     - [x] 더블클릭했을 때 input 모드로 변경 (li tag 에 editing class 추가)
-      - [x] 수정 전의 텍스트가 보여야함
+        - [x] 수정 전의 텍스트가 보여야함
     - [x] 엔터키를 누르면 수정 완료
     - [x] 수정을 완료하지 않은 상태에서 esc키를 누르면 수정되지 않은 채로 다시 view 모드로 복귀
 - [x] todo list의 item갯수를 count한 갯수를 리스트의 하단에 보여주기
