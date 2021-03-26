@@ -27,7 +27,24 @@ function deletedSelected(e) {
     updateCount(count);
 }
 
+function changeName(e) {
+    e.target.parentNode.parentNode.classList.add("editing");
+    e.target.parentNode.parentNode.querySelectorAll('input')[1].value = e.target.innerHTML
 
+    e.target.parentNode.value = e.target.innerHTML
+
+    e.target.parentNode.parentElement.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            e.target.parentNode.parentNode.classList.remove("editing");
+            return;
+        }
+        if (event.key === 'Enter') {
+            e.target.innerHTML = e.target.parentNode.parentElement.querySelector(".edit").value;
+            e.target.parentNode.parentNode.classList.remove("editing");
+            return;
+        }
+    })
+}
 
 
 function addList(e) {
@@ -59,7 +76,7 @@ function addList(e) {
         return;
     }
     label.innerHTML = document.getElementById('new-todo-title').value;
-
+    label.addEventListener('dblclick',changeName);
 
     div.appendChild(label);
 
