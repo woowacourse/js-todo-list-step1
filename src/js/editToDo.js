@@ -1,4 +1,4 @@
-const editToDos = ($entireToDo) => {
+export const editToDos = ($entireToDo) => {
     $entireToDo.addEventListener("dblclick", function(e) {
         if (e.target && e.target.className == "label"){
             clickEdit(e);

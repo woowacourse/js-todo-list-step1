@@ -1,4 +1,4 @@
-const countDo = () => {
+export const countDo = () => {
     const $dos = document.getElementById("todo-list");
     const $dosNumber = $dos.childElementCount;
     const $numberSlot = document.getElementsByClassName("todo-count")[0];

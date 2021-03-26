@@ -1,4 +1,4 @@
-const showConditions = () => {
+export const showConditions = () => {
     const $filters = document.getElementsByClassName('filters')[0];
 
     const $allFilters = $filters.getElementsByClassName('all')[0];

@@ -1,5 +1,4 @@
-
-const checkToDos = ($entireToDo) => {
+export const checkToDos = ($entireToDo) => {
     $entireToDo.addEventListener("click", function(e) {
         if (e.target && e.target.type == "checkbox") {
             onToggleTodoItem(e);
