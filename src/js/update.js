@@ -6,7 +6,7 @@ const COMPLETE_ITEM_CLASSIFICATION_NAME = 'completed';
 
 function initiate() {
     updateVisibleTodoItemCounts();
-    TODO_INPUT_BOX.addEventListener('keypress', addTodoItem);
+    TODO_INPUT_BOX.addEventListener('keyup', addTodoItem);
 }
 
 function updateVisibleTodoItemCounts() {
