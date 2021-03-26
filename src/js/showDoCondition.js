@@ -1,6 +1,6 @@
-window.onload = function(){
+const showConditions = () => {
     const $filters = document.getElementsByClassName('filters')[0];
-    
+
     const $allFilters = $filters.getElementsByClassName('all')[0];
     $allFilters.addEventListener('click', showAll);
 
@@ -11,6 +11,20 @@ window.onload = function(){
     $completeFilters.addEventListener('click', showComplete);
 };
 
+const blockByCondition = ($doList, condition) => {
+    Array.prototype.forEach.call($doList, function($toDo) {
+        if ($toDo.className == condition){
+            $toDo.style.display = "none";
+        }
+    });
+}
+
+const removeAllBlock = ($doList) => {
+    Array.prototype.forEach.call($doList, function($toDo) {
+        $toDo.style.display = "block";
+    });
+}
+
 const showAll = () => {
     const $allDos = document.getElementById("todo-list").childNodes;
     Array.prototype.forEach.call($allDos, function($toDo) {
@@ -20,24 +34,15 @@ const showAll = () => {
 
 const showActive = () => {
     const $allDos = document.getElementById("todo-list").childNodes;
-    Array.prototype.forEach.call($allDos, function($toDo) {
-        $toDo.style.display = "block";
-    });
-    Array.prototype.forEach.call($allDos, function($toDo) {
-        if ($toDo.className == "completed"){
-            $toDo.style.display = "none";
-        }
-    });
+
+    removeAllBlock($allDos);
+    blockByCondition($allDos, "completed")
 }
 
 const showComplete = () => {
     const $allDos = document.getElementById("todo-list").childNodes;
-    Array.prototype.forEach.call($allDos, function($toDo) {
-        $toDo.style.display = "block";
-    });
-    Array.prototype.forEach.call($allDos, function($toDo) {
-        if ($toDo.className != "completed"){
-            $toDo.style.display = "none";
-        }
-    });
+    
+    removeAllBlock($allDos);
+    blockByCondition($allDos, "");
 }
+

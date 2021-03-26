@@ -4,4 +4,5 @@ window.onload = function(){
     deleteToDos($entireToDo);
     editToDos($entireToDo);
     countDo();
+    showConditions();
 };
