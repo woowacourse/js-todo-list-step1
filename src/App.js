@@ -1,4 +1,4 @@
-function init() {
+function init () {
   const newTodo = document.querySelector('#new-todo-title')
   const todoList = document.querySelector('#todo-list')
   const filters = document.querySelector('.filters')
@@ -12,31 +12,29 @@ function init() {
   })
 }
 
-function filterTodo(e, todoList, filters) {
-  filters
-    .querySelector('.selected')
-    .classList.remove('selected')
+function filterTodo (e, todoList, filters) {
+  filters.querySelector('.selected').classList.remove('selected')
   e.target.classList.add('selected')
 
   if (e.target.classList.contains('all')) {
-    Array.from(todoList.querySelectorAll('li'))
-      .map(todo => todo.style.display = 'block')
+    Array.from(todoList.querySelectorAll('li')).
+      map(todo => todo.style.display = 'block')
   }
   if (e.target.classList.contains('active')) {
-    Array.from(todoList.querySelectorAll('.completed'))
-      .map(todo => todo.style.display = 'none')
-    Array.from(todoList.querySelectorAll('li:not(.completed)'))
-      .map(todo => todo.style.display = 'block')
+    Array.from(todoList.querySelectorAll('.completed')).
+      map(todo => todo.style.display = 'none')
+    Array.from(todoList.querySelectorAll('li:not(.completed)')).
+      map(todo => todo.style.display = 'block')
   }
   if (e.target.classList.contains('completed')) {
-    Array.from(todoList.querySelectorAll('.completed'))
-      .map(todo => todo.style.display = 'block')
-    Array.from(todoList.querySelectorAll('li:not(.completed)'))
-      .map(todo => todo.style.display = 'none')
+    Array.from(todoList.querySelectorAll('.completed')).
+      map(todo => todo.style.display = 'block')
+    Array.from(todoList.querySelectorAll('li:not(.completed)')).
+      map(todo => todo.style.display = 'none')
   }
 }
 
-function editTodo(e) {
+function editTodo (e) {
   if (e.target.className === 'label') {
     const content = e.target
     const todoItem = e.target.closest('li')
@@ -58,50 +56,33 @@ function editTodo(e) {
   }
 }
 
-function checkTodo(e) {
-  if (e.target.className === 'toggle') {
-    e.target.closest('li').classList.toggle('completed')
+function checkTodo (e) {
+  if (e.target.checked) {
+    e.target.closest('li').className = 'completed'
+  } else {
+    e.target.closest('li').className = 'false'
   }
 }
 
-function createTodo(e) {
+function createTodo (e) {
   if (e.key === 'Enter' && e.target.value) {
-    const todoList = document.querySelector('#todo-list')
-
-    const todoItem = document.createElement('li')
-
-    const todo = document.createElement('div')
-    todo.className = 'view'
-
-    const checkBox = document.createElement('input')
-    checkBox.type = 'checkbox'
-    checkBox.className = 'toggle'
-
-    const content = document.createElement('label')
-    content.className = 'label'
-    content.innerText = e.target.value
-
-    const destroyBtn = document.createElement('button')
-    destroyBtn.className = 'destroy'
-    destroyBtn.addEventListener('click', () => {
-      todoList.removeChild(todoItem)
-      updateTodoCount(todoList)
-    })
-
-    todo.appendChild(checkBox)
-    todo.appendChild(content)
-    todo.appendChild(destroyBtn)
-    todoItem.appendChild(todo)
-    todoList.appendChild(todoItem)
-    updateTodoCount(todoList)
-
+    const todoList = JSON.parse(localStorage.getItem('todoList')) ?? []
+    console.log(todoList)
+    const todoItem = {
+      id: Date.now(),
+      completed: false,
+      content: e.target.value
+    };
+    todoList.push(todoItem)
+    localStorage.setItem('todoList', JSON.stringify(todoList))
     e.target.value = ''
+    updateTodoCount(todoList)
   }
 }
 
-function updateTodoCount(todoList) {
+function updateTodoCount (todoList) {
   const todoCount = document.querySelector('strong')
-  todoCount.innerText = todoList.querySelectorAll('li').length
+  todoCount.innerText = todoList.length
 }
 
 init()
