@@ -1,5 +1,6 @@
 export class Todos {
     static #instance
+    static #storage = new Map()
 
     #dom = document.getElementById("todo-list")
 
@@ -12,28 +13,25 @@ export class Todos {
     }
 
     addItem(item) {
+        Todos.#storage.set(item.id, item)
+
         this.#dom.appendChild(item.dom)
     }
 
     editItem(id, value) {
-        const item = document.getElementById(id)
+        const item = Todos.#storage.get(id)
 
         item.querySelector('label').innerText = value
         item.classList.toggle('editing')
     }
 
     cancelEditing(id) {
-        const item = document.getElementById(id)
+        const item = Todos.#storage.get(id)
 
         const originalValue = item.querySelector('label').textContent
         item.querySelector('.edit').value = originalValue
 
         item.classList.toggle('editing')
-    }
-
-    get allSize() {
-        const elements = [...this.#dom.querySelectorAll('li')]
-        return elements.length
     }
 
     completeEventHandler(e) {
@@ -50,6 +48,15 @@ export class Todos {
 
     }
 
+    setFilter(filter) {
+        const values = [...Todos.#storage.values()]
+
+        values.forEach(e => {
+                if(filter(e)) e.toNoneHidden()
+                else e.toHidden()
+            })
+    }
+
     removeEventHandler(e) {
         if (!(e.target && e.target.nodeName === 'BUTTON')) return
         const item = e.target.closest('Li')
@@ -63,6 +70,12 @@ export class Todos {
         const item = e.target.closest('Li')
 
         item.classList.toggle('editing')
+    }
+
+    getSizeByFilter(filter) {
+        const elements = [...this.#dom.querySelectorAll('li')]
+
+        return elements.filter(e => filter(e)).length
     }
 
 }

@@ -21,8 +21,17 @@ export class Item {
                     <button class="destroy"></button>
                 </div>
                 <input class="edit" value="${value}" />
-            </li>`.trim());
+            </li>`.trim()).firstElementChild;
     }
+
+    toHidden() {
+        this.#dom.setAttribute('hidden', '')
+    }
+
+    toNoneHidden() {
+        this.#dom.removeAttribute('hidden')
+    }
+
 
     get value() {
         return this.#value
