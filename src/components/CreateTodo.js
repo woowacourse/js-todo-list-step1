@@ -13,9 +13,9 @@ export default class CreateTodo {
         content: target.value,
       }
 
-      const todos = JSON.parse(localStorage.getItem('todos')) ?? []
-      todos.push(todoItem)
-      localStorage.setItem('todos', JSON.stringify(todos))
+      this.todos = JSON.parse(localStorage.getItem('todos')) ?? []
+      this.todos.push(todoItem)
+      localStorage.setItem('todos', JSON.stringify(this.todos))
       target.value = ''
 
       this.loadTodo()

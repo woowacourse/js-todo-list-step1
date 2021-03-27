@@ -16,8 +16,8 @@ class App {
   }
 
   loadTodo = () => {
-    const todos = JSON.parse(localStorage.getItem('todos')) ?? []
-    this.updateTodo(todos)
+    this.todos = JSON.parse(localStorage.getItem('todos')) ?? []
+    this.updateTodo(this.todos)
   }
 
   updateTodo = (todos) => {
