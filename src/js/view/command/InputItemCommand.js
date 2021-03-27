@@ -1,6 +1,6 @@
 export class InputItemCommand {
-
     static #DOM = document.getElementById('new-todo-title')
+
     #TODO_CONTROLLER
 
     constructor(controller) {
