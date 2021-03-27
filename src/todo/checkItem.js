@@ -13,13 +13,18 @@ export default {
 };
 
 function toggleOn(target) {
-  if (target.classList.contains(STATES.ACTIVE)) {
+  if (target.closest("li").classList.contains(STATES.ACTIVE)) {
     target.closest("li").classList.toggle(STATES.COMPLETED);
-    target.classList.replace(STATES.ACTIVE, STATES.COMPLETED);
+    target.closest("li").classList.remove(STATES.ACTIVE);
+    target.closest("li").classList.add(STATES.COMPLETED);
     return;
   }
-  target.closest("li").classList.toggle(STATES.COMPLETED);
-  target.classList.replace(STATES.COMPLETED, STATES.ACTIVE);
+  if (target.closest("li").classList.contains(STATES.COMPLETED)) {
+    target.closest("li").classList.toggle(STATES.COMPLETED);
+    target.closest("li").classList.remove(STATES.COMPLETED);
+    target.closest("li").classList.add(STATES.ACTIVE);
+    return;
+  }
 }
 
 function removeItem(target) {
