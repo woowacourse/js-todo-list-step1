@@ -41,7 +41,7 @@ function renderTodoList(state) {
 }
 
 function visibleTotoList(state) {
-    if (state) {
+    if (state && state !== "all") {
         return deepCopyStore().filter(item => item.state === state);
     } else {
         return deepCopyStore();

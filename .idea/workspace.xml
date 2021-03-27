@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f78f829d-02f2-4fa7-9eae-ad47faed784b" name="Default Changelist" comment="" />
+    <list default="true" id="f78f829d-02f2-4fa7-9eae-ad47faed784b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +32,7 @@
     <option name="projectConfigVersion" value="2" />
   </component>
   <component name="ProjectId" id="1q94O44m839wab3omcO8FwFlfJX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -68,7 +71,10 @@
       <workItem from="1616724334261" duration="41000" />
       <workItem from="1616741806704" duration="10806000" />
       <workItem from="1616760971706" duration="11034000" />
-      <workItem from="1616821135963" duration="6237000" />
+      <workItem from="1616821135963" duration="7195000" />
+      <workItem from="1616841647845" duration="1156000" />
+      <workItem from="1616843642437" duration="1093000" />
+      <workItem from="1616847253845" duration="88000" />
     </task>
     <task id="LOCAL-00001" summary="feat : todoItem을 추가하는 기능 및 체크박스를 클릭하여 class를 바꾸는 기능 구현">
       <created>1616743594750</created>
@@ -119,7 +125,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616834969396</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fix : 전체보기에서 전체가 보이지 않던 오류 수정">
+      <created>1616847328440</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616847328440</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +157,7 @@
     <MESSAGE value="refactor : 상태관리를 통해 구현하도록 리펙토링" />
     <MESSAGE value="refactor : 도메인과 뷰 분리, 도메인을 연결해주는 Accessor 추가" />
     <MESSAGE value="feat : 상태별로 다른 목록 보여주는 기능 및 갯수 보여주는 기능 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : 상태별로 다른 목록 보여주는 기능 및 갯수 보여주는 기능 추가" />
+    <MESSAGE value="fix : 전체보기에서 전체가 보이지 않던 오류 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix : 전체보기에서 전체가 보이지 않던 오류 수정" />
   </component>
 </project>
