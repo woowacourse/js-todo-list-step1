@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="kr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,34 +8,30 @@
 <body>
 <div class="todoapp">
   <h1>TODOS</h1>
+  <input
+          id="new-todo-title"
+          class="new-todo"
+          placeholder="할일을 추가해주세요"
+          autofocus
+  />
   <main>
-    <section class="todoapp">
-      <header class="header">
-        <h1>TODOS</h1>
-        <input id="new-todo-title" class="new-todo" placeholder="할일을 추가해주세요" autofocus>
-      </header>
-      <section class="main">
-        <ul id="todo-list" class="todo-list">
-
-        </ul>
-      </section>
-    </section>
+    <input class="toggle-all" type="checkbox" />
+    <ul id="todo-list" class="todo-list"></ul>
     <div class="count-container">
       <span class="todo-count">총 <strong>0</strong> 개</span>
       <ul class="filters">
         <li>
-          <a class="all selected" href="#">전체보기</a>
+          <a class="all selected" href="/#">전체보기</a>
         </li>
         <li>
-          <a class="active" href="#">해야할 일</a>
+          <a class="active" href="#active">해야할 일</a>
         </li>
         <li>
-          <a class="completed" href="#">완료한 일</a>
+          <a class="completed" href="#completed">완료한 일</a>
         </li>
       </ul>
     </div>
   </main>
 </div>
 </body>
-<script src = index.js></script>
 </html>
