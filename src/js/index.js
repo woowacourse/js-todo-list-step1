@@ -1,3 +1,13 @@
+const todoTitleInput = document.getElementById("new-todo-title");
+todoTitleInput.addEventListener("keyup", onAddTodoItem)
+
+function onAddTodoItem(event) {
+  const todoList = document.getElementById("todo-list");
+  const title = event.target.value;
+  
+  todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(title));
+}
+
 function renderTodoItemTemplate(title) {
   return `
   <li>
