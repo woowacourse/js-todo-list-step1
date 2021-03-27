@@ -4,11 +4,11 @@ export class Todos {
     #dom = document.getElementById("todo-list")
 
     constructor() {
-        if(Todos.#instance) {
+        if (Todos.#instance) {
             return Todos.#instance
         }
 
-        this.#dom.addEventListener('click', e => Todos.#completeEventHandler(e))
+        this.#dom.addEventListener('click', e => this.#completeEventHandler(e))
 
         Todos.#instance = this
     }
@@ -17,16 +17,30 @@ export class Todos {
         this.#dom.appendChild(item.dom)
     }
 
-    static #completeEventHandler(e) {
-        if(e.target && e.target.nodeName === "INPUT") {
-            const item = e.target.closest('Li')
+    #completeEventHandler(e) {
+        this.#setCompletedIfPossible(e)
+        this.#removeItemIfPossible(e)
+    }
 
-            if(item.classList.toggle('completed')) {
-                e.target.setAttribute('checked', '')
-                return
-            }
+    #setCompletedIfPossible(e) {
+        if (!(e.target && e.target.nodeName === "INPUT")) return
 
-            e.target.removeAttribute('checked')
+        const item = e.target.closest('Li')
+
+        if (item.classList.toggle('completed')) {
+            e.target.setAttribute('checked', '')
+            return
         }
+
+        e.target.removeAttribute('checked')
+
+    }
+
+    #removeItemIfPossible(e) {
+        if (!(e.target && e.target.nodeName === 'BUTTON')) return
+
+        const item = e.target.closest('Li')
+
+        this.#dom.removeChild(item)
     }
 }
