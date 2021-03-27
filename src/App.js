@@ -1,5 +1,6 @@
 import CreateTodo from './components/CreateTodo.js'
 import DeleteTodo from './components/DeleteTodo.js'
+import EditTodo from './components/EditTodo.js'
 
 class App {
   constructor () {
@@ -11,6 +12,7 @@ class App {
 
     this.createTodo = new CreateTodo(this.$newTodo, this.loadTodo)
     this.deleteTodo = new DeleteTodo(this.$todoList, this.loadTodo)
+    this.editTodo = new EditTodo(this.$todoList, this.loadTodo)
 
     this.loadTodo()
   }
