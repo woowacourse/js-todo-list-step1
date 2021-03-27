@@ -69,9 +69,12 @@ function onClickFilter(event) {
 }
 
 function getState() {
-    if ($filterList.querySelector(".selected").classList.contains("completed")) {
-        return "completed";
-    } else {
-        return "active";
-    }
+    let state = "";
+    $filterList.querySelector(".selected").classList
+        .forEach(className => {
+            if (className !== "filter-item" && className !== "selected") {
+                state = className;
+            }
+        });
+    return state;
 }
