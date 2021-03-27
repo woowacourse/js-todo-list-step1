@@ -8,10 +8,6 @@ export class Todos {
             return Todos.#instance
         }
 
-        this.#dom.addEventListener('click', e => this.#completeEventHandler(e))
-        this.#dom.addEventListener('click', e => this.#removeEventHandler(e))
-        this.#dom.addEventListener('dblclick', e => this.#editEventHandler(e))
-
         Todos.#instance = this
     }
 
@@ -35,7 +31,12 @@ export class Todos {
         item.classList.toggle('editing')
     }
 
-    #completeEventHandler(e) {
+    get allSize() {
+        const elements = [...this.#dom.querySelectorAll('li')]
+        return elements.length
+    }
+
+    completeEventHandler(e) {
         if (!(e.target && e.target.type === "checkbox")) return
 
         const item = e.target.closest('Li')
@@ -49,14 +50,14 @@ export class Todos {
 
     }
 
-    #removeEventHandler(e) {
+    removeEventHandler(e) {
         if (!(e.target && e.target.nodeName === 'BUTTON')) return
         const item = e.target.closest('Li')
 
         this.#dom.removeChild(item)
     }
 
-    #editEventHandler(e) {
+    editEventHandler(e) {
         if (!(e.target && e.target.nodeName === 'LABEL')) return
 
         const item = e.target.closest('Li')
