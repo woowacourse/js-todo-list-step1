@@ -1,3 +1,4 @@
+/*
 const $todoInput = document.querySelector("#new-todo-title");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
@@ -27,3 +28,4 @@ return `
   <input class="edit" value="새로운 타이틀">
 </li>`;
 }
+*/
