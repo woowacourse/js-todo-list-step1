@@ -4,8 +4,10 @@ todoTitleInput.addEventListener("keyup", onAddTodoItem)
 function onAddTodoItem(event) {
   const todoList = document.getElementById("todo-list");
   const title = event.target.value;
-  
-  todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(title));
+
+  if (event.key === "Enter" && title !== "") {
+    todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(title));
+  }
 }
 
 function renderTodoItemTemplate(title) {
