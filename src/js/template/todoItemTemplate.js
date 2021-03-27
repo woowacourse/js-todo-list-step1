@@ -1,7 +1,7 @@
-export default function itemTemplate(id, title) {
-    return ` <li id="${id}" class="todo-item">
+export default function itemTemplate(id, title, state) {
+    return ` <li id="${id}" class="todo-item ${state}">
                   <div class="view">
-                      <input class="toggle" type="checkbox">
+                      <input class="toggle" ${state === "completed" ? "checked" : ""} type="checkbox">
                       <label class="label">${title}</label>
                       <button class="destroy"></button>
                   </div>
