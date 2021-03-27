@@ -10,4 +10,16 @@ export class TodoController {
         todos.addItem(item)
     }
 
+    editItem(id, value) {
+        const todos = new Todos()
+
+        todos.editItem(id, value)
+    }
+
+    cancelEditing(id) {
+        const todos = new Todos()
+
+        todos.cancelEditing(id)
+    }
+
 }

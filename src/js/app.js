@@ -1,10 +1,14 @@
 import {InputItemCommand} from "./view/command/InputItemCommand.js";
 import {TodoController} from "./controller/TodoController.js";
+import {EditCommand} from "./view/command/EditCommand.js";
+import {EditCancelCommand} from "./view/command/EditCancleCommand.js";
 
 class App {
     #controller = new TodoController()
     #commands = [
-        new InputItemCommand(this.#controller)
+        new InputItemCommand(this.#controller),
+        new EditCommand(this.#controller),
+        new EditCancelCommand(this.#controller)
     ]
 
     run() {

@@ -9,6 +9,8 @@ export class Todos {
         }
 
         this.#dom.addEventListener('click', e => this.#completeEventHandler(e))
+        this.#dom.addEventListener('click', e => this.#removeEventHandler(e))
+        this.#dom.addEventListener('dblclick', e => this.#editEventHandler(e))
 
         Todos.#instance = this
     }
@@ -17,13 +19,24 @@ export class Todos {
         this.#dom.appendChild(item.dom)
     }
 
-    #completeEventHandler(e) {
-        this.#setCompletedIfPossible(e)
-        this.#removeItemIfPossible(e)
+    editItem(id, value) {
+        const item = document.getElementById(id)
+
+        item.querySelector('label').innerText = value
+        item.classList.toggle('editing')
     }
 
-    #setCompletedIfPossible(e) {
-        if (!(e.target && e.target.nodeName === "INPUT")) return
+    cancelEditing(id) {
+        const item = document.getElementById(id)
+
+        const originalValue = item.querySelector('label').textContent
+        item.querySelector('.edit').value = originalValue
+
+        item.classList.toggle('editing')
+    }
+
+    #completeEventHandler(e) {
+        if (!(e.target && e.target.type === "checkbox")) return
 
         const item = e.target.closest('Li')
 
@@ -36,11 +49,19 @@ export class Todos {
 
     }
 
-    #removeItemIfPossible(e) {
+    #removeEventHandler(e) {
         if (!(e.target && e.target.nodeName === 'BUTTON')) return
-
         const item = e.target.closest('Li')
 
         this.#dom.removeChild(item)
     }
+
+    #editEventHandler(e) {
+        if (!(e.target && e.target.nodeName === 'LABEL')) return
+
+        const item = e.target.closest('Li')
+
+        item.classList.toggle('editing')
+    }
+
 }
