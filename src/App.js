@@ -2,6 +2,7 @@ import CreateTodo from './components/CreateTodo.js'
 import DeleteTodo from './components/DeleteTodo.js'
 import EditTodo from './components/EditTodo.js'
 import FilterTodo from './components/FilterTodo.js'
+import CheckTodo from './components/CheckTodo.js'
 
 class App {
   constructor () {
@@ -13,6 +14,7 @@ class App {
     this.deleteTodo = new DeleteTodo(this.$todoList, this.loadTodo)
     this.editTodo = new EditTodo(this.$todoList, this.loadTodo)
     this.filterTodo = new FilterTodo(this.$filters, this.updateTodo)
+    this.checkTodo = new CheckTodo(this.$todoList, this.loadTodo)
 
     this.loadTodo()
   }
