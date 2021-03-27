@@ -2,53 +2,68 @@ const $todoInput = document.querySelector("#new-todo-title");
 const $toggleInput = document.querySelector(`#todo-list`);
 const $todoCount = document.querySelector(`span strong`);
 
-$todoInput.addEventListener("keyup", onAddTodoItem);
-$toggleInput.addEventListener("click", onToggleTodoItem);
-$toggleInput.addEventListener("dblclick", editingTodoItem);
+$todoInput.addEventListener("keyup", addTodoItem);
 
 document.addEventListener("click", activeTodoItem);
 document.addEventListener("click", allTodoItem);
 document.addEventListener("click", finishTodoItem);
 
-function onAddTodoItem(event) {
+function renderTodoItemTemplate(title) {
+    return ` <li class="active">
+                  <div class="view">
+                      <input class="toggle" onclick="onToggleTodoItem(event)" type="checkbox" >
+                      <label class="label" ondblclick="updateTodoItem(event)">${title}</label>
+                      <button class="destroy" onclick="deleteTodoItem(event)"></button>
+                  </div>
+                  <input class="edit" value=${title} />
+              </li>`;
+}
+
+function addTodoItem(event) {
     const todoTitle = event.target.value;
     const todoList = document.getElementById("todo-list");
-
-    if (event.key === "Enter" && todoTitle !== "") {
-        todoList.innerHTML += renderTodoItemTemplate(todoTitle);
+    if ("Enter" === event.key && "" !== todoTitle) {
+        todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
         event.target.value = "";
         count();
     }
 }
 
 function onToggleTodoItem(event) {
-    if (event.target.classList.contains("toggle")) {
-        event.target.closest("li").classList.toggle("completed");
-    }
-
-    if (event.target.classList.contains("destroy")) {
-        let todoList = document.getElementById("todo-list");
-        todoList.removeChild(event.target.parentElement.parentElement);
-    }
-}
-
-function editingTodoItem(event) {
-    console.log("gㅁasdfasdfadsfk");
-
-    if (event.target.classList.contains("editing")) {
-        console.log("gk");
+    const target = event.target;
+    if ("toggle" === target.className) {
+        if ("completed" === target.closest("li").className) {
+            target.closest("li").className = "active";
+        } else {
+            target.closest("li").className = "completed";
+        }
     }
 }
 
-function renderTodoItemTemplate(title) {
-    return `<li class="false">
-    <div class="editing">
-      <input class="toggle" type="checkbox"/>
-      <label class="label">${title}</label>
-      <button class="destroy"></button>
-    </div>
-    <input class="edit" value="새로운 타이틀" />
-  </li>`;
+function updateTodoItem(event) {
+    const target = event.target;
+    if ("label" === target.className) {
+        target.closest("li").classList.add("editing");
+
+        const editInput = document.querySelector(".edit");
+        editInput.addEventListener("keydown", function(event){
+            if ("Escape" === event.key) {
+                target.closest("li").classList.remove("editing");
+            }
+
+            if ("Enter" === event.key) {
+                target.innerText = editInput.value;
+                target.closest("li").classList.remove("editing");
+            }
+        })
+    }
+}
+
+function deleteTodoItem(event) {
+    const target = event.target;
+    if ("destroy" === target.className) {
+        target.closest("li").remove();
+    }
 }
 
 function activeTodoItem(event) {
