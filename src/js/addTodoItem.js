@@ -7,6 +7,7 @@ function onAddTodoItem(event) {
 
   if (event.key === "Enter" && title !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(title));
+    event.target.value = "";
   }
 }
 
