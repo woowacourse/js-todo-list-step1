@@ -49,7 +49,7 @@ function visibleTotoList(state) {
 }
 
 function createCountTemplate(state) {
-    if (state) {
+    if (state === "completed") {
         return countTemplate(deepCopyStore().filter(item => item.state === state).length);
     } else {
         return countTemplate(deepCopyStore().length);

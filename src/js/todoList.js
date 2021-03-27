@@ -55,7 +55,6 @@ function getOnEventClosestTodoItemId(event) {
 
 function onToggleTodoItem(event) {
     if (event.target && event.target.className === "toggle") {
-        const id = getOnEventClosestTodoItemId(event);
         execute("toggle", {id: getOnEventClosestTodoItemId(event)}, getState());
     }
 }
