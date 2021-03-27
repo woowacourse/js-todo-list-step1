@@ -12,14 +12,22 @@ function onAddTodoItem(event) {
 }
 
 function renderTodoItemTemplate(title) {
+  const id = uniqueId();
   return `
-  <li>
+  <li id="${id}">
     <div class="view">
-      <input class="toggle" type="checkbox"/>
+      <input class="toggle" type="checkbox" id="${id}" />
       <label class="label">${title}</label>
-      <button class="destroy"></button>
+      <button class="destroy" id="${id}"></button>
     </div>
-    <input class="edit" value="새로운 타이틀" />
+    <input class="edit" value="${title}" />
   </li>
 `;
 }
+
+let uniqueId = (function () {
+  let id = 0;
+  return function() {
+    return id++;
+  }
+})();
