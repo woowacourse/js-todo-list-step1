@@ -8,7 +8,7 @@ export default class DeleteTodo {
   deleteTodo = ({ target }) => {
     if (target.className === 'destroy') {
       const todos = JSON.parse(localStorage.getItem('todos')) ?? []
-      const todo = todos.find(todo => todo.id == target.id)
+      const todo = todos.find(todo => todo.id === target.id)
       todos.splice(todos.indexOf(todo), 1)
       localStorage.setItem('todos', JSON.stringify(todos))
 

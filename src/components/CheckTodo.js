@@ -8,7 +8,7 @@ export default class CheckTodo {
   checkTodo = ({ target }) => {
     this.todos = JSON.parse(localStorage.getItem('todos')) ?? []
     this.todos.map(todo => {
-      if (todo.id == target.id) {
+      if (todo.id === target.id) {
         todo.completed = !todo.completed
         todo.checked = !todo.checked
       }

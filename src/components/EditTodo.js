@@ -22,7 +22,7 @@ export default class EditTodo {
 
   patchTodo = (target) => {
     this.todos.map(todo => {
-      if (todo.id == target.closest('li').id) {
+      if (todo.id === target.closest('li').id) {
         todo.content = target.value
       }
     })

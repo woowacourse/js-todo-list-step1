@@ -8,7 +8,7 @@ export default class CreateTodo {
   createTodo = ({ key, target }) => {
     if (key === 'Enter' && target.value) {
       const todoItem = {
-        id: Date.now(),
+        id: Date.now().toString(),
         completed: false,
         content: target.value,
       }
