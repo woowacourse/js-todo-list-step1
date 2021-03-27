@@ -1,103 +1,26 @@
-import {CancelModifyElementCommand} from "./Command/CancelModifyElementCommand.js";
-import {CreateNewElementCommand} from "./Command/CreateNewElementCommand.js";
-import {ModifyElementCommand} from "./Command/ModifyElementCommand.js";
-import {OutputView} from "./view/OutputView.js";
+import {InputItemCommand} from "./view/command/InputItemCommand.js";
+import {TodoController} from "./controller/TodoController.js";
 
 class App {
-
-    #editingElement
-    #commands
-
-    constructor() {
-        this.#commands = [
-            new CancelModifyElementCommand(this),
-            new CreateNewElementCommand(this),
-            new ModifyElementCommand(this)
-        ]
-    }
+    #controller = new TodoController()
+    #commands = [
+        new InputItemCommand(this.#controller)
+    ]
 
     run() {
-        this.#addCommandListener()
-        this.#addCheckBoxListener()
-        this.#addFilterListener()
+        this.#addKeyBoardEvent()
     }
 
-    #addFilterListener() {
-        let filters = document.querySelector("ul[class=filters]").querySelectorAll("a")
-
-        filters.forEach(filter =>
-            this.#setFilterListener(filter, filters)
-        )
-    }
-
-    #setFilterListener(filter, filters) {
-        filter.addEventListener('click',
-            () => {
-                this.#setFiltersToUnSelected(filters);
-                this.#setSelectedFilterToSelected(filter);
-                OutputView.drawElementByHash(filter.getAttribute("href"))
+    #addKeyBoardEvent() {
+        document.addEventListener('keyup', e => {
+            let cmd = this.#commands.find(cmd => cmd.isUsable(e))
+            if (cmd !== undefined) {
+                cmd.execute()
             }
-        );
-    }
-
-    #setSelectedFilterToSelected(filter) {
-        filter.classList.add("selected")
-    }
-
-    #setFiltersToUnSelected(filters) {
-        filters.forEach(f => f.classList.remove("selected"))
-    }
-
-    #addCheckBoxListener() {
-        let checkboxes = document.querySelectorAll("input[type=checkbox]")
-
-        checkboxes.forEach(checkbox =>
-            this.#setCheckboxListener(checkbox)
-        )
-    }
-
-    #setCheckboxListener(checkbox) {
-        checkbox.addEventListener('change',
-            () => {
-                checkbox.classList.toggle('#complete')
-            }
-        );
-    }
-
-    #addCommandListener() {
-        window.addEventListener("keyup", e => {
-            let command = this.#commands.find(
-                command => command.isUsable(e.code)
-            );
-
-            if(command === undefined) {
-                return
-            }
-
-            console.log(command)
-
-            command.execute()
-
-            if(e.code === "Enter") {
-                OutputView.printTodoList()
-            }
-
         })
-    }
-
-    getEditingElement() {
-        return this.#editingElement
-    }
-
-    setEditingElementToUndefined() {
-        this.#editingElement = undefined
-    }
-
-    setEditingElement(dom) {
-        this.#editingElement = dom
     }
 
 }
 
-let app = new App()
+const app = new App()
 app.run()
