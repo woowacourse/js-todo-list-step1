@@ -1,6 +1,6 @@
 const $todoInput = document.getElementById("new-todo-title");
 const $todoList = document.getElementById("todo-list");
-
+const $count = document.querySelector("strong")
 $todoInput.addEventListener('keyup', addTodoItem);
 $todoList.addEventListener('click', todoComplete);
 $todoList.addEventListener('click', todoDelete);
@@ -14,6 +14,7 @@ function addTodoItem(event) {
         $todoList.insertAdjacentHTML("beforeend", addedItem);
         $todoInput.value = null;  // input clear
     }
+    updateTodoItemsCount($todoList.childElementCount);
 }
 
 function todoComplete(event) {
@@ -23,21 +24,22 @@ function todoComplete(event) {
         !event.target.classList.contains("checked")) {
         todoItem.classList.toggle("completed");
         todoItem.querySelector(".toggle").classList.add("checked")
-        return;
-    }
-
-    if (event.target.type === 'checkbox' &&
+    } else if (event.target.type === 'checkbox' &&
         event.target.classList.contains("checked")) {
         todoItem.classList.toggle("completed");
         todoItem.querySelector(".toggle").classList.remove("checked")
-        return;
     }
+}
+
+function updateTodoItemsCount(count) {
+    $count.innerText = count;
 }
 
 function todoDelete(event) {
     if (event.target.tagName === 'BUTTON') {
         event.target.closest("li").remove();
     }
+    updateTodoItemsCount($todoList.childElementCount);
 }
 
 function todoEdit(event) {
