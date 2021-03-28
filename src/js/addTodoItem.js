@@ -8,6 +8,7 @@ function onAddTodoItem(event) {
   if (event.key === "Enter" && title !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(title));
     event.target.value = "";
+    onTodoCount(todoList);
   }
 }
 
@@ -31,3 +32,9 @@ let uniqueId = (function () {
     return id++;
   }
 })();
+
+function onTodoCount(todoList) {
+  const todoCount = document.getElementsByClassName("todo-count")[0];
+  const strongTag = todoCount.getElementsByTagName("strong")[0];
+  strongTag.innerHTML = todoList.childElementCount;
+}
