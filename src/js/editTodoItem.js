@@ -1,5 +1,5 @@
-const toggleTodoInput = document.getElementById("todo-list");
-toggleTodoInput.addEventListener("dblclick", onChangeEditModeTodoItem);
+const editTodoList = document.getElementById("todo-list");
+editTodoList.addEventListener("dblclick", onChangeEditModeTodoItem);
 
 function onChangeEditModeTodoItem(event) {
   const label = event.target;

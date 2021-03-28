@@ -1,5 +1,5 @@
-const toggleTodoInput = document.getElementById("todo-list");
-toggleTodoInput.addEventListener("click", onDeleteTodoItem);
+const deleteTodoList = document.getElementById("todo-list");
+deleteTodoList.addEventListener("click", onDeleteTodoItem);
 
 function onDeleteTodoItem(event) {
   if (event.target && event.target.nodeName === "BUTTON") {
