@@ -16,6 +16,10 @@ $activeTodo.addEventListener("click", displayTodo);
 $completedTodo.addEventListener("click", displayDone);
 
 function displayAll() {
+  $allTodo.classList.add("selected");
+  $activeTodo.classList.remove("selected");
+  $completedTodo.classList.remove("selected");
+
   for (const todoItem of $todoList.children) {
     todoItem.style.display = "block";
     console.log(todoItem);
@@ -24,6 +28,10 @@ function displayAll() {
 }
 
 function displayTodo() {
+  $allTodo.classList.remove("selected");
+  $activeTodo.classList.add("selected");
+  $completedTodo.classList.remove("selected");
+
   let todoCount = 0;
   for (const todoItem of $todoList.children) {
     if (!todoItem.classList.contains("completed")) {
@@ -37,6 +45,10 @@ function displayTodo() {
 }
 
 function displayDone() {
+  $allTodo.classList.remove("selected");
+  $activeTodo.classList.remove("selected");
+  $completedTodo.classList.add("selected");
+
   let doneCount = 0;
   for (const todoItem of $todoList.children) {
     if (todoItem.classList.contains("completed")) {
