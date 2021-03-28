@@ -28,13 +28,13 @@ function TodoTab({$target, selectTodoStatus, state}) {
     this.render = () => {
         const selectedTab = this.state.selectedTab;
         this.$target.innerHTML = `<li>
-                        <a class="all ${selectedTab.includes("all") ? "selected" : ""}" href="#">전체보기</a>
+                        <a class="all ${"all".includes(selectedTab) ? "selected" : ""}" href="#">전체보기</a>
                     </li>
                     <li>
-                        <a class="active ${selectedTab.includes("active") ? "selected" : ""}" href="#active">해야할 일</a>
+                        <a class="active ${"active".includes(selectedTab) ? "selected" : ""}" href="#active">해야할 일</a>
                     </li>
                     <li>
-                        <a class="completed ${selectedTab.includes("completed") ? "selected" : ""}" href="#completed">완료한 일</a>
+                        <a class="completed ${"completed".includes(selectedTab) ? "selected" : ""}" href="#completed">완료한 일</a>
                     </li>`;
     };
 
