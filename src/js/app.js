@@ -67,7 +67,7 @@ function addTodoItem(event) {
   if (event.key === "Enter" && todoTitle !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
     event.target.value = "";
-    updateTodoCount($todoList.childElementCount);
+    displayAll();
   }
 }
 
