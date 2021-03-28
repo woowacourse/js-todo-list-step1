@@ -1,5 +1,6 @@
 import AddTodo from "./AddTodo.js";
 import ChangeTodo from "./ChangeTodo.js";
+import EditTodo from "./EditTodo.js";
 
 const $count = document.querySelector('strong');
 const $newTodo = document.querySelector('#new-todo-title');
@@ -40,4 +41,5 @@ new AddTodo($newTodo);
 ChangeTodo.prototype.renderTodo = renderTodo;
 new ChangeTodo($todoList);
 
-
+EditTodo.prototype.renderTodo = renderTodo;
+new EditTodo($todoList);
