@@ -1,4 +1,5 @@
 function TodoTab({$target, selectTodoStatus, state}) {
+
     this.init = () => {
         this.$target = $target;
         this.selectTodoStatus = selectTodoStatus;

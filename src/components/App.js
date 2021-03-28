@@ -10,7 +10,7 @@ export default class App {
         try {
             this.state = {
                 todos: [],
-                selectedTab: "all" //todo: all, active, completed (tab 기능 추가시에 확장 고려!)
+                selectedTab: "all"
             }
 
             this.todoHeader = new TodoHeader({
@@ -38,7 +38,7 @@ export default class App {
             this.todoTab = new TodoTab({
                 $target: document.querySelector(".filters"),
                 selectTodoStatus: this.selectTodoStatus.bind(this),
-                state:this.state
+                state: this.state
             });
 
         } catch (e) {
@@ -64,7 +64,7 @@ export default class App {
     };
 
     toggleTodo(toggledId) {
-        //todo: 질의응답 해보기 특정요소만 변경하기! (프론트 분들한테 물어볼까...?)
+        //todo: 질문! 특정요소만 삭제! (지금은 한 개 값만 변경하지만 iterator를 돌면서 Array를 다시 만들고있음. 즉 비효율적이라 느껴진다)
         const changedTodos = this.state.todos
             .map(todo => {
                     if (todo.id !== parseInt(toggledId)) {
@@ -85,6 +85,7 @@ export default class App {
     };
 
     editTodo(editedTodoId, newTodoTitle) {
+        //todo: 질문! 특정요소만 변경 (위와 동일한 질문, 단지 여기서는 특정 요소 변경!)
         const editedTodos = this.state.todos
             .map(todo => {
                 if (todo.id !== editedTodoId) {
@@ -103,7 +104,7 @@ export default class App {
         });
     };
 
-    selectTodoStatus(tabAttributeName) { //todo: 선택한 tab으로 변경!
+    selectTodoStatus(tabAttributeName) {
         this.setState({
             ...this.state,
             selectedTab: tabAttributeName

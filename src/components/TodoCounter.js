@@ -1,5 +1,5 @@
 function TodoCounter({$target, state}) {
-    
+
     this.init = () => {
         this.$target = $target;
         this.state = state;
