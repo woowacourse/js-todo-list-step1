@@ -3,7 +3,7 @@ const todoInput = document.querySelector("#new-todo-title");
 const todoList = document.querySelector("#todo-list");
 const countContainer = todoList.querySelector(".count-container");
 
-const showCompletedButton = todoList.querySelector(".completed");
+const toggleInput = document.getElementById("todo-list");
 
 const allTodos = todoList.querySelectorAll(".all");
 const activeTodos = todoList.querySelectorAll(".active");
@@ -14,8 +14,7 @@ const EMPTY_STRING = "";
 
 // Event Listeners
 todoInput.addEventListener('keypress', addTodo);
-
-showCompletedButton.addEventListener('click', showCompleted);
+toggleInput.addEventListener("click", checkTodo);
 
 // Functions
 function addTodo(event) {
@@ -29,7 +28,8 @@ function addTodo(event) {
 }
 
 function checkTodo(event) {
-
+    event.target.closest("li").classList.toggle("completed");
+    event.target.toggleAttribute("checked");
 }
 
 function deleteTodo(event) {
