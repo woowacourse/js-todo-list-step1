@@ -9,7 +9,7 @@ export default class App {
     constructor() {
         try {
             this.state = {
-                todos: [],
+                todos: this.findAllTodos(),
                 selectedTab: "all"
             }
 
@@ -44,6 +44,11 @@ export default class App {
         } catch (e) {
             console.error(e.error);
         }
+    }
+
+    findAllTodos = () => {
+        const todos = localStorage.getItem("todos");
+        return JSON.parse(todos) || [];
     }
 
     addTodo(newTodo) {
@@ -136,11 +141,16 @@ export default class App {
         return todo.done === true;
     }
 
+    saveTodos = state => {
+        localStorage.setItem("todos", JSON.stringify(state.todos));
+    }
+
     setState(changedState) {
         this.state = changedState;
         this.todoList.setState(changedState);
         this.todoTab.setState(changedState);
         this.todoCounter.setState(changedState);
+        this.saveTodos(changedState);
     }
 
 }
