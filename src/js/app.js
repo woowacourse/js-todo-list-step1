@@ -1,10 +1,10 @@
 const $todoInput = document.querySelector("#new-todo-title");
-const $toggleInputs = document.getElementById("todo-list");
+const $toggleInput = document.querySelector("#todo-list");
 
-$todoInput.addEventListener("keyup", onAddTodoItem);
-$toggleInputs.addEventListener("click", onToggleTodoItem);
+$todoInput.addEventListener("keyup", addTodoItem);
+$toggleInput.addEventListener("click", toggleCompleteTodoItem);
 
-function onAddTodoItem(event) {
+function addTodoItem(event) {
   const todoTitle = event.target.value;
   const todoList = document.getElementById("todo-list");
   if (event.key === "Enter" && todoTitle !== "") {
@@ -13,8 +13,11 @@ function onAddTodoItem(event) {
   }
 }
 
-function onToggleTodoItem(event) {
-  event.target.closest("li").classList.toggle("completed");
+function toggleCompleteTodoItem(event) {
+  const li = event.target.closest("li");
+  if (event.target.classList.contains("toggle")) {
+    li.classList.toggle("completed");
+  }
 }
 
 function renderTodoItemTemplate(title) {
