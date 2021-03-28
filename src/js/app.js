@@ -13,6 +13,7 @@ const EMPTY_STRING = "";
 todoInput.addEventListener('keypress', addTodo);
 todoList.addEventListener("click", checkTodo);
 todoList.addEventListener("click", deleteTodo);
+todoList.addEventListener("dblclick", editTodo);
 
 // Functions
 function addTodo(event) {
@@ -26,8 +27,9 @@ function addTodo(event) {
 }
 
 function checkTodo(event) {
-    event.target.closest("li").classList.toggle("completed");
-    event.target.toggleAttribute("checked");
+    const todo = event.target.closest("li");
+    todo.classList.toggle("completed");
+    todo.querySelector(".toggle").toggleAttribute("checked");
 }
 
 function deleteTodo(event) {
