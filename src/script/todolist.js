@@ -2,11 +2,10 @@ const $todoInput = document.getElementById("new-todo-title");
 const $todoList = document.getElementById("todo-list");
 const $count = document.querySelector("strong")
 $todoInput.addEventListener('keyup', addTodoItem);
+$todoList.addEventListener('keyup', cancelEditItem);
 $todoList.addEventListener('click', todoComplete);
 $todoList.addEventListener('click', todoDelete);
 $todoList.addEventListener('dblclick', todoEdit);
-
-$todoList.addEventListener('keyup', cancelEditItem)
 
 function addTodoItem(event) {
     if (event.key === 'Enter' && event.target.value !== "") {
@@ -72,4 +71,40 @@ function getTodoItem(itemTitle) {
       <input class="edit" value="${itemTitle.value}" />
       
   </li>`
+}
+
+const $allSelected = document.querySelector(".selected");
+const $active = document.querySelector(".active");
+const $completed = document.querySelector(".completed");
+
+$allSelected.addEventListener('click', showAll)
+$active.addEventListener('click', showTodo)
+$completed.addEventListener('click', showCompleted)
+
+function showAll() {
+    Array.from($todoList.children).forEach(
+        element => element.style.display = "block")
+    updateTodoItemsCount($todoList.childElementCount);
+}
+
+function showTodo() {
+    const completed = Array.from($todoList.children).filter(
+        element => element.classList.contains("completed"));
+    const notCompleted = Array.from($todoList.children).filter(
+        element => !element.classList.contains("completed"));
+
+    notCompleted.forEach(element => element.style.display = 'block')
+    completed.forEach(element => element.style.display = 'none')
+    updateTodoItemsCount(notCompleted.length)
+}
+
+function showCompleted() {
+    const completed = Array.from($todoList.children).filter(
+        element => element.classList.contains("completed"));
+    const notCompleted = Array.from($todoList.children).filter(
+        element => !element.classList.contains("completed"));
+
+    completed.forEach(element => element.style.display = 'block')
+    notCompleted.forEach(element => element.style.display = 'none')
+    updateTodoItemsCount(completed.length)
 }
