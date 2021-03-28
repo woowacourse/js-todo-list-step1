@@ -36,7 +36,9 @@ export default class App {
             });
 
             this.todoTab = new TodoTab({
-                $target: document.querySelector(".filters")
+                $target: document.querySelector(".filters"),
+                selectTodoStatus: this.selectTodoStatus.bind(this),
+                state:this.state
             });
 
         } catch (e) {
@@ -101,10 +103,42 @@ export default class App {
         });
     };
 
+    selectTodoStatus(tabAttributeName) { //todo: 선택한 tab으로 변경!
+        this.setState({
+            ...this.state,
+            selectedTab: tabAttributeName
+        });
+
+        const filteredTodos = this.state.todos
+            .filter(todo => this.filterTodo(todo));
+
+        const filteredState = {
+            ...this.state,
+            todos: filteredTodos
+        };
+
+        this.todoList.setState(filteredState);
+        this.todoTab.setState(filteredTodos);
+        this.todoCounter.setState(filteredState);
+    }
+
+    filterTodo = todo => {
+        const selectedTab = this.state.selectedTab;
+        if (selectedTab.includes('all')) {
+            return true;
+        }
+
+        if (selectedTab.includes('active')) {
+            return todo.done === false;
+        }
+
+        return todo.done === true;
+    }
+
     setState(changedState) {
         this.state = changedState;
         this.todoList.setState(changedState);
-        //todo: tab 선택에 따라 상태 초기화
+        this.todoTab.setState(changedState);
         this.todoCounter.setState(changedState);
     }
 

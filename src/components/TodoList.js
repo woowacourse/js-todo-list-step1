@@ -86,7 +86,7 @@ function TodoList({$target, state, removeTodo, toggleTodo, editTodo}) {
     this.render = () => {
         this.$target.innerHTML = this.state.todos
             .map(todo => this.translateTemplate(todo)).join("");
-    }
+    };
 
     this.translateTemplate = (todo) => `<li id="${todo.id}" class="${todo.done ? "completed" : ""}">
       <div class="view">
