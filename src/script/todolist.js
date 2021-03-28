@@ -2,8 +2,8 @@ const $todoInput = document.getElementById("new-todo-title");
 const $todoList = document.getElementById("todo-list");
 
 $todoInput.addEventListener('keyup', addTodoItem);
-
-$todoList.addEventListener('click', todoComplete)
+$todoList.addEventListener('click', todoComplete);
+$todoList.addEventListener('click', todoDelete);
 
 function addTodoItem(event) {
     if (event.key === 'Enter' && event.target.value !== "") {
@@ -31,10 +31,17 @@ function todoComplete(event) {
     }
 }
 
+function todoDelete(event) {
+    if (event.target.tagName === 'BUTTON') {
+        event.target.closest("li").remove();
+    }
+}
+
 function getTodoItem(itemTitle) {
     return ` <li>
       <input class="toggle" type="checkbox"/>
       <label class="label">${itemTitle.value}</label>
+      <button class="destroy"></button>
   </li>`
 }
 
