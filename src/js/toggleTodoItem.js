@@ -1,8 +1,8 @@
-const toggleTodoInput = document.getElementById("todo-list");
-toggleTodoInput.addEventListener("click", onToggleTodoItem);
+const toggleTodoList = document.getElementById("todo-list");
+toggleTodoList.addEventListener("click", onToggleTodoItem);
 
 function onToggleTodoItem(event) {
-  if (event.target && event.target.nodeName === "INPUT") {
+  if (event.target && event.target.className === "toggle") {
     event.target.toggleAttribute("checked");
     event.target.closest("li").classList.toggle("completed");
   }
