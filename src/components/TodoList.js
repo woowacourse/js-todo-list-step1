@@ -22,11 +22,16 @@ function TodoList({$target}) {
 
         if (clickedClassName === 'toggle') {
             this.toggleTodoItem(evt);
+            return;
+        }
+
+        if (clickedClassName === 'destroy') {
+            const clickedTodo = evt.target.offsetParent;
+            clickedTodo.remove();
         }
 
         // todo: 수정기능! (추가할 경우 위의 기능은 early return 시키기!)
 
-        // todo: 삭제기능!
     }
 
     this.toggleTodoItem = evt => {
