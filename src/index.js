@@ -3,6 +3,7 @@ const $todoList = document.querySelector(".todo-list");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
 $todoList.addEventListener("click", onDeleteTodoItem);
+$todoList.addEventListener("click", onToggleTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -28,5 +29,12 @@ function renderTodoItemTemplate(title) {
 function onDeleteTodoItem(event) {
     if (event.target.className === "destroy") {
         event.target.closest('li').remove();
+    }
+}
+
+function onToggleTodoItem(event) {
+    if (event.target.className === "toggle") {
+        event.target.closest("li").classList.toggle("completed");
+
     }
 }

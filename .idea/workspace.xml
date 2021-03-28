@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="854c17ef-75ac-48b5-8aa5-308468702f00" name="Default Changelist" comment="feat: .destroy 버튼 입력시 해당 todoList 삭제 기능 구현">
+    <list default="true" id="854c17ef-75ac-48b5-8aa5-308468702f00" name="Default Changelist" comment="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +51,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="854c17ef-75ac-48b5-8aa5-308468702f00" name="Default Changelist" comment="" />
+      <changelist id="" name="feat: .detroy 버튼 입력 시 해당 todo 삭제 기능 구현" comment="" />
       <created>1616686330818</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -61,6 +62,7 @@
       <workItem from="1616757063588" duration="1074000" />
       <workItem from="1616758383804" duration="84000" />
       <workItem from="1616766931453" duration="9509000" />
+      <workItem from="1616929366333" duration="1289000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 엔터 입력시 할 일 추가 기능 구현">
       <created>1616928050946</created>
@@ -69,7 +71,28 @@
       <option name="project" value="LOCAL" />
       <updated>1616928050946</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: .detroy 버튼 입력 시 해당 todo 삭제 기능 구현">
+      <created>1616929427401</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1616929427401</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현">
+      <created>1616929470250</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616929470250</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현">
+      <created>1616929613695</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1616929613695</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -89,7 +112,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 엔터 입력시 할 일 추가 기능 구현" />
+    <MESSAGE value="feat: .detroy 버튼 입력 시 해당 todo 삭제 기능 구현" />
     <MESSAGE value="feat: .destroy 버튼 입력시 해당 todoList 삭제 기능 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: .destroy 버튼 입력시 해당 todoList 삭제 기능 구현" />
+    <MESSAGE value="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현" />
   </component>
 </project>
