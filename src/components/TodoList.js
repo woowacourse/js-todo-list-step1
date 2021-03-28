@@ -85,10 +85,11 @@ function TodoList({$target, state, removeTodo, toggleTodo, editTodo}) {
 
     this.render = () => {
         this.$target.innerHTML = this.state.todos
-            .map(todo => this.translateTemplate(todo)).join("");
+            .map(todo => this.translateTemplate(todo))
+            .join("");
     };
 
-    this.translateTemplate = (todo) => `<li id="${todo.id}" class="${todo.done ? "completed" : ""}">
+    this.translateTemplate = todo => `<li id="${todo.id}" class="${todo.done ? "completed" : ""}">
       <div class="view">
         <input class="toggle" type="checkbox" ${todo.done ? "checked" : ""}/>
         <label class="label">${todo.title}</label>

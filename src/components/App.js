@@ -11,7 +11,7 @@ export default class App {
             this.state = {
                 todos: this.findAllTodos(),
                 selectedTab: "all"
-            }
+            };
 
             this.todoHeader = new TodoHeader({
                 $target: document.querySelector(".todo-header")
@@ -49,16 +49,16 @@ export default class App {
     findAllTodos = () => {
         const todos = localStorage.getItem("todos");
         return JSON.parse(todos) || [];
-    }
+    };
 
-    addTodo(newTodo) {
+    addTodo = newTodo => {
         this.setState({
             ...this.state,
             todos: [...this.state.todos, newTodo],
         });
-    }
+    };
 
-    removeTodo(removedTodoId) {
+    removeTodo = removedTodoId => {
         const removedTodos = this.state.todos
             .filter(todo => todo.id !== removedTodoId);
 
@@ -68,7 +68,7 @@ export default class App {
         });
     };
 
-    toggleTodo(toggledId) {
+    toggleTodo = toggledId => {
         //todo: 질문! 특정요소만 삭제! (지금은 한 개 값만 변경하지만 iterator를 돌면서 Array를 다시 만들고있음. 즉 비효율적이라 느껴진다)
         const changedTodos = this.state.todos
             .map(todo => {
@@ -89,7 +89,7 @@ export default class App {
         });
     };
 
-    editTodo(editedTodoId, newTodoTitle) {
+    editTodo = (editedTodoId, newTodoTitle) => {
         //todo: 질문! 특정요소만 변경 (위와 동일한 질문, 단지 여기서는 특정 요소 변경!)
         const editedTodos = this.state.todos
             .map(todo => {
@@ -109,7 +109,7 @@ export default class App {
         });
     };
 
-    selectTodoStatus(tabAttributeName) {
+    selectTodoStatus = tabAttributeName => {
         this.setState({
             ...this.state,
             selectedTab: tabAttributeName
@@ -126,7 +126,7 @@ export default class App {
         this.todoList.setState(filteredState);
         this.todoTab.setState(filteredTodos);
         this.todoCounter.setState(filteredState);
-    }
+    };
 
     filterTodo = todo => {
         const selectedTab = this.state.selectedTab;
@@ -139,18 +139,18 @@ export default class App {
         }
 
         return todo.done === true;
-    }
+    };
 
     saveTodos = state => {
         localStorage.setItem("todos", JSON.stringify(state.todos));
-    }
+    };
 
-    setState(changedState) {
+    setState = changedState => {
         this.state = changedState;
         this.todoList.setState(changedState);
         this.todoTab.setState(changedState);
         this.todoCounter.setState(changedState);
         this.saveTodos(changedState);
-    }
+    };
 
 }

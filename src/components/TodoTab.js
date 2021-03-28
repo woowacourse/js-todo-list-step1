@@ -4,12 +4,12 @@ function TodoTab({$target, selectTodoStatus, state}) {
         this.$target = $target;
         this.selectTodoStatus = selectTodoStatus;
         this.state = state;
-        this.render();
 
         this.addClickEvent();
+        this.render();
     }
 
-    this.addClickEvent = function () {
+    this.addClickEvent = () => {
         this.$target.addEventListener("click", evt => {
             const eventTarget = evt.target;
             if (eventTarget.tagName !== "A") {
@@ -20,7 +20,7 @@ function TodoTab({$target, selectTodoStatus, state}) {
         })
     };
 
-    this.setState = (changedState) => {
+    this.setState = changedState => {
         this.state = changedState;
         this.render();
     };

@@ -5,7 +5,7 @@ function TodoHeader({$target}) {
         this.render();
     }
 
-    this.render = function () {
+    this.render = () => {
         this.$target.innerHTML = `<h1>Roki's TODOS</h1>`;
     }
 

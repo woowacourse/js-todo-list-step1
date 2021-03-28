@@ -5,17 +5,8 @@ function TodoInput({$target, addTodo}) {
     this.init = () => {
         this.$target = $target;
         this.addTodo = addTodo;
-        this.render();
         this.addEnterEvent();
-    }
-
-    this.render = () => {
-        this.$target.innerHTML = `<input
-                id="new-todo-title"
-                class="new-todo"
-                placeholder="할일을 추가해주세요"
-                autofocus
-        />`;
+        this.render();
     }
 
     this.addEnterEvent = () => {
@@ -39,6 +30,15 @@ function TodoInput({$target, addTodo}) {
             this.addTodo(newTodoItem);
             evt.target.value = '';
         });
+    }
+
+    this.render = () => {
+        this.$target.innerHTML = `<input
+                id="new-todo-title"
+                class="new-todo"
+                placeholder="할일을 추가해주세요"
+                autofocus
+        />`;
     }
 
     this.init();
