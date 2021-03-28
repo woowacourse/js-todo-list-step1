@@ -1,6 +1,8 @@
 const $todoInput = document.querySelector("#new-todo-title");
+const $todoList = document.querySelector(".todo-list");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
+$todoList.addEventListener("click", onDeleteTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -9,7 +11,7 @@ function onAddTodoItem(event) {
         todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
         event.target.value = "";
     }
-}현
+}
 
 function renderTodoItemTemplate(title) {
     return `<li>
@@ -21,4 +23,10 @@ function renderTodoItemTemplate(title) {
                 <input class="edit" value="새로운 타이틀" />
             </li>`;
 
+}
+
+function onDeleteTodoItem(event) {
+    if (event.target.className === "destroy") {
+        event.target.closest('li').remove();
+    }
 }
