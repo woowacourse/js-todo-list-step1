@@ -12,6 +12,7 @@ const EMPTY_STRING = "";
 // Event Listeners
 todoInput.addEventListener('keypress', addTodo);
 todoList.addEventListener("click", checkTodo);
+todoList.addEventListener("click", deleteTodo);
 
 // Functions
 function addTodo(event) {
@@ -30,7 +31,9 @@ function checkTodo(event) {
 }
 
 function deleteTodo(event) {
-
+    if (event.target.className === "destroy") {
+        event.target.parentNode.parentNode.remove();
+    }
 }
 
 function editTodo(event) {
