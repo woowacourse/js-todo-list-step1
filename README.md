@@ -1,6 +1,3 @@
-<p align="middle" >
-  <img width="200px;" src="./src/images/check_list.png"/>
-</p>
 <h2 align="middle">JS 투두리스트 스텝1</h2>
 <p align="middle">자바스크립트로 구현 하는 투두리스트</p>
 <p align="middle">
@@ -13,21 +10,10 @@
   </a>
 </p>
 
-## 🔥 Projects!
-
-<p align="middle">
-  <img width="400" src="./src/images/sample.gif">
-</p>
-
-<p align="middle">
-  <a href="https://next-step.github.io/js-todo-list-step1/">🖥️ 데모 링크</a>
-</p>
-
-<br/>
 
 ## 🎯 요구사항
 
-- [ ] todo list에 todoItem을 키보드로 입력하여 추가하기
+- [x] todo list에 todoItem을 키보드로 입력하여 추가하기
 - [ ] todo list의 체크박스를 클릭하여 complete 상태로 변경 (li tag 에 completed class 추가, input 태그에 checked 속성 추가)
 - [ ] todo list의 x버튼을 이용해서 해당 엘리먼트를 삭제
 - [ ] todo list를 더블클릭했을 때 input 모드로 변경 (li tag 에 editing class 추가) 단 이때 수정을 완료하지 않은 상태에서 esc키를 누르면 수정되지 않은 채로 다시 view 모드로 복귀
@@ -85,18 +71,6 @@ npm install -g live-server
 ```
 live-server 폴더명
 ```
-
-<br>
-
-## 👏 Contributing
-
-만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
-
-<br>
-
-## 🐞 Bug Report
-
-버그를 발견한다면, [Issues](https://github.com/woowacourse/js-todo-list-step1/issues)에 등록해주세요.
 
 <br>
 

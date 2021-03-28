@@ -12,12 +12,13 @@ class App {
                 $target: document.querySelector(".todo-header")
             });
 
-            this.todoInput = new TodoInput({
-                $target: document.querySelector(".todo-input")
+            this.todoList = new TodoList({
+                $target: document.querySelector(".todo-list"),
             });
 
-            this.todoList = new TodoList({
-                $target: document.querySelector(".todo-list")
+            this.todoInput = new TodoInput({
+                $target: document.querySelector(".todo-input"),
+                todoList: this.todoList
             });
 
             this.todoCounter = new TodoCounter({
