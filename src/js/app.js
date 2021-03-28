@@ -3,6 +3,8 @@ const $toggleInput = document.querySelector("#todo-list");
 
 $todoInput.addEventListener("keyup", addTodoItem);
 $toggleInput.addEventListener("click", toggleCompleteTodoItem);
+$toggleInput.addEventListener("click", deleteTodoItem);
+$toggleInput.addEventListener("doubleclick", editTodoItem);
 
 function addTodoItem(event) {
   const todoTitle = event.target.value;
@@ -14,9 +16,25 @@ function addTodoItem(event) {
 }
 
 function toggleCompleteTodoItem(event) {
-  const li = event.target.closest("li");
+  const todoItem = event.target.closest("li");
+  const todoItemInput = todoItem.querySelector(".toggle");
   if (event.target.classList.contains("toggle")) {
-    li.classList.toggle("completed");
+    todoItem.classList.toggle("completed");
+    todoItemInput.classList.toggle("checked");
+  }
+}
+
+function deleteTodoItem(event) {
+  const todoItem = event.target.closest("li");
+  if (event.target.classList.contains("destroy")) {
+    todoItem.remove();
+  }
+}
+
+function editTodoItem(event) {
+  const todoItem = event.target.closest("li");
+  if (event.target.classList.contains("label")) {
+    todoItem.remove();
   }
 }
 
