@@ -22,7 +22,6 @@ function displayAll() {
 
   for (const todoItem of $todoList.children) {
     todoItem.style.display = "block";
-    console.log(todoItem);
   }
   updateTodoCount($todoList.childElementCount);
 }
@@ -67,7 +66,7 @@ function addTodoItem(event) {
   if (event.key === "Enter" && todoTitle !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
     event.target.value = "";
-    updateTodoCount($todoList.childElementCount);
+    displayAll();
   }
 }
 
