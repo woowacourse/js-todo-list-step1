@@ -1,10 +1,11 @@
 const $todoInput = document.querySelector("#new-todo-title");
-const $toggleInput = document.querySelector("#todo-list");
+const $todoList = document.querySelector("#todo-list");
+const $todoCount = document.querySelector(".todo-count strong");
 
 $todoInput.addEventListener("keyup", addTodoItem);
-$toggleInput.addEventListener("click", toggleCompleteTodoItem);
-$toggleInput.addEventListener("click", deleteTodoItem);
-$toggleInput.addEventListener("dblclick", editTodoItem);
+$todoList.addEventListener("click", toggleCompleteTodoItem);
+$todoList.addEventListener("click", deleteTodoItem);
+$todoList.addEventListener("dblclick", editTodoItem);
 
 function addTodoItem(event) {
   const todoTitle = event.target.value;
@@ -12,7 +13,13 @@ function addTodoItem(event) {
   if (event.key === "Enter" && todoTitle !== "") {
     todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
     event.target.value = "";
+    updateTodoCount($todoList.childElementCount);
   }
+}
+
+function updateTodoCount(todoCount) {
+  console.log(todoCount);
+  $todoCount.textContent = todoCount;
 }
 
 function toggleCompleteTodoItem(event) {
@@ -28,6 +35,7 @@ function deleteTodoItem(event) {
   const todoItem = event.target.closest("li");
   if (event.target.classList.contains("destroy")) {
     todoItem.remove();
+    updateTodoCount($todoList.childElementCount);
   }
 }
 
