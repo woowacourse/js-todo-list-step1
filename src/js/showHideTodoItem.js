@@ -10,9 +10,9 @@ active.addEventListener("click", onActiveFilter);
 completed.addEventListener("click", onCompletedFilter);
 
 function onAllSelectedFilter() {
-  all.className = "all selected";
-  active.className = "active";
-  completed.className = "completed";
+  all.classList.add("selected");
+  active.classList.remove("selected");
+  completed.classList.remove("selected");
 
   for (const todoItem of todoList.children) {
     todoItem.style.display = "block";
@@ -22,9 +22,9 @@ function onAllSelectedFilter() {
 }
 
 function onActiveFilter() {
-  all.className = "all";
-  active.className = "active selected";
-  completed.className = "completed";
+  all.classList.remove("selected");
+  active.classList.add("selected");
+  completed.classList.remove("selected");
 
   let countOfActiveItem = 0;
 
@@ -41,9 +41,9 @@ function onActiveFilter() {
 }
 
 function onCompletedFilter() {
-  all.className = "all";
-  active.className = "active";
-  completed.className = "completed selected";
+  all.classList.remove("selected");
+  active.classList.remove("selected");
+  completed.classList.add("selected");
 
   let countOfCompltedItem = 0;
 
