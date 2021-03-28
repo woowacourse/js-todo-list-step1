@@ -6,6 +6,8 @@ $todoList.addEventListener('click', todoComplete);
 $todoList.addEventListener('click', todoDelete);
 $todoList.addEventListener('dblclick', todoEdit);
 
+$todoList.addEventListener('keyup', cancelEditItem)
+
 function addTodoItem(event) {
     if (event.key === 'Enter' && event.target.value !== "") {
         const addedItem = getTodoItem($todoInput);
@@ -52,6 +54,12 @@ function completeEdit(event) {
     }
 }
 
+function cancelEditItem(event) {
+    if (event.target.className === 'edit' && event.key === 'Escape') {
+        event.target.closest("li").classList.remove("editing");
+    }
+}
+
 function getTodoItem(itemTitle) {
     return ` <li>
      <div class="view">
@@ -59,7 +67,7 @@ function getTodoItem(itemTitle) {
         <label class="label">${itemTitle.value}</label>
         <button class="destroy"></button>
       </div>
-      <input class="edit" value="새로운 타이틀" />
+      <input class="edit" value="${itemTitle.value}" />
       
   </li>`
 }
