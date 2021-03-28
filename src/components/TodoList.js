@@ -1,13 +1,14 @@
-function TodoList({$target}) {
+function TodoList({$target, state, removeTodo, toggleTodo, editTodo}) {
 
     this.init = () => {
         this.$target = $target;
-        this.render();
+        this.state = state;
+        this.removeTodo = removeTodo;
+        this.toggleTodo = toggleTodo;
+        this.editTodo = editTodo;
+
         this.addEvents();
-    }
-
-    this.render = () => {
-
+        this.render();
     }
 
     this.addEvents = () => {
@@ -29,6 +30,7 @@ function TodoList({$target}) {
 
         if (clickedClassName === 'destroy') {
             const clickedTodo = evt.target.offsetParent;
+            this.removeTodo(Number.parseInt(clickedTodo.id));
             clickedTodo.remove();
         }
     };
@@ -44,15 +46,21 @@ function TodoList({$target}) {
 
     this.addCancelAndCompleteEditMode = evt => {
         const dblClickedTodoItem = evt.target.offsetParent;
+        if (!dblClickedTodoItem.classList.contains("editing")) {
+            return;
+        }
+
         if (evt.key === 'Escape') {
             dblClickedTodoItem.classList.remove("editing");
             return;
         }
 
         if (evt.key === 'Enter') {
-            const todoTitle = evt.target.offsetParent.firstElementChild.children[1];
-            const inputNewTodoTitle = evt.target.value;
-            todoTitle.innerText = inputNewTodoTitle;
+            const editedTodoId = evt.target.offsetParent.id;
+            const newTodoTitle = evt.target.value;
+            this.editTodo(parseInt(editedTodoId), newTodoTitle);
+            const todoTitle = evt.target;
+            todoTitle.innerText = newTodoTitle;
             dblClickedTodoItem.classList.remove("editing");
         }
     };
@@ -60,6 +68,8 @@ function TodoList({$target}) {
     this.toggleTodoItem = evt => {
         const clickedTodoState = evt.target.offsetParent.classList;
         if (evt.target.checked === true) {
+            const toggledId = evt.target.offsetParent.id;
+            this.toggleTodo(toggledId);
             clickedTodoState.add("completed");
             return;
         }
@@ -67,16 +77,25 @@ function TodoList({$target}) {
         clickedTodoState.remove("completed");
     }
 
-    this.addNewTodoItem = newTitle => {
-        this.$target.innerHTML += `<li>
-                            <div id="${newTitle.id}" class="view">
-                                <input class="toggle" type="checkbox"/>
-                                <label class="label">${newTitle.title}</label>
-                                <button class="destroy"></button>
-                            </div>
-                            <input class="edit" value="${newTitle.title}" />
-                        </li>`
+    this.setState = (updatedState) => {
+        this.state = updatedState;
+
+        this.render();
     }
+
+    this.render = () => {
+        this.$target.innerHTML = this.state.todos
+            .map(todo => this.translateTemplate(todo)).join("");
+    }
+
+    this.translateTemplate = (todo) => `<li id="${todo.id}" class="${todo.done ? "completed" : ""}">
+      <div class="view">
+        <input class="toggle" type="checkbox" ${todo.done ? "checked" : ""}/>
+        <label class="label">${todo.title}</label>
+        <button class="destroy"></button>
+      </div>
+      <input class="edit" value="${todo.title}" />
+    </li>`
 
     this.init();
 }

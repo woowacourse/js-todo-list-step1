@@ -1,9 +1,10 @@
 let id = 1;
 
-function TodoInput({$target, todoList}) {
+function TodoInput({$target, addTodo}) {
 
     this.init = () => {
         this.$target = $target;
+        this.addTodo = addTodo;
         this.render();
         this.addEnterEvent();
     }
@@ -35,7 +36,7 @@ function TodoInput({$target, todoList}) {
                 done: false
             };
 
-            todoList.addNewTodoItem(newTodoItem);
+            this.addTodo(newTodoItem);
             evt.target.value = '';
         });
     }
