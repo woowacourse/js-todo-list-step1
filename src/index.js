@@ -1,6 +1,7 @@
 const $todoInput = document.querySelector("#new-todo-title");
 const $todoList = document.querySelector(".todo-list");
 
+
 $todoInput.addEventListener("keyup", onAddTodoItem);
 $todoList.addEventListener("click", onDeleteTodoItem);
 $todoList.addEventListener("click", onToggleTodoItem);
@@ -13,10 +14,11 @@ function onAddTodoItem(event) {
         todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
         event.target.value = "";
     }
+    onTodoCount();
 }
 
 function renderTodoItemTemplate(title) {
-    return `<li>
+    return `<li class="all">
                 <div class="view">
                     <input class="toggle" type="checkbox"/>
                     <label class="label">${title}</label>
@@ -30,6 +32,7 @@ function onDeleteTodoItem(event) {
     if (event.target.className === "destroy") {
         event.target.closest('li').remove();
     }
+    onTodoCount();
 }
 
 function onToggleTodoItem(event) {
@@ -55,4 +58,10 @@ function onEditTodoItem(event) {
             }
         })
     }
+    onTodoCount();
+}
+
+function onTodoCount() {
+    const strongTag = document.getElementsByClassName("count")[0];
+    strongTag.innerHTML = $todoList.childElementCount;
 }
