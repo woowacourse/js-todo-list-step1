@@ -13,6 +13,11 @@ export default {
       target.value = "";
     }
     countItem.onCountItem();
+
+    const $filterState = document.querySelector(".selected").classList;
+    if ($filterState.contains(STATES.COMPLETED)) {
+      li.classList.add("d-none");
+    }
   },
 };
 
