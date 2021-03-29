@@ -8,7 +8,8 @@ function makeNewTodoLi() {
 }
 
 function clone(value) {
-    const newTodoListElement = document.getElementsByClassName('new-template')[0].cloneNode(true);
+    const newTodoListElement = document.getElementsByClassName(
+        'new-template')[0].cloneNode(true);
     newTodoListElement.id = "new";
     newTodoListElement.childNodes[1].childNodes[3].textContent = value;
     newTodoListElement.childNodes[3].value = value;
@@ -58,7 +59,7 @@ function changeInputToLi() {
                 parentNode.className = "new"
                 parentNode.childNodes[1].childNodes[3].textContent = value;
             }
-        } else if(e.key === 'Esc' || e.key === 'Escape' || e.key === 27) {
+        } else if (e.key === 'Esc' || e.key === 'Escape' || e.key === 27) {
             if (e.target && e.target.className === "edit") {
                 let parentNode = e.target.parentNode;
                 parentNode.className = "new"
@@ -94,15 +95,15 @@ function getHashInURL() {
 
 function applyFilterBorderColor(hash) {
     let childNodes = document.getElementsByClassName('filters').childNodes;
-    if(hash === "") {
+    if (hash === "") {
         childNodes[0].className = "all selected";
         childNodes[1].className = "active";
         childNodes[2].className = "completed";
-    } else if(hash === "#active") {
+    } else if (hash === "#active") {
         childNodes[0].className = "all";
         childNodes[1].className = "active selected";
         childNodes[2].className = "completed";
-    } else if(hash === "#completed") {
+    } else if (hash === "#completed") {
         childNodes[0].className = "all";
         childNodes[1].className = "active";
         childNodes[2].className = "completed selected";
@@ -122,8 +123,13 @@ function filter(hash) {
 }
 
 window.onhashchange = getHashInURL()
-document.getElementById('new-todo-title').addEventListener('keypress', makeNewTodoLi());
-document.getElementById('todo-list').addEventListener('click', changeOrDeleteLi());
-document.getElementById('todo-list').addEventListener('dblclick', changeLiToInput());
-document.getElementById('todo-list').addEventListener('keypress', changeInputToLi());
-document.getElementById('todo-list').addEventListener('keydown', changeInputToLi());
+document.getElementById('new-todo-title').addEventListener('keypress',
+    makeNewTodoLi());
+document.getElementById('todo-list').addEventListener('click',
+    changeOrDeleteLi());
+document.getElementById('todo-list').addEventListener('dblclick',
+    changeLiToInput());
+document.getElementById('todo-list').addEventListener('keypress',
+    changeInputToLi());
+document.getElementById('todo-list').addEventListener('keydown',
+    changeInputToLi());
