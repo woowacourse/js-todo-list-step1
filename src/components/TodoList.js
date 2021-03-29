@@ -17,64 +17,58 @@ function TodoList({$target, state, removeTodo, toggleTodo, editTodo}) {
         this.$target.addEventListener("keydown", this.addCancelAndCompleteEditMode);
     }
 
-    this.addChangeTodoState = evt => {
-        const clickedClassName = evt.target.className;
+    this.addChangeTodoState = event => {
+        const clickedClassName = event.target.className;
         if (clickedClassName !== 'destroy' && clickedClassName !== 'toggle') {
             return;
         }
 
         if (clickedClassName === 'toggle') {
-            this.toggleTodoItem(evt);
+            this.toggleTodoItem(event);
             return;
         }
 
         if (clickedClassName === 'destroy') {
-            const clickedTodo = evt.target.offsetParent;
+            const clickedTodo = event.target.offsetParent;
             this.removeTodo(Number.parseInt(clickedTodo.id));
             clickedTodo.remove();
         }
     };
 
-    this.addEditModeEvent = evt => {
-        const clickedTodoState = evt.target.offsetParent.className;
+    this.addEditModeEvent = event => {
+        const clickedTodoState = event.target.offsetParent.className;
         if (clickedTodoState === "editing" || clickedTodoState === "completed") {
             return;
         }
 
-        evt.target.offsetParent.classList.add('editing');
+        event.target.offsetParent.classList.add('editing');
     };
 
-    this.addCancelAndCompleteEditMode = evt => {
-        const dblClickedTodoItem = evt.target.offsetParent;
+    this.addCancelAndCompleteEditMode = event => {
+        const dblClickedTodoItem = event.target.offsetParent;
         if (!dblClickedTodoItem.classList.contains("editing")) {
             return;
         }
 
-        if (evt.key === 'Escape') {
+        if (event.key === 'Escape') {
             dblClickedTodoItem.classList.remove("editing");
             return;
         }
 
-        if (evt.key === 'Enter') {
-            const editedTodoId = evt.target.offsetParent.id;
-            const newTodoTitle = evt.target.value;
+        if (event.key === 'Enter') {
+            const editedTodoId = event.target.offsetParent.id;
+            const newTodoTitle = event.target.value;
             this.editTodo(parseInt(editedTodoId), newTodoTitle);
-            const todoTitle = evt.target;
+            const todoTitle = event.target;
             todoTitle.innerText = newTodoTitle;
             dblClickedTodoItem.classList.remove("editing");
         }
     };
 
-    this.toggleTodoItem = evt => {
-        const clickedTodoState = evt.target.offsetParent.classList;
-        if (evt.target.checked === true) {
-            const toggledId = evt.target.offsetParent.id;
-            this.toggleTodo(toggledId);
-            clickedTodoState.add("completed");
-            return;
-        }
-
-        clickedTodoState.remove("completed");
+    this.toggleTodoItem = event => {
+        const toggledId = event.target.offsetParent.id;
+        this.toggleTodo(toggledId);
+        event.target.classList.toggle("completed");
     }
 
     this.setState = (updatedState) => {
