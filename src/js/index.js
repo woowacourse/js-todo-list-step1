@@ -57,16 +57,12 @@ TodoPage.prototype.registerTodoFilterEvent = function () {
         document.querySelectorAll('.filters li a').forEach(item => { item.classList.remove("selected") });
         var element = event.target;
         if (element.className === "all") {
-            console.log("모두 보기");
             todoPage.displayAllTodos();
         }
         else if (element.className === "active") {
-            console.log("아직 안함");
-
             todoPage.displayActiveTodos();
         }
         else if (element.className === "completed") {
-            console.log("해결ㄹ함");
             todoPage.displayCompletedTodos();
         }
         element.classList.toggle("selected");
@@ -83,12 +79,9 @@ TodoPage.prototype.displayAllTodos = function () {
 
 TodoPage.prototype.displayActiveTodos = function () {
     document.querySelectorAll(".todo-list li").forEach(item => {
-        console.log(item);
         if (item.className === "completed") {
-            console.log("안보이게");
             item.style.display = "none";
         } else {
-            console.log("보이게");
             item.style.display = "block";
         }
     })
