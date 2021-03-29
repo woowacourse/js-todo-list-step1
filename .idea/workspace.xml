@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="854c17ef-75ac-48b5-8aa5-308468702f00" name="Default Changelist" comment="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현">
+    <list default="true" id="854c17ef-75ac-48b5-8aa5-308468702f00" name="Default Changelist" comment="feat: 체크박스 클릭시 complete 상태로 변경 기능 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,6 +38,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="js.last.introduce.type" value="CONST" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
@@ -62,7 +62,7 @@
       <workItem from="1616757063588" duration="1074000" />
       <workItem from="1616758383804" duration="84000" />
       <workItem from="1616766931453" duration="9509000" />
-      <workItem from="1616929366333" duration="1289000" />
+      <workItem from="1616929366333" duration="5956000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 엔터 입력시 할 일 추가 기능 구현">
       <created>1616928050946</created>
@@ -92,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616929613695</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: 체크박스 클릭시 complete 상태로 변경 기능 구현">
+      <created>1616930740619</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1616930740619</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +122,7 @@
     <MESSAGE value="feat: .detroy 버튼 입력 시 해당 todo 삭제 기능 구현" />
     <MESSAGE value="feat: .destroy 버튼 입력시 해당 todoList 삭제 기능 구현" />
     <MESSAGE value="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현" />
+    <MESSAGE value="feat: 체크박스 클릭시 complete 상태로 변경 기능 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 체크박스 클릭시 complete 상태로 변경 기능 구현" />
   </component>
 </project>
