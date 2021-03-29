@@ -1,6 +1,6 @@
-export default function AddTodo($newTodo) {
+export default function AddTodo($newTodo, renderTodo) {
     // constructor
-    this.newTodo = $newTodo;
+    this.renderTodo = renderTodo;
 
     this.addItem = function(event) {
         const newTodoTitle = event.target.value;
@@ -13,9 +13,9 @@ export default function AddTodo($newTodo) {
             });
             localStorage.setItem('todos', JSON.stringify(todos));
             event.target.value = "";
-            AddTodo.prototype.renderTodo();
+            this.renderTodo();
         }
-    }
+    }.bind(this);
 
-    this.newTodo.addEventListener('keyup', this.addItem);
+    $newTodo.addEventListener('keyup', this.addItem);
 }

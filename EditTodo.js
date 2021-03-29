@@ -1,6 +1,7 @@
-export default function EditTodo($todoList) {
+export default function EditTodo($todoList, renderTodo) {
     // constructor
     this.todoList = $todoList;
+    this.renderTodo = renderTodo;
 
     this.editTodo = function(event) {
         const target = event.target;
@@ -22,17 +23,17 @@ export default function EditTodo($todoList) {
                     })
                     localStorage.setItem('todos', JSON.stringify(result));
                     target.closest("li").classList.toggle('editing');
-                    EditTodo.prototype.renderTodo();
+                    this.renderTodo();
                     return;
                 }
                 if (event.key === "Escape") {
                     target.closest("li").classList.toggle('editing');
-                    EditTodo.prototype.renderTodo();
+                    this.renderTodo();
                     return;
                 }
             });
         }
-    }
+    }.bind(this);
 
     this.todoList.addEventListener("dblclick", this.editTodo);
 }

@@ -1,6 +1,7 @@
-export default function ChangeTodo($todoList) {
+export default function ChangeTodo($todoList, renderTodo) {
     // constructor
     this.todoList = $todoList;
+    this.renderTodo = renderTodo;
 
     this.changeTodo = function(event) {
         const todos = JSON.parse(localStorage.getItem('todos')) ?? [];
@@ -14,7 +15,7 @@ export default function ChangeTodo($todoList) {
                 return item;
             });
             localStorage.setItem('todos', JSON.stringify(result));
-            ChangeTodo.prototype.renderTodo();
+            this.renderTodo();
             return;
         }
         if (target.classList.contains("destroy")) {
@@ -24,10 +25,10 @@ export default function ChangeTodo($todoList) {
                 }
             })
             localStorage.setItem('todos', JSON.stringify(result));
-            ChangeTodo.prototype.renderTodo();
+            this.renderTodo();
             return;
         }
-    }
+    }.bind(this);
 
     this.todoList.addEventListener('click', this.changeTodo);
 }

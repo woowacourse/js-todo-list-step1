@@ -1,6 +1,7 @@
-export default function Filters($filters) {
+export default function Filters($filters, renderTodo) {
     // constructor
     this.filters = $filters;
+    this.renderTodo = renderTodo;
 
     this.filterTodo = function(event) {
         const target = event.target;
@@ -14,7 +15,7 @@ export default function Filters($filters) {
             $completed.classList.remove("selected");
             
             $active.classList.toggle("selected");
-            Filters.prototype.renderTodo("active");
+            this.renderTodo("active");
             return;
         }
         if (target.classList.contains("completed")) {
@@ -22,15 +23,15 @@ export default function Filters($filters) {
             $active.classList.remove("selected");
             
             $completed.classList.toggle("selected");
-            Filters.prototype.renderTodo("completed");
+            this.renderTodo("completed");
             return;
         }
         $active.classList.remove("selected");
         $completed.classList.remove("selected");
         
         $allSelected.classList.toggle("selected");
-        Filters.prototype.renderTodo();
-    }
+        this.renderTodo();
+    }.bind(this);
 
     this.filters.addEventListener('click', this.filterTodo);
 }

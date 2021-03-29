@@ -3,13 +3,14 @@ import ChangeTodo from "./ChangeTodo.js";
 import EditTodo from "./EditTodo.js";
 import Filters from "./Filters.js";
 
-const $count = document.querySelector('strong');
-const $newTodo = document.querySelector('#new-todo-title');
-const $todoList = document.querySelector('#todo-list');
-const $filters = document.querySelector('.filters');
+export default function App() {
+    this.$count = document.querySelector('strong');
+    this.$newTodo = document.querySelector('#new-todo-title');
+    this.$todoList = document.querySelector('#todo-list');
+    this.$filters = document.querySelector('.filters');
 
-const renderTodoTemplate = function(item) {
-    return ` <li id = ${item.id} class = ${item.completed && 'completed'} >
+    this.renderTodoTemplate = function(item) {
+        return ` <li id = ${item.id} class = ${item.completed && 'completed'} >
                 <div class="view">
                     <input class="toggle" type="checkbox"
                         id=${item.id} ${item.completed && 'checked'} />
@@ -18,51 +19,48 @@ const renderTodoTemplate = function(item) {
                 </div>
                 <input class="edit" value="${item.title}">
             </li>`;
-}
-
-const updateTodoCount = function() {
-    $count.innerHTML = $todoList.childElementCount;
-}
-
-const renderTodo = function(type) {
-    const todos = JSON.parse(localStorage.getItem('todos')) ?? [];
-    $todoList.innerHTML = '';
-
-    type = type || 'ALL';
-
-    if (type === 'ALL') {
-        for (let i = 0; i < todos.length; i++) {
-            $todoList.insertAdjacentHTML("beforeend", renderTodoTemplate(todos[i]));
-        }
-    }
-    if (type === 'active') {
-        for (let i = 0; i < todos.length; i++) {
-            if (!todos[i].completed) {
-                $todoList.insertAdjacentHTML("beforeend", renderTodoTemplate(todos[i]));
-            }
-        }
-    }
-    if (type === 'completed') {
-        for (let i = 0; i < todos.length; i++) {
-            if (todos[i].completed) {
-                $todoList.insertAdjacentHTML("beforeend", renderTodoTemplate(todos[i]));
-            }
-        }
     }
     
-    updateTodoCount();
+    this.updateTodoCount = function() {
+        this.$count.innerHTML = this.$todoList.childElementCount;
+    }.bind(this);
+
+    this.renderTodo = function(type) {
+        const todos = JSON.parse(localStorage.getItem('todos')) ?? [];
+        this.$todoList.innerHTML = '';
+    
+        type = type || 'ALL';
+    
+        if (type === 'ALL') {
+            for (let i = 0; i < todos.length; i++) {
+                this.$todoList.insertAdjacentHTML("beforeend", this.renderTodoTemplate(todos[i]));
+            }
+        }
+        if (type === 'active') {
+            for (let i = 0; i < todos.length; i++) {
+                if (!todos[i].completed) {
+                    this.$todoList.insertAdjacentHTML("beforeend", this.renderTodoTemplate(todos[i]));
+                }
+            }
+        }
+        if (type === 'completed') {
+            for (let i = 0; i < todos.length; i++) {
+                if (todos[i].completed) {
+                    this.$todoList.insertAdjacentHTML("beforeend", this.renderTodoTemplate(todos[i]));
+                }
+            }
+        }
+        
+        this.updateTodoCount();
+    }.bind(this);
+
+    this.addTodo = new AddTodo(this.$newTodo, this.renderTodo);
+    this.changeTodo = new ChangeTodo(this.$todoList, this.renderTodo);
+    this.editTodo = new EditTodo(this.$todoList, this.renderTodo);
+    this.filters = new Filters(this.$filters, this.renderTodo);
 }
 
-renderTodo();
-
-AddTodo.prototype.renderTodo = renderTodo;
-new AddTodo($newTodo);
-
-ChangeTodo.prototype.renderTodo = renderTodo;
-new ChangeTodo($todoList);
-
-EditTodo.prototype.renderTodo = renderTodo;
-new EditTodo($todoList);
-
-Filters.prototype.renderTodo = renderTodo;
-new Filters($filters);
+window.onload = function() {
+    const app = new App();
+    app.renderTodo();
+}
