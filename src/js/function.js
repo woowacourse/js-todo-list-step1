@@ -1,8 +1,8 @@
 const ENTER = "Enter";
 const ESC = "Escape";
 const CLASS_NAME_FALSE = "false";
-const CLASS_NAME_COMPLTED = "completed";
-const URL_NAME_COMPLTED = "#completed"
+const CLASS_NAME_COMPLETED = "completed";
+const URL_NAME_COMPLETED = "#completed"
 const URL_NAME_ACTIVE = "#active"
 const URL_NAME_ALL = "#";
 
@@ -11,7 +11,7 @@ const TODO_INPUT = document.getElementById("new-todo-title");
 const CONTENT_COUNT = document.getElementById("content-count");
 const ALL_VIEW = document.getElementById("all");
 const ACTIVE_VIEW = document.getElementById("active");
-const COMPLETED_VIEW = document.getElementById(CLASS_NAME_COMPLTED);
+const COMPLETED_VIEW = document.getElementById(CLASS_NAME_COMPLETED);
 
 
 window.onload = () => {
@@ -31,17 +31,17 @@ function addItem(event) {
             className: CLASS_NAME_FALSE,
         }
 
-        createTempliate(dataObject)
+        createTemplate(dataObject)
 
         TODO_INPUT.value = "";
         countChange(getUrlType());
     }
 }
 
-function createTempliate(dataObject) {
+function createTemplate(dataObject) {
     const newList = createList(dataObject.className);
     const newDiv = createDiv();
-    const newCheckbox = createCheckbox(dataObject.className === CLASS_NAME_COMPLTED);
+    const newCheckbox = createCheckbox(dataObject.className === CLASS_NAME_COMPLETED);
     const newLabel = createLabel(dataObject.text);
     const newButton = createButton();
     const hideInput = createHideInput(dataObject.text);
@@ -78,8 +78,9 @@ function createCheckbox(isChecked) {
     newCheckbox.checked = isChecked;
     newCheckbox.addEventListener("click", (event) => {
         const parentList = event.target.parentNode.parentNode;
-        if (parentList.className === CLASS_NAME_FALSE) {
-            parentList.className = CLASS_NAME_COMPLTED;
+        event.target.toggleAttribute("checked");
+        if (event.target.checked === true) {
+            parentList.className = CLASS_NAME_COMPLETED;
         } else {
             parentList.className = CLASS_NAME_FALSE;
         }
@@ -119,6 +120,8 @@ function createHideInput(inputData) {
         if (event.key === ESC || event.key === ENTER) {
             if (event.key === ENTER) {
                 event.target.previousSibling.children[1].textContent = event.target.value;
+            } else {
+                event.target.value = event.target.previousSibling.children[1].textContent;
             }
             event.target.display = "none";
             event.target.parentNode.className = event.target.parentNode.className.split(" ")[0];
@@ -134,10 +137,10 @@ function countChange(urlType) {
     else if (urlType === URL_NAME_ACTIVE) {
         countClass(CLASS_NAME_FALSE);
     }
-    else if (urlType === URL_NAME_COMPLTED) {
-        countClass(CLASS_NAME_COMPLTED);
+    else if (urlType === URL_NAME_COMPLETED) {
+        countClass(CLASS_NAME_COMPLETED);
     }
-    chagneDisplay(urlType);
+    changeDisplay(urlType);
     saveLocalStorage();
 }
 
@@ -166,15 +169,15 @@ function changeSelect(event) {
     } else if (event.target === ACTIVE_VIEW) {
         countChange(URL_NAME_ACTIVE);
     } else if (event.target === COMPLETED_VIEW) {
-        countChange(URL_NAME_COMPLTED);
+        countChange(URL_NAME_COMPLETED);
     }
 }
 
-function chagneDisplay(urlType) {
+function changeDisplay(urlType) {
     for (const item of TODO.children) {
         if (urlType === URL_NAME_ALL
         || (urlType === URL_NAME_ACTIVE && item.className === CLASS_NAME_FALSE)
-        || (urlType === URL_NAME_COMPLTED && item.className === CLASS_NAME_COMPLTED)) {
+        || (urlType === URL_NAME_COMPLETED && item.className === CLASS_NAME_COMPLETED)) {
             item.style.display = "block";
         } else {
             item.style.display = "none";
@@ -197,7 +200,7 @@ function loadLocalStorage() {
     }
     const objects = JSON.parse(localStorage.getItem("todo"));
     for (const key in objects) {
-        createTempliate(objects[key]);
+        createTemplate(objects[key]);
     }
     countChange(getUrlType());
 }
