@@ -10,8 +10,8 @@ function TodoTab({$target, selectTodoStatus, state}) {
     }
 
     this.addClickEvent = () => {
-        this.$target.addEventListener("click", evt => {
-            const eventTarget = evt.target;
+        this.$target.addEventListener("click", event => {
+            const eventTarget = event.target;
             if (eventTarget.tagName !== "A") {
                 return;
             }

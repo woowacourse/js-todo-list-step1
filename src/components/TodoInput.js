@@ -10,12 +10,12 @@ function TodoInput({$target, addTodo}) {
     }
 
     this.addEnterEvent = () => {
-        this.$target.addEventListener('keydown', (evt) => {
-            if (evt.key != 'Enter') {
+        this.$target.addEventListener('keydown', (event) => {
+            if (event.key != 'Enter') {
                 return;
             }
 
-            const newTitle = evt.target.value;
+            const newTitle = event.target.value;
             if ('' === newTitle) {
                 alert("할 일을 입력해주세요!");
                 return;
@@ -28,7 +28,7 @@ function TodoInput({$target, addTodo}) {
             };
 
             this.addTodo(newTodoItem);
-            evt.target.value = '';
+            event.target.value = '';
         });
     }
 
