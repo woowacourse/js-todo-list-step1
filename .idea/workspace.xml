@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="854c17ef-75ac-48b5-8aa5-308468702f00" name="Default Changelist" comment="feat: 더블클릭했을 때 input 모드 변경 및 수정 기능 구현">
+    <list default="true" id="854c17ef-75ac-48b5-8aa5-308468702f00" name="Default Changelist" comment="feat: item 갯수 count 기능 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +63,7 @@
       <workItem from="1616758383804" duration="84000" />
       <workItem from="1616766931453" duration="9509000" />
       <workItem from="1616929366333" duration="6064000" />
-      <workItem from="1616986517519" duration="1077000" />
+      <workItem from="1616986517519" duration="6995000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 엔터 입력시 할 일 추가 기능 구현">
       <created>1616928050946</created>
@@ -107,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616986502070</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: item 갯수 count 기능 구현">
+      <created>1616987876093</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1616987876093</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +139,7 @@
     <MESSAGE value="feat: .destroy 버튼 입력 시 해당 todo 삭제 기능 구현" />
     <MESSAGE value="feat: 체크박스 클릭시 complete 상태로 변경 기능 구현" />
     <MESSAGE value="feat: 더블클릭했을 때 input 모드 변경 및 수정 기능 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 더블클릭했을 때 input 모드 변경 및 수정 기능 구현" />
+    <MESSAGE value="feat: item 갯수 count 기능 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: item 갯수 count 기능 구현" />
   </component>
 </project>
