@@ -4,25 +4,36 @@ import countItem from "./countItem.js";
 export default {
   onCheckToDoItem: function ({ target }) {
     if (target.classList.contains("toggle")) {
-      return toggleOn(target);
+      toggleOn(target);
     } else if (target.classList.contains("destroy")) {
       removeItem(target);
-      countItem.onCountItem();
     }
+    countItem.onCountItem();
   },
 };
 
 function toggleOn(target) {
-  if (target.closest("li").classList.contains(STATES.ACTIVE)) {
-    target.closest("li").classList.toggle(STATES.COMPLETED);
-    target.closest("li").classList.remove(STATES.ACTIVE);
-    target.closest("li").classList.add(STATES.COMPLETED);
+  const $targetToggle = target.closest("li").classList;
+  const $filterState = document.querySelector(".selected").classList;
+
+  if ($targetToggle.contains(STATES.ACTIVE)) {
+    $targetToggle.toggle(STATES.COMPLETED);
+    $targetToggle.remove(STATES.ACTIVE);
+    $targetToggle.add(STATES.COMPLETED);
+
+    if ($filterState.contains(STATES.ACTIVE)) {
+      target.parentElement.parentElement.classList.add("d-none");
+    }
     return;
   }
-  if (target.closest("li").classList.contains(STATES.COMPLETED)) {
-    target.closest("li").classList.toggle(STATES.COMPLETED);
-    target.closest("li").classList.remove(STATES.COMPLETED);
-    target.closest("li").classList.add(STATES.ACTIVE);
+  if ($targetToggle.contains(STATES.COMPLETED)) {
+    $targetToggle.toggle(STATES.COMPLETED);
+    $targetToggle.remove(STATES.COMPLETED);
+    $targetToggle.add(STATES.ACTIVE);
+
+    if ($filterState.contains(STATES.COMPLETED)) {
+      target.parentElement.parentElement.classList.add("d-none");
+    }
     return;
   }
 }

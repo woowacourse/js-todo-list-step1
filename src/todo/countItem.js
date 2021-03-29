@@ -1,9 +1,9 @@
 export default {
   onCountItem: function count() {
-    const todos = document.querySelector(".todo-list").querySelectorAll("li");
+    const todos = document.querySelectorAll(".todo-list > li");
     let visible = 0;
     for (const todo of todos) {
-      if (todo.style.display !== "none") {
+      if (!todo.classList.contains("d-none")) {
         visible++;
       }
     }
