@@ -77,36 +77,20 @@ function getListCount() {
     return count;
 }
 
-function getHashInURL() {
-    return function () {
-        const hash = window.location.hash;
-
-        applyFilterBorderColor(hash);
-
-        if (hash === "") {
-            filter("e")
-        } else if (hash === "#active") {
-            filter("new")
-        } else if (hash === "#completed") {
-            filter("completed")
-        }
-    };
-}
-
 function applyFilterBorderColor(hash) {
-    let childNodes = document.getElementsByClassName('filters').childNodes;
+    let child = document.getElementsByClassName('filters')[0].childNodes;
     if (hash === "") {
-        childNodes[0].className = "all selected";
-        childNodes[1].className = "active";
-        childNodes[2].className = "completed";
+        child[1].childNodes[1].className = "all selected";
+        child[3].childNodes[1].className = "active";
+        child[5].childNodes[1].className = "completed";
     } else if (hash === "#active") {
-        childNodes[0].className = "all";
-        childNodes[1].className = "active selected";
-        childNodes[2].className = "completed";
+        child[1].childNodes[1].className = "all";
+        child[3].childNodes[1].className = "active selected";
+        child[5].childNodes[1].className = "completed";
     } else if (hash === "#completed") {
-        childNodes[0].className = "all";
-        childNodes[1].className = "active";
-        childNodes[2].className = "completed selected";
+        child[1].childNodes[1].className = "all";
+        child[3].childNodes[1].className = "active";
+        child[5].childNodes[1].className = "completed selected";
     }
 }
 
@@ -114,7 +98,7 @@ function filter(hash) {
     let todo_list = document.getElementById('todo-list').childNodes;
     for (let i = 0; i < todo_list.length; i++) {
         const name = todo_list[i].className;
-        if (!name.includes(hash) && todo_list[i].nodeName === "LI") {
+        if (!name.includes(hash)) {
             todo_list[i].style.display = 'none';
         } else {
             todo_list[i].style.display = 'block';
@@ -122,7 +106,19 @@ function filter(hash) {
     }
 }
 
-window.onhashchange = getHashInURL()
+window.onhashchange = function () {
+    const hash = window.location.hash;
+    applyFilterBorderColor(hash);
+
+    if (hash === "") {
+        filter("e")
+    } else if (hash === "#active") {
+        filter("new")
+    } else if (hash === "#completed") {
+        filter("completed")
+    }
+};
+
 document.getElementById('new-todo-title').addEventListener('keypress',
     makeNewTodoLi());
 document.getElementById('todo-list').addEventListener('click',
