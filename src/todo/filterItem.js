@@ -4,12 +4,9 @@ import countItem from "./countItem.js";
 export default {
   onFilterToDoItem: function onFilterToDoItem({ target }) {
     const todos = document.querySelectorAll(".todo-list > li");
-    const status = target.className;
+    const status = target.classList;
 
-    function filterSelected(target) {
-      if (target.classList.contains("selected")) {
-        return;
-      }
+    function renderFilters(target) {
       const filters = document.querySelector(".filters").querySelectorAll("a");
       for (const filter of filters) {
         if (target.classList.contains(filter.className)) {
@@ -20,37 +17,49 @@ export default {
       }
     }
 
+    function filterSelected(target) {
+      if (target.classList.contains("selected")) {
+        return;
+      }
+      renderFilters(target);
+    }
+
     function showAll() {
-      console.log(todos);
       for (const todo of todos) {
-        todo.style.display = "block";
+        todo.classList.remove("d-none");
       }
     }
 
-    function showCompleted() {
+    function showCompleted(target) {
+      if (target.classList.contains("selected")) {
+        return;
+      }
       for (let todo of todos) {
         if (todo.classList.contains(STATES.COMPLETED)) {
-          todo.style.display = "block";
+          todo.classList.remove("d-none");
         } else {
-          todo.style.display = "none";
+          todo.classList.add("d-none");
         }
       }
     }
 
-    function showActive() {
+    function showActive(target) {
+      if (target.classList.contains("selected")) {
+        return;
+      }
       for (let todo of todos) {
         if (todo.classList.contains(STATES.ACTIVE)) {
-          todo.style.display = "block";
+          todo.classList.remove("d-none");
         } else {
-          todo.style.display = "none";
+          todo.classList.add("d-none");
         }
       }
     }
 
-    if (status === STATES.COMPLETED) {
-      showCompleted();
-    } else if (status === STATES.ACTIVE) {
-      showActive();
+    if (status.contains(STATES.COMPLETED)) {
+      showCompleted(target);
+    } else if (status.contains(STATES.ACTIVE)) {
+      showActive(target);
     } else {
       showAll();
     }
