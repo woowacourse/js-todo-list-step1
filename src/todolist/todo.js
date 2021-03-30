@@ -1,8 +1,9 @@
-const $todoInput = document.getElementById("new-todo-title");
+const $todoInput = document.querySelector("#new-todo-title");
 const $todoToggle = document.querySelector("#todo-list");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
-$todoToggle.addEventListener("click", onToggleTodoItem);
+$todoToggle.addEventListener("click", toggleOrRemove);
+$todoToggle.addEventListener("click", toggleOrRemove);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -24,7 +25,20 @@ function renderTotoItemTemplate(title) {
               </li>`;
 }
 
+function toggleOrRemove(event) {
+    if (event.target.className === "toggle") {
+        return onToggleTodoItem(event);
+    }
+
+    return onRemoveTodoItem(event);
+}
+
 function onToggleTodoItem(event) {
     event.target.closest("li").classList.toggle("completed");
 }
 
+function onRemoveTodoItem(event) {
+    if (confirm("정말로 삭제하시겠습니까?") === true) {
+        event.target.closest("li").remove();
+    }
+}
