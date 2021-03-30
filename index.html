@@ -7,16 +7,19 @@
     <link rel="stylesheet" href="./src/css/style.css" />
   </head>
   <body>
+  <script src="/src/todolist/todo.js"></script>
     <div class="todoapp">
       <h1>TODOS</h1>
-      <input
+      <label for="new-todo-title"></label><input
         id="new-todo-title"
         class="new-todo"
         placeholder="할일을 추가해주세요"
         autofocus
       />
       <main>
-        <input class="toggle-all" type="checkbox" />
+        <label>
+          <input class="toggle-all" type="checkbox" />
+        </label>
         <ul id="todo-list" class="todo-list"></ul>
         <div class="count-container">
           <span class="todo-count">총 <strong>0</strong> 개</span>
