@@ -1,5 +1,8 @@
-const $todoInput = document.querySelector("#new-todo-title");
+const $todoInput = document.getElementById("new-todo-title");
+const $todoToggle = document.querySelector("#todo-list");
+
 $todoInput.addEventListener("keyup", onAddTodoItem);
+$todoToggle.addEventListener("click", onToggleTodoItem);
 
 function onAddTodoItem(event) {
     const todoTitle = event.target.value;
@@ -19,5 +22,9 @@ function renderTotoItemTemplate(title) {
                   </div>
                   <input class="edit" value="새로운 타이틀">
               </li>`;
+}
+
+function onToggleTodoItem(event) {
+    event.target.closest("li").classList.toggle("completed");
 }
 
