@@ -6,6 +6,8 @@
     <title>이벤트 - TODOS</title>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
+
+
   <body>
     <div class="todoapp">
       <h1>TODOS</h1>
@@ -16,7 +18,8 @@
           <ul id="todo-title" class="todo-list">
             <li class = "todo">
               <div class="view" >
-                <input class="toggle" type="checkbox"/>
+                <input class="toggle" type="checkbox"
+                onchange= "checkIsDone(this)"/>
                 <label class="label">새로운 타이틀</label>
                 <button class="destroy"></button>
               </div>
@@ -25,8 +28,8 @@
 
             <li class="editing">
               <div class="view">
-                <input class="toggle" type="checkbox" />
-                <label class="label">완료된 타이틀</label>
+                <input class="toggle" type="checkbox"/>
+                <label class="label">편집 중 타이틀</label>
                 <button class="destroy"></button>
               </div>
               <input class="edit" value="완료된 타이틀"/>
@@ -34,8 +37,9 @@
 
             <li class="completed">
               <div class="view">
-                <input class="toggle" type="checkbox" checked/>
-                <label class="label">완료된 타이틀</label>
+                <input class="toggle" type="checkbox"
+                       onclick="checkIsDone(this)" checked/>
+                <label class="label">편집 중 타이틀</label>
                 <button class="destroy"></button>
               </div>
               <input class="edit" value="완료된 타이틀" />
