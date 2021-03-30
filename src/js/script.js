@@ -3,8 +3,10 @@ const domParser = new DOMParser();
 const $todoList = document.getElementById("todo-list");
 const $todoInput = document.getElementById("new-todo-title");
 const $todoCount = document.getElementById("todo-count");
+const $filters = document.getElementById("filters");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
+addEventToFilters();
 
 function onAddTodoItem(event) {
   const todoTitle = event.target.value;
@@ -71,5 +73,43 @@ function onDoubleClickToRemoveTodoItem(event) {
       label.innerHTML = newTitle;
       todoItem.classList.remove("editing");
     }
+  });
+}
+
+function addEventToFilters() {
+  const allSelected = $filters.querySelector(".allselected");
+  const active = $filters.querySelector(".active");
+  const completed = $filters.querySelector(".completed");
+
+  allSelected.addEventListener("click", event => {
+    const todoItems = $todoList.querySelectorAll(".todoItem");
+    Array.from(todoItems)
+      .forEach(todoItem => todoItem.style.display = "inline");
+  });
+
+  active.addEventListener("click", event => {
+    const todoItems = $todoList.querySelectorAll(".todoItem");
+    Array.from(todoItems)
+      .forEach(todoItem => {
+        if (!todoItem.classList.contains("completed")) {
+          todoItem.style.display = "inline";
+        }
+        else {
+          todoItem.style.display = "none";
+        }
+      });
+  });
+
+  completed.addEventListener("click", event => {
+    const todoItems = $todoList.querySelectorAll(".todoItem");
+    Array.from(todoItems)
+      .forEach(todoItem => {
+        if (todoItem.classList.contains("completed")) {
+          todoItem.style.display = "inline";
+        }
+        else {
+          todoItem.style.display = "none";
+        }
+      });
   });
 }
