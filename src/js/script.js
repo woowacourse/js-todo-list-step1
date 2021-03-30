@@ -1,64 +1,75 @@
+const domParser = new DOMParser();
+
 const $todoList = document.getElementById("todo-list");
 const $todoInput = document.getElementById("new-todo-title");
 const $todoCount = document.getElementById("todo-count");
 
-$todoList.addEventListener("click", onClickEventForTodoList);
-$todoList.addEventListener("dblclick", onDoubleClickEventForTodoList);
 $todoInput.addEventListener("keyup", onAddTodoItem);
 
 function onAddTodoItem(event) {
   const todoTitle = event.target.value;
   if (event.key === "Enter" && todoTitle !== "") {
-    $todoList.insertAdjacentHTML("beforeend", renderTodoItemTemplate(todoTitle));
+    const todoItem = parseToDom(renderTodoItemTemplate(todoTitle));
+    const toggle = todoItem.querySelector(".toggle");
+    toggle.addEventListener("click", (event) => event.target.closest("li").classList.toggle("completed"));
+
+    const destroyButton = todoItem.querySelector(".destroy");
+    destroyButton.addEventListener("click", onClickToRemove);
+
+    const label = todoItem.querySelector(".label");
+    label.addEventListener("dblclick", onDoubleClickToRemoveTodoItem);
+
+    $todoList.appendChild(todoItem);
+
     event.target.value = "";
-    updateTodoCount($todoList.getElementsByTagName("li").length);
+    updateTodoCount();
   }
+}
+
+function parseToDom(template) {
+  return domParser.parseFromString(template, "text/html").body.firstElementChild;
 }
 
 function renderTodoItemTemplate(title) {
-  return `<li>
+  return `<li class="todoItem">
   <div class="view">
     <input class="toggle" type="checkbox"/>
-    <label class="label" id="title">${title}</label>
+    <label class="label">${title}</label>
     <button class="destroy"></button>
   </div>
-  <input class="edit" value="새로운 타이틀" />
+  <input class="edit" value="" />
   </li>`;
 }
 
-function onClickEventForTodoList(event) {
-  if (event.target.nodeName === "INPUT" && event.target.className=="toggle") {
-    event.target.closest("li").classList.toggle("completed");
-  }
-  if (event.target.nodeName === "BUTTON") {
-    const liToDestroy = event.target.closest("li");
-    if (confirm("정말로 삭제하시겠습니까?")) {
-      $todoList.removeChild(liToDestroy);
-      updateTodoCount($todoList.getElementsByTagName("li").length);
-    }
+function onClickToRemove(event) {
+  const liToDestroy = event.target.closest("li");
+  if (confirm('정말로 삭제하시겠습니까?')) {
+    $todoList.removeChild(liToDestroy);
+    updateTodoCount();
   }
 }
 
-function updateTodoCount(count) {
+function updateTodoCount() {
+  const count = $todoList.getElementsByTagName("li").length;
   $todoCount.innerHTML = `총 <strong>${count}</strong> 개`;
 }
 
-function onDoubleClickEventForTodoList(event) {
-  const clickedLi = event.target.closest("li");
-  const label = clickedLi.getElementsByTagName("label")[0];
-  const edit = clickedLi.getElementsByClassName("edit")[0];
+function onDoubleClickToRemoveTodoItem(event) {
+  const todoItem = event.target.closest("li");
+  const label = todoItem.querySelector(".label");
+  const edit = todoItem.querySelector(".edit");
 
   edit.value = label.innerHTML;
-  clickedLi.classList.add("editing");
+  todoItem.classList.add("editing");
 
-  edit.addEventListener('keydown', event => {
+  edit.addEventListener("keydown", event => {
     if (event.key === "Escape") {
-      clickedLi.classList.remove("editing");
+      todoItem.classList.remove("editing");
     }
     if (event.key === "Enter") {
       const newTitle = edit.value;
       label.innerHTML = newTitle;
-      clickedLi.classList.remove("editing");
+      todoItem.classList.remove("editing");
     }
   });
 }
