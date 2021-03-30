@@ -6,7 +6,6 @@
     <title>이벤트 - TODOS</title>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <script type="text/javascript" src="../js/main.js"> </script>
   <body>
     <div class="todoapp">
       <h1>TODOS</h1>
@@ -15,13 +14,13 @@
       <main>
         <div>
           <ul id="todo-title" class="todo-list">
-            <li >
-              <div class="view">
+            <li class = "todo">
+              <div class="view" >
                 <input class="toggle" type="checkbox"/>
                 <label class="label">새로운 타이틀</label>
                 <button class="destroy"></button>
               </div>
-              <input class="edit" value="새로운 타이틀" />
+              <input class="edit" value="새로운 타이틀"/>
             </li>
 
             <li class="editing">
@@ -30,8 +29,9 @@
                 <label class="label">완료된 타이틀</label>
                 <button class="destroy"></button>
               </div>
-              <input class="edit" value="완료된 타이틀" />
+              <input class="edit" value="완료된 타이틀"/>
             </li>
+
             <li class="completed">
               <div class="view">
                 <input class="toggle" type="checkbox" checked/>
@@ -62,5 +62,5 @@
       </main>
     </div>
   </body>
-
+  <script type="text/javascript" src="../js/main.js"> </script>
 </html>
