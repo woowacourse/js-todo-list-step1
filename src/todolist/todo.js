@@ -1,11 +1,12 @@
 const $todoInput = document.querySelector("#new-todo-title");
-const $todoToggle = document.querySelector("#todo-list");
+const $todoList = document.querySelector("#todo-list");
+let $todoCount = document.querySelector(".todo-count").querySelector("strong");
 
 $todoInput.addEventListener("keyup", onAddTodoItem);
-$todoToggle.addEventListener("click", toggleOrRemove);
-$todoToggle.addEventListener("click", toggleOrRemove);
-$todoToggle.addEventListener("dblclick", onEditTitle);
-$todoToggle.addEventListener("keyup", onEnterEdit);
+$todoList.addEventListener("click", toggleOrRemove);
+$todoList.addEventListener("click", toggleOrRemove);
+$todoList.addEventListener("dblclick", onEditTitle);
+$todoList.addEventListener("keyup", onEnterEdit);
 window.addEventListener("keyup", onEscapeEdit);
 
 function onAddTodoItem(event) {
@@ -15,6 +16,8 @@ function onAddTodoItem(event) {
         todoList.insertAdjacentHTML("beforeend", renderTotoItemTemplate(todoTitle));
         event.target.value = "";
     }
+
+    onCountItems();
 }
 
 function renderTotoItemTemplate(title) {
@@ -62,7 +65,7 @@ function onEnterEdit(event) {
     const newTitle = event.target.value;
 
     if (event.key === "Enter" && newTitle !== "") {
-        todoItem.querySelector(".label").innerHTML = newTitle;
+        todoItem.querySelector(".label").textContent = newTitle;
         todoItem.classList.remove("editing");
     }
 }
@@ -74,4 +77,9 @@ function onEscapeEdit(event) {
     if (checkAnyEditing && checkEscapePressed) {
         document.querySelector(".editing").classList.remove("editing");
     }
+}
+
+function onCountItems() {
+    const itemCount = $todoList.querySelectorAll("li");
+    $todoCount.textContent = itemCount == null ? 0 : itemCount.length;
 }
