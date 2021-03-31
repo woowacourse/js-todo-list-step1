@@ -4,6 +4,9 @@ document.getElementById('todo-title')
 document.getElementById('todo-title')
     .addEventListener('keypress', setEditedTitle());
 
+document.getElementById('todo-title')
+    .addEventListener('click', checkIsDone());
+
 document.getElementById('new-todo-title')
     .addEventListener('keypress', enterNewToDo());
 
@@ -20,13 +23,13 @@ function enterNewToDo() {
             const labelLabel = document.createElement("label");
             const destroyButton = document.createElement("button");
 
+            li.className = "todo";
             viewDiv.className = "view";
             editInput.className = "edit";
             editInput.value = newWork;
 
             toggleBox.className = "toggle";
             toggleBox.type = "checkBox";
-            toggleBox.addEventListener('onchange', checkIsDone2());
 
             labelLabel.className = "label";
             labelLabel.innerText = newWork;
@@ -67,19 +70,22 @@ function setEditedTitle() {
     }
 }
 
-function checkIsDone(target) {
-    console.log(target.className);
-    if (target.parentNode.parentNode.className = 'todo') {
-        target.parentNode.parentNode.className = 'completed';
-    }
-}
-
-function checkIsDone2(){
-    console.log("sdf");
+function checkIsDone(){
     return function(event){
-        console.log("22");
-        if(event.target.parentNode.parentNode.className = 'todo'){
+        if(event.target && event.target.className !== 'toggle') {
+            return;
+        }
+
+        if(event.target.checked == true){
             event.target.parentNode.parentNode.className = 'completed';
+            event.target.toggleAttribute('checked');
+            return;
+        }
+
+        if(event.target.checked == false){
+            event.target.parentNode.parentNode.className = 'todo';
+            event.target.removeAttribute('checked');
+            return;
         }
     }
 }
