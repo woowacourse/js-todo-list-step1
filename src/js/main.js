@@ -7,6 +7,9 @@ document.getElementById('todo-title')
 document.getElementById('todo-title')
     .addEventListener('click', checkIsDone());
 
+document.getElementById('todo-title')
+    .addEventListener('click', remove());
+
 document.getElementById('new-todo-title')
     .addEventListener('keypress', enterNewToDo());
 
@@ -67,6 +70,15 @@ function setEditedTitle() {
                 console.log("set editing title");
             }
         }
+    }
+}
+
+function remove() {
+    return function (event) {
+        if(event.target && event.target.className !== 'destroy') {
+            return;
+        }
+        event.target.closest("li").remove();
     }
 }
 
