@@ -13,6 +13,31 @@ document.getElementById('todo-title')
 document.getElementById('new-todo-title')
     .addEventListener('keypress', enterNewToDo());
 
+document.getElementsByClassName('filters').namedItem('status')
+    .addEventListener('click', changeStatus());
+
+window.onload = printVisibleCount;
+
+function count(items){
+    let visibleCount = 0;
+    Array.from(items).forEach((el) =>{
+        console.log(el.tagName);
+        if(el.tagName === 'LI' && el.hidden === false){
+            visibleCount++;
+        }
+    });
+
+    return visibleCount;
+}
+
+function printVisibleCount(){
+    const activeItems = document.getElementsByClassName('todo');
+    const completedItems = document.getElementsByClassName('completed');
+
+    document.getElementById('count').innerHTML = ""+(count(activeItems) + count(completedItems));
+    console.log(document.getElementById('count').innerHTML);
+}
+
 function enterNewToDo() {
     return function (event) {
         if(event.keyCode === 13){
@@ -47,6 +72,8 @@ function enterNewToDo() {
 
             document.getElementById("todo-title").appendChild(li);
             console.log("enter new : " + newWork);
+
+            printVisibleCount();
         }
     }
 }
@@ -62,13 +89,15 @@ function editingTitle() {
 
 function setEditedTitle() {
     return function (event) {
-        if (event.keyCode === 13) {
-            if(event.target.parentNode.className === 'editing'){
-                event.target.parentNode.className = 'todo';
-                const label = event.target.previousSibling.childNodes[1];
-                label.innerText = event.target.value;
-                console.log("set editing title");
-            }
+        if (event.keyCode !== 13) {
+            return;
+        }
+
+        if(event.target.parentNode.className === 'editing'){
+            event.target.parentNode.className = 'todo';
+            const label = event.target.previousSibling.childNodes[1];
+            label.innerText = event.target.value;
+            console.log("set editing title");
         }
     }
 }
@@ -99,5 +128,60 @@ function checkIsDone(){
             event.target.removeAttribute('checked');
             return;
         }
+    }
+}
+
+function decideItemsVisible(items, isVisible){
+    Array.from(items).forEach((el) =>{
+        if(el.tagName === 'LI'){
+            el.hidden = !isVisible;
+        }
+    });
+}
+
+function decideMenuSelected(selectedMenu){
+    const filters = document.getElementsByClassName('filters')[0];
+
+    Array.from(filters.children).forEach((el) =>{
+        const button = el.children[0];
+        const buttonMenu = button.className.split(" ")[0];
+
+        if(buttonMenu === selectedMenu){
+            el.children[0].className = selectedMenu.concat(' ', 'selected');
+            return;
+        }
+
+        el.children[0].className = buttonMenu;
+    });
+}
+
+function changeStatus(){
+    return function(event){
+        const activeItems = document.getElementsByClassName('todo');
+        const completedItems = document.getElementsByClassName('completed');
+
+        if(!event.target){
+            return;
+        }
+
+        const menu = event.target.className.split(" ")[0];
+
+        if(menu === 'all'){
+            decideItemsVisible(activeItems, true);
+            decideItemsVisible(completedItems, true);
+        }
+
+        if(menu === 'active'){
+            decideItemsVisible(activeItems, true);
+            decideItemsVisible(completedItems, false);
+        }
+
+        if(menu === 'completed'){
+            decideItemsVisible(activeItems, false);
+            decideItemsVisible(completedItems, true);
+        }
+
+        decideMenuSelected(menu);
+        printVisibleCount();
     }
 }
