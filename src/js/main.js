@@ -1,46 +1,25 @@
-document.getElementById('todo-title')
-    .addEventListener('dblclick', editingTitle());
-
-document.getElementById('todo-title')
-    .addEventListener('keypress', setEditedTitle());
-
-document.getElementById('todo-title')
-    .addEventListener('click', checkIsDone());
-
-document.getElementById('todo-title')
-    .addEventListener('click', remove());
-
-document.getElementById('new-todo-title')
-    .addEventListener('keypress', enterNewToDo());
-
-document.getElementsByClassName('filters').namedItem('status')
-    .addEventListener('click', changeStatus());
-
 window.onload = printVisibleCount;
 
-function count(items){
+function count(items) {
     let visibleCount = 0;
-    Array.from(items).forEach((el) =>{
-        console.log(el.tagName);
-        if(el.tagName === 'LI' && el.hidden === false){
+    Array.from(items).forEach((el) => {
+        if (el.tagName === 'LI' && el.hidden === false) {
             visibleCount++;
         }
     });
-
     return visibleCount;
 }
 
-function printVisibleCount(){
+function printVisibleCount() {
     const activeItems = document.getElementsByClassName('todo');
     const completedItems = document.getElementsByClassName('completed');
 
-    document.getElementById('count').innerHTML = ""+(count(activeItems) + count(completedItems));
-    console.log(document.getElementById('count').innerHTML);
+    document.getElementById('count').innerHTML = "" + (count(activeItems) + count(completedItems));
 }
 
 function enterNewToDo() {
     return function (event) {
-        if(event.keyCode === 13){
+        if (event.keyCode === 13) {
             const newWork = document.getElementById("new-todo-title").value;
             document.getElementById("new-todo-title").value = "";
 
@@ -71,8 +50,6 @@ function enterNewToDo() {
             viewDiv.appendChild(destroyButton);
 
             document.getElementById("todo-title").appendChild(li);
-            console.log("enter new : " + newWork);
-
             printVisibleCount();
         }
     }
@@ -80,108 +57,129 @@ function enterNewToDo() {
 
 function editingTitle() {
     return function (event) {
-        if (event.target && event.target.className === 'label') {
-            event.target.parentNode.parentNode.className = 'editing';
-            console.log("turn to editing");
+        if (event.target && event.target.classList.contains('label')) {
+            const item = event.target.closest('.todo');
+            item.className = 'editing';
         }
     }
 }
 
 function setEditedTitle() {
     return function (event) {
-        if (event.keyCode !== 13) {
+        if (event.keyCode !== 13 && event.target.closest('.editing')) {
             return;
         }
 
-        if(event.target.parentNode.className === 'editing'){
-            event.target.parentNode.className = 'todo';
-            const label = event.target.previousSibling.childNodes[1];
-            label.innerText = event.target.value;
-            console.log("set editing title");
-        }
+        const editedLabelValue = event.target.value;
+        const view = event.target.previousSibling; // hard
+
+        Array.from(view.children).forEach((el) => {
+            if (el.classList.contains('label')) {
+                el.innerText = editedLabelValue;
+            }
+        });
+
+        event.target.closest('.editing').className = 'todo';
     }
 }
 
 function remove() {
     return function (event) {
-        if(event.target && event.target.className !== 'destroy') {
+        if (event.target && !event.target.classList.contains('destroy')) {
             return;
         }
         event.target.closest("li").remove();
     }
 }
 
-function checkIsDone(){
-    return function(event){
-        if(event.target && event.target.className !== 'toggle') {
+function checkIsDone() {
+    return function (event) {
+        if (event.target && !event.target.classList.contains('toggle')) {
             return;
         }
 
-        if(event.target.checked == true){
-            event.target.parentNode.parentNode.className = 'completed';
+        if (event.target.checked == true) {
+            event.target.closest("LI").className = 'completed';
             event.target.toggleAttribute('checked');
             return;
         }
 
-        if(event.target.checked == false){
-            event.target.parentNode.parentNode.className = 'todo';
+        if (event.target.checked == false) {
+            event.target.closest("LI").className = 'todo';
             event.target.removeAttribute('checked');
             return;
         }
     }
 }
 
-function decideItemsVisible(items, isVisible){
-    Array.from(items).forEach((el) =>{
-        if(el.tagName === 'LI'){
+
+function decideMenuSelected(selectedMenu) {
+    const filters = document.getElementsByClassName('filters')[0];
+
+    Array.from(filters.children).forEach((el) => {
+        const button = el.children[0];
+        const buttonMenu = button.className.split(" ")[0];
+
+        if (buttonMenu === selectedMenu) {
+            button.classList.add('selected');
+            return;
+        }
+
+        button.className = buttonMenu;
+    });
+}
+
+function changeStatus() {
+    return function (event) {
+        const activeItems = document.getElementsByClassName('todo');
+        const completedItems = document.getElementsByClassName('completed');
+
+        if (!event.target) {
+            return;
+        }
+
+        if (event.target.classList.contains('all')) {
+            decideItemsVisible(activeItems, true);
+            decideItemsVisible(completedItems, true);
+        }
+
+        if (event.target.classList.contains('active')) {
+            decideItemsVisible(activeItems, true);
+            decideItemsVisible(completedItems, false);
+        }
+
+        if (event.target.classList.contains('completed')) {
+            decideItemsVisible(activeItems, false);
+            decideItemsVisible(completedItems, true);
+        }
+
+        decideMenuSelected(event.target.className.split(" ")[0]);
+        printVisibleCount();
+    }
+}
+
+function decideItemsVisible(items, isVisible) {
+    Array.from(items).forEach((el) => {
+        if (el.tagName === 'LI') {
             el.hidden = !isVisible;
         }
     });
 }
 
-function decideMenuSelected(selectedMenu){
-    const filters = document.getElementsByClassName('filters')[0];
+document.getElementById('todo-title')
+    .addEventListener('dblclick', editingTitle());
 
-    Array.from(filters.children).forEach((el) =>{
-        const button = el.children[0];
-        const buttonMenu = button.className.split(" ")[0];
+document.getElementById('todo-title')
+    .addEventListener('keypress', setEditedTitle());
 
-        if(buttonMenu === selectedMenu){
-            el.children[0].className = selectedMenu.concat(' ', 'selected');
-            return;
-        }
+document.getElementById('todo-title')
+    .addEventListener('click', checkIsDone());
 
-        el.children[0].className = buttonMenu;
-    });
-}
+document.getElementById('todo-title')
+    .addEventListener('click', remove());
 
-function changeStatus(){
-    return function(event){
-        const activeItems = document.getElementsByClassName('todo');
-        const completedItems = document.getElementsByClassName('completed');
+document.getElementById('new-todo-title')
+    .addEventListener('keypress', enterNewToDo());
 
-        if(!event.target){
-            return;
-        }
-
-        const menu = event.target.className.split(" ")[0];
-
-        if(menu === 'all'){
-            decideItemsVisible(activeItems, true);
-            decideItemsVisible(completedItems, true);
-        }
-
-        if(menu === 'active'){
-            decideItemsVisible(activeItems, true);
-            decideItemsVisible(completedItems, false);
-        }
-
-        if(menu === 'completed'){
-            decideItemsVisible(activeItems, false);
-            decideItemsVisible(completedItems, true);
-        }
-
-        decideMenuSelected(menu);
-        printVisibleCount();
-    }
-}
+document.getElementsByClassName('filters').namedItem('status')
+    .addEventListener('click', changeStatus());
