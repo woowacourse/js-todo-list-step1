@@ -15,7 +15,7 @@ const COMPLETED_VIEW = document.getElementById(CLASS_NAME_COMPLETED);
 
 
 window.onload = () => {
-    TODO_INPUT.addEventListener("keydown", addItem);
+    TODO_INPUT.addEventListener("keyup", addItem);
     ALL_VIEW.addEventListener("click", changeSelect);
     ACTIVE_VIEW.addEventListener("click", changeSelect);
     COMPLETED_VIEW.addEventListener("click", changeSelect);
@@ -116,7 +116,7 @@ function createHideInput(inputData) {
     hideInput.className = "edit";
     hideInput.value = inputData;
     hideInput.display = "none";
-    hideInput.addEventListener("keydown", (event) => {
+    hideInput.addEventListener("keyup", (event) => {
         if (event.key === ESC || event.key === ENTER) {
             if (event.key === ENTER) {
                 event.target.previousSibling.children[1].textContent = event.target.value;
