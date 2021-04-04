@@ -26,7 +26,7 @@ function addTodo(event) {
         newTodo.innerHTML = renderTodoItemTemplate(newTodoTitle);
         todoInput.value = '';
         todoList.append(newTodo);
-        showAll();
+        showActives();
     }
     updateCount();
 }
@@ -118,6 +118,10 @@ function renderTodoItemTemplate(title) {
 }
 
 function updateCount() {
-    const selectedTodo = document.querySelector(".show");
+    let count = 0;
+    for (const todo of todoList.children) {
+        count++;
+    }
+    selectedCount.textContent = count.toString(10);
 }
 
