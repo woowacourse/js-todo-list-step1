@@ -106,6 +106,14 @@ function showCompleted() {
     updateCount();
 }
 
+function updateCount() {
+    let count = 0;
+    for (const todo of todoList.children) {
+        count++;
+    }
+    selectedCount.textContent = count.toString(10);
+}
+
 function renderTodoItemTemplate(title) {
     return `
         <div class="view">
@@ -115,13 +123,5 @@ function renderTodoItemTemplate(title) {
         </div>
         <input class="edit" value=${title} />
         `;
-}
-
-function updateCount() {
-    let count = 0;
-    for (const todo of todoList.children) {
-        count++;
-    }
-    selectedCount.textContent = count.toString(10);
 }
 
