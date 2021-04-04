@@ -1,41 +1,48 @@
 // Selector
-const todoInput = document.querySelector('#new-todo-title');
-const todoList = document.querySelector('#todo-list');
+const $todoInput = document.querySelector('#new-todo-title');
+const $todoList = document.querySelector('#todo-list');
 
-const allTodos = todoList.querySelectorAll('.all');
-const activeTodos = todoList.querySelectorAll('.active');
-const completedTodos = todoList.querySelectorAll('.completed');
+const $allTodos = document.querySelector('.all');
+const $activeTodos = document.querySelector('.active');
+const $completedTodos = document.querySelector('.completed');
 
-// Values
+const $selectedCount = document.querySelector(".todo-count strong");
+
 const EMPTY_STRING = "";
 
-// Event Listeners
-todoInput.addEventListener('keypress', addTodo);
-todoList.addEventListener('click', checkTodo);
-todoList.addEventListener('click', deleteTodo);
-todoList.addEventListener('dblclick', editTodo);
+$todoInput.addEventListener('keypress', addTodo);
+$todoList.addEventListener('click', checkTodo);
+$todoList.addEventListener('click', deleteTodo);
+$todoList.addEventListener('dblclick', editTodo);
 
-// Functions
+$allTodos.addEventListener("click", showAll);
+$activeTodos.addEventListener("click", showActives);
+$completedTodos.addEventListener("click", showCompleted);
+
 function addTodo(event) {
-    const newTodoTitle = todoInput.value;
+    const newTodoTitle = $todoInput.value;
     if (event.key === 'Enter' && newTodoTitle !== EMPTY_STRING) {
         const newTodo = document.createElement('li');
         newTodo.innerHTML = renderTodoItemTemplate(newTodoTitle);
-        todoInput.value = '';
-        todoList.append(newTodo);
+        $todoInput.value = '';
+        $todoList.append(newTodo);
+        showAll();
     }
+    updateCount();
 }
 
 function checkTodo(event) {
-    const todoCheckBox = event.target.closest('.toggle');
-    todoCheckBox.parentNode.parentNode.classList.toggle('completed');
-    todoCheckBox.toggleAttribute('checked');
+    if (event.target.className === 'toggle') {
+        event.target.parentNode.parentNode.classList.toggle('completed');
+        event.target.toggleAttribute('checked');
+    }
 }
 
 function deleteTodo(event) {
     if (event.target.className === 'destroy') {
         event.target.parentNode.parentNode.remove();
     }
+    updateCount();
 }
 
 function editTodo(event) {
@@ -58,8 +65,25 @@ function editTodo(event) {
     }
 }
 
-function showCompleted() {
+function showAll() {
+    $allTodos.classList.add("selected");
+    $activeTodos.classList.remove("selected");
+    $completedTodos.classList.remove("selected");
+    updateCount();
+}
 
+function showActives() {
+    $allTodos.classList.remove("selected");
+    $activeTodos.classList.add("selected");
+    $completedTodos.classList.remove("selected");
+    updateCount();
+}
+
+function showCompleted() {
+    $allTodos.classList.remove("selected");
+    $activeTodos.classList.remove("selected");
+    $completedTodos.classList.add("selected");
+    updateCount();
 }
 
 function renderTodoItemTemplate(title) {
@@ -71,5 +95,9 @@ function renderTodoItemTemplate(title) {
         </div>
         <input class="edit" value=${title} />
         `;
+}
+
+function updateCount() {
+    const selectedTodo = document.querySelector(".show");
 }
 
