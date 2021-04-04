@@ -1,31 +1,31 @@
 // Selector
-const $todoInput = document.querySelector('#new-todo-title');
-const $todoList = document.querySelector('#todo-list');
+const todoInput = document.querySelector('#new-todo-title');
+const todoList = document.querySelector('#todo-list');
 
-const $allTodos = document.querySelector('.all');
-const $activeTodos = document.querySelector('.active');
-const $completedTodos = document.querySelector('.completed');
+const allTodos = document.querySelector('.all');
+const activeTodos = document.querySelector('.active');
+const completedTodos = document.querySelector('.completed');
 
-const $selectedCount = document.querySelector(".todo-count strong");
+const selectedCount = document.querySelector(".todo-count strong");
 
 const EMPTY_STRING = "";
 
-$todoInput.addEventListener('keypress', addTodo);
-$todoList.addEventListener('click', checkTodo);
-$todoList.addEventListener('click', deleteTodo);
-$todoList.addEventListener('dblclick', editTodo);
+todoInput.addEventListener('keypress', addTodo);
+todoList.addEventListener('click', checkTodo);
+todoList.addEventListener('click', deleteTodo);
+todoList.addEventListener('dblclick', editTodo);
 
-$allTodos.addEventListener("click", showAll);
-$activeTodos.addEventListener("click", showActives);
-$completedTodos.addEventListener("click", showCompleted);
+allTodos.addEventListener("click", showAll);
+activeTodos.addEventListener("click", showActives);
+completedTodos.addEventListener("click", showCompleted);
 
 function addTodo(event) {
-    const newTodoTitle = $todoInput.value;
+    const newTodoTitle = todoInput.value;
     if (event.key === 'Enter' && newTodoTitle !== EMPTY_STRING) {
         const newTodo = document.createElement('li');
         newTodo.innerHTML = renderTodoItemTemplate(newTodoTitle);
-        $todoInput.value = '';
-        $todoList.append(newTodo);
+        todoInput.value = '';
+        todoList.append(newTodo);
         showAll();
     }
     updateCount();
@@ -66,23 +66,43 @@ function editTodo(event) {
 }
 
 function showAll() {
-    $allTodos.classList.add("selected");
-    $activeTodos.classList.remove("selected");
-    $completedTodos.classList.remove("selected");
+    allTodos.classList.add("selected");
+    activeTodos.classList.remove("selected");
+    completedTodos.classList.remove("selected");
+
+    for (const todo of todoList.children) {
+        todo.style.display = "block";
+    }
     updateCount();
 }
 
 function showActives() {
-    $allTodos.classList.remove("selected");
-    $activeTodos.classList.add("selected");
-    $completedTodos.classList.remove("selected");
+    allTodos.classList.remove("selected");
+    activeTodos.classList.add("selected");
+    completedTodos.classList.remove("selected");
+
+    for (const todo of todoList.children) {
+        if (!todo.classList.contains("completed")) {
+            todo.style.display = "block";
+        } else {
+            todo.style.display = "none";
+        }
+    }
     updateCount();
 }
 
 function showCompleted() {
-    $allTodos.classList.remove("selected");
-    $activeTodos.classList.remove("selected");
-    $completedTodos.classList.add("selected");
+    allTodos.classList.remove("selected");
+    activeTodos.classList.remove("selected");
+    completedTodos.classList.add("selected");
+
+    for (const todo of todoList.children) {
+        if (todo.classList.contains("completed")) {
+            todo.style.display = "block";
+        } else {
+            todo.style.display = "none";
+        }
+    }
     updateCount();
 }
 
